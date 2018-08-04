@@ -1,0 +1,11 @@
+﻿<Window x:Class="PokemonUtility.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        Title="{Binding Title}" Height="350" Width="525">
+    <Grid>
+        <ContentControl prism:RegionManager.RegionName="ContentRegion" />
+        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="10,267,0,0" VerticalAlignment="Top" Width="94" Height="42" Command="{Binding calcCommand}" />
+    </Grid>
+</Window>
