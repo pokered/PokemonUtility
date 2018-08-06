@@ -1,5 +1,6 @@
 ﻿using Prism.Mvvm;
 using Prism.Commands;
+using Prism.Regions;
 using PokemonUtility.Models;
 
 namespace PokemonUtility.ViewModels
@@ -18,6 +19,8 @@ namespace PokemonUtility.ViewModels
         public MainWindowViewModel()
         {
             model = new MainModel();
+
+            // 世代コンボボックスのアイテム設定
         }
 
         private DelegateCommand calcComamnd;
@@ -29,6 +32,15 @@ namespace PokemonUtility.ViewModels
         private void CHangeTitle()
         {
             Title = model.CHangeTitle();
+        }
+
+        // 世代コンボボックス
+        private ObservableCollection<PersonViewModel> _Persons;
+
+        public class generation 
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
         }
     }
 }
