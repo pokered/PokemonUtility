@@ -66,6 +66,7 @@
     </Compile>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Models\MainModel.cs" />
+    <Compile Include="Models\SoftGeneration.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
