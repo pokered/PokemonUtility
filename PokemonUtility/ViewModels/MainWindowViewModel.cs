@@ -2,6 +2,7 @@
 using Prism.Commands;
 using Prism.Regions;
 using PokemonUtility.Models;
+using System.Collections.Generic;
 
 namespace PokemonUtility.ViewModels
 {
@@ -21,6 +22,15 @@ namespace PokemonUtility.ViewModels
             model = new MainModel();
 
             // 世代コンボボックスのアイテム設定
+            var aaa = new SoftGeneration();
+            aaa.ID = 0;
+            aaa.Name = "aaa";
+
+            var list = new List<SoftGeneration>();
+            list.Add(aaa);
+
+            SoftGenerations = list;
+
         }
 
         private DelegateCommand calcComamnd;
@@ -34,13 +44,12 @@ namespace PokemonUtility.ViewModels
             Title = model.CHangeTitle();
         }
 
-        // 世代コンボボックス
-        private ObservableCollection<PersonViewModel> _Persons;
-
-        public class generation 
+        private IList<SoftGeneration> _softGenerations;
+        public IList<SoftGeneration> SoftGenerations
         {
-            public int Id { get; set; }
-            public string Name { get; set; }
+            get { return _softGenerations; }
+            // privateにする
+            set { _softGenerations = value; }
         }
     }
 }

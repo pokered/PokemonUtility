@@ -32,7 +32,7 @@
                 <RadioButton x:Name="radioButton_Copy" Content="勝" HorizontalAlignment="Left" Height="17" VerticalAlignment="Top" Margin="2,5,2,3"/>
                 <RadioButton x:Name="rdo_lose" Content="負" Height="17" RenderTransformOrigin="4.321,0.893" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,5,2,3"/>
                 <RadioButton x:Name="radioButton" Content="分" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,5,2,3"/>
-                <ComboBox x:Name="comboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="48" Margin="3,1,3,0"/>
+                <ComboBox x:Name="comboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="48" Margin="3,1,3,0" ItemsSource="{Binding SoftGenerations}" />
                 <Button x:Name="button1" Content="保存" HorizontalAlignment="Left" VerticalAlignment="Top" Width="40" Margin="3"/>
             </WrapPanel>
         </GroupBox>
