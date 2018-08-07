@@ -22,14 +22,17 @@ namespace PokemonUtility.ViewModels
             model = new MainModel();
 
             // 世代コンボボックスのアイテム設定
-            var aaa = new SoftGeneration();
-            aaa.ID = 0;
-            aaa.Name = "aaa";
-
-            var list = new List<SoftGeneration>();
-            list.Add(aaa);
-
-            SoftGenerations = list;
+            var softGenerationList = new List<SoftGeneration>();
+            softGenerationList.Add(new SoftGeneration(){ID = 0, Name = "赤緑"});
+            softGenerationList.Add(new SoftGeneration(){ID = 1, Name = "金銀"});
+            softGenerationList.Add(new SoftGeneration(){ID = 2, Name = "ＲＳ"});
+            softGenerationList.Add(new SoftGeneration(){ID = 3, Name = "ＤＰ"});
+            softGenerationList.Add(new SoftGeneration(){ID = 4, Name = "黒白"});
+            softGenerationList.Add(new SoftGeneration(){ID = 5, Name = "ＸＹ"});
+            softGenerationList.Add(new SoftGeneration(){ID = 6, Name = "ＳＭ"});
+            // 先にselecteditemに値を設定しないとダメ
+            this.SelectedSoftGeneration = softGenerationList[0];
+            this.SoftGenerations = softGenerationList;
 
         }
 
@@ -44,12 +47,20 @@ namespace PokemonUtility.ViewModels
             Title = model.CHangeTitle();
         }
 
-        private IList<SoftGeneration> _softGenerations;
-        public IList<SoftGeneration> SoftGenerations
+        public SoftGeneration SelectedSoftGeneration { get; set; }	// 変更通知
+        private List<SoftGeneration> _softGenerations;
+        public List<SoftGeneration> SoftGenerations
         {
             get { return _softGenerations; }
             // privateにする
             set { _softGenerations = value; }
+        }
+
+        public enum battle_result
+        {
+            win = 0,
+            lose = 1,
+            draw = 2
         }
     }
 }
