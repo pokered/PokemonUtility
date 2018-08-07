@@ -12,6 +12,12 @@ namespace PokemonUtility.Models
         {
             return "test";
         }
+
+        public bool ShowMyPartyWindow(bool isChecked)
+        {
+            if (isChecked) { return true; }
+            return false; 
+        }
     }
 
 

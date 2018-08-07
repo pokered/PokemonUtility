@@ -1,9 +1,22 @@
 ﻿<Window x:Class="PokemonUtility.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:prism="http://prismlibrary.com/"
+        xmlns:views="clr-namespace:PokemonUtility.Views"
         prism:ViewModelLocator.AutoWireViewModel="True"
         Title="{Binding Title}" Height="288.044" Width="475.981">
+
+    <i:Interaction.Triggers>
+        <prism:InteractionRequestTrigger SourceObject="{Binding OpenChildDialogRequest}">
+            <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True" >
+                <prism:PopupWindowAction.WindowContent>
+                    <views:InputView />
+                </prism:PopupWindowAction.WindowContent>
+            </prism:PopupWindowAction>
+        </prism:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
+ 
     <Grid Margin="3,10,3,0" RenderTransformOrigin="0.361,-0.173" Height="240" VerticalAlignment="Top">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="205*"/>
@@ -29,12 +42,9 @@
         </GroupBox>
         <GroupBox x:Name="groupBox2" Header="保存" HorizontalAlignment="Left" Height="49" Margin="0,99,0,0" VerticalAlignment="Top" Width="215" Grid.ColumnSpan="2">
             <WrapPanel HorizontalAlignment="Left" Height="25" Margin="0,0,-59,0" VerticalAlignment="Top" Width="211">
-              <Window.Resources>
-                <BoolToEnumConverter x:Key="enumConverter" />
-              </Window.Resources>
-              <RadioButton x:Name="radioButton_Copy" Content="勝" HorizontalAlignment="Left" Height="17" VerticalAlignment="Top" Margin="2,5,2,3"/>
-                <RadioButton x:Name="rdo_lose" Content="負" Height="17" RenderTransformOrigin="4.321,0.893" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,5,2,3"/>
-                <RadioButton x:Name="radioButton" Content="分" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,5,2,3"/>
+                <RadioButton GroupName="battle_result" x:Name="radioButton_Copy" Content="勝" HorizontalAlignment="Left" Height="17" VerticalAlignment="Top" Margin="2,5,2,3" IsChecked="{Binding RadioWin}" />
+                <RadioButton GroupName="battle_result" x:Name="rdo_lose" Content="負" Height="17" RenderTransformOrigin="4.321,0.893" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,5,2,3" IsChecked="{Binding RadioLose}" />
+                <RadioButton GroupName="battle_result" x:Name="radioButton" Content="分" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,5,2,3"  IsChecked="{Binding RadioDraw}" />
                 <ComboBox x:Name="comboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="48" Margin="3,1,3,0" ItemsSource="{Binding SoftGenerations}" SelectedItem="{Binding SelectedSoftGeneration}" DisplayMemberPath="Name" SelectedValuePath="ID" />
                 <Button x:Name="button1" Content="保存" HorizontalAlignment="Left" VerticalAlignment="Top" Width="40" Margin="3"/>
             </WrapPanel>

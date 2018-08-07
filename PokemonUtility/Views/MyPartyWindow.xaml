@@ -1,0 +1,10 @@
+﻿<Window x:Class="PokemonUtility.Views.MyPartyWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <Grid>
+        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="226,177,0,0" VerticalAlignment="Top" Width="75"/>
+
+    </Grid>
+</Window>
