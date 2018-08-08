@@ -98,7 +98,20 @@ namespace PokemonUtility.ViewModels
             model.ShowMyPartyWindow(true);
         }
 
-
+        //InteractionRequestクラスのプロパティ
         public InteractionRequest<InputNotification> InputNotificationRequest { get; } = new InteractionRequest<InputNotification>();
+
+        public DelegateCommand NotificationCommand { get; }
+        //コンストラクタでDelegateCommand にNotificationCommandExecuteメソッドを指定
+        public InteractionRequestViewModel()
+        {
+            this.NotificationCommand = new DelegateCommand(this.NotificationCommandExecute);
+        }
+
+        //Raiseイベントの実装
+        private void NotificationCommandExecute()
+        {
+            this.NotificationRequest.Raise(new Notification { Title = "Alert", Content = "Notification message." });
+        }
     }
 }
