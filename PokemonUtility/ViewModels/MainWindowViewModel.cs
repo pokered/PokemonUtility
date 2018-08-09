@@ -39,6 +39,10 @@ namespace PokemonUtility.ViewModels
             // 先にselecteditemに値を設定しないとダメ
             SelectedSoftGeneration = softGenerationList[0];
             SoftGenerations = softGenerationList;
+
+
+            this.alertRequest = new InteractionRequest<Notification>();
+            
         }
 
         private DelegateCommand calcComamnd;
@@ -99,13 +103,12 @@ namespace PokemonUtility.ViewModels
         }
 
         //InteractionRequestクラスのプロパティ
-        public InteractionRequest<InputNotification> InputNotificationRequest { get; } = new InteractionRequest<InputNotification>();
+        public InteractionRequest<Notification> NotificationRequest { get; } = new InteractionRequest<Notification>();
 
-        public DelegateCommand NotificationCommand { get; }
-        //コンストラクタでDelegateCommand にNotificationCommandExecuteメソッドを指定
-        public InteractionRequestViewModel()
+        private DelegateCommand showDialogCommand;
+        public DelegateCommand ShowDialogCommand
         {
-            this.NotificationCommand = new DelegateCommand(this.NotificationCommandExecute);
+            get { return showDialogCommand = showDialogCommand ?? new DelegateCommand(NotificationCommandExecute); }
         }
 
         //Raiseイベントの実装

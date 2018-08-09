@@ -3,21 +3,12 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:prism="http://prismlibrary.com/"
-        xmlns:views="clr-namespace:PokemonUtility.Views"
         prism:ViewModelLocator.AutoWireViewModel="True"
         Title="{Binding Title}" Height="288.044" Width="475.981">
 
-    <i:Interaction.Triggers>
-        <prism:InteractionRequestTrigger SourceObject="{Binding OpenChildDialogRequest}">
-            <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True" >
-                <prism:PopupWindowAction.WindowContent>
-                    <views:InputView />
-                </prism:PopupWindowAction.WindowContent>
-            </prism:PopupWindowAction>
-        </prism:InteractionRequestTrigger>
-    </i:Interaction.Triggers>
- 
     <Grid Margin="3,10,3,0" RenderTransformOrigin="0.361,-0.173" Height="240" VerticalAlignment="Top">
+
+      
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="205*"/>
             <ColumnDefinition Width="332*"/>
@@ -33,7 +24,7 @@
         </GroupBox>
         <GroupBox x:Name="gb_capture" Header="キャプチャ設定" HorizontalAlignment="Left" Height="82" Margin="115,153,0,0" VerticalAlignment="Top" Width="100" Grid.ColumnSpan="2">
             <StackPanel HorizontalAlignment="Left" Height="60" VerticalAlignment="Bottom" Width="90" Margin="0,0,-2,0">
-                <Button x:Name="button" Content="範囲設定" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3,3,0,3" Width="84"/>
+                <Button x:Name="button" Content="範囲設定" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3,3,0,3" Width="84" Command="{Binding ShowDialogCommand}" />
                 <Button x:Name="btn_analysis" Content="分析" VerticalAlignment="Top" Margin="3" Width="84" HorizontalAlignment="Left" />
             </StackPanel>
         </GroupBox>
@@ -52,5 +43,18 @@
         <GroupBox x:Name="groupBox3" Grid.Column="1" Header="キャプチャイメージ" HorizontalAlignment="Left" Height="235" Margin="44,0,0,0" VerticalAlignment="Top" Width="242">
             <Image x:Name="image" HorizontalAlignment="Left" Height="219" VerticalAlignment="Top" Width="232" Margin="0,0,-2,-1"/>
         </GroupBox>
+
+      <prism:InteractionRequestTrigger SourceObject="{Binding NotificationRequest, Mode=OneWay}">
+        <prism:PopupWindowAction IsModal="True"
+                                 CenterOverAssociatedObject="True">
+          <prism:PopupWindowAction.WindowStyle>
+            <Style TargetType="Window">
+              <Setter Property="ResizeMode" Value="NoResize" />
+              <Setter Property="SizeToContent" Value="WidthAndHeight" />
+            </Style>
+          </prism:PopupWindowAction.WindowStyle>
+        </prism:PopupWindowAction>
+      </prism:InteractionRequestTrigger>
     </Grid>
 </Window>
+
