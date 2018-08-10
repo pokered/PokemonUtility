@@ -41,7 +41,7 @@ namespace PokemonUtility.ViewModels
             SoftGenerations = softGenerationList;
 
 
-            this.alertRequest = new InteractionRequest<Notification>();
+            this.NotificationCommand = new DelegateCommand(this.NotificationCommandExecute);
             
         }
 
@@ -105,11 +105,10 @@ namespace PokemonUtility.ViewModels
         //InteractionRequestクラスのプロパティ
         public InteractionRequest<Notification> NotificationRequest { get; } = new InteractionRequest<Notification>();
 
-        private DelegateCommand showDialogCommand;
-        public DelegateCommand ShowDialogCommand
-        {
-            get { return showDialogCommand = showDialogCommand ?? new DelegateCommand(NotificationCommandExecute); }
-        }
+
+        public DelegateCommand NotificationCommand { get; }
+        //コンストラクタでDelegateCommand にNotificationCommandExecuteメソッドを指定
+
 
         //Raiseイベントの実装
         private void NotificationCommandExecute()
