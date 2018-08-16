@@ -6,11 +6,11 @@ using System.Linq;
 
 namespace PokemonUtility.ViewModels
 {
-    public class InputViewViewModel : BindableBase
-    {
-        public InputViewViewModel()
+	public class PrismUserControl1ViewModel : BindableBase
+	{
+        public PrismUserControl1ViewModel()
         {
 
         }
-    }
+	}
 }

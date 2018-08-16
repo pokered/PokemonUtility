@@ -4,11 +4,13 @@ using PokemonUtility.Models;
 using PokemonUtility.Views;
 using System.Collections.Generic;
 using Prism.Interactivity.InteractionRequest;
+using System.Drawing;
 
 namespace PokemonUtility.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
+        // プロパティ
         private string _title = "Prism Application";
         public string Title
         {
@@ -16,9 +18,22 @@ namespace PokemonUtility.ViewModels
             set { SetProperty(ref _title, value); }
         }
 
+        private int _capture = 0;
+        public int Capture
+        {
+            get { return _capture; }
+            set { SetProperty(ref _capture, value); }
+        }
+
         private MainModel model;
 
         private MyPartyWindow _myPartyWindow;
+
+        // キャプチャウィンドウの矩形情報
+        public InteractionRequest<CaptureRectangleNotification> CaptureRectangleNotificationRequest { get; } = new InteractionRequest<CaptureRectangleNotification>();
+
+        // コマンド
+        public DelegateCommand ShowCaptureWindowNotificationCommand { get; }
 
         public MainWindowViewModel()
         {
@@ -40,20 +55,12 @@ namespace PokemonUtility.ViewModels
             SelectedSoftGeneration = softGenerationList[0];
             SoftGenerations = softGenerationList;
 
+            // コマンド
+            //ShowCaptureWindowNotificationCommand = new DelegateCommand(ShowCaptureWindow);
 
-            this.NotificationCommand = new DelegateCommand(this.NotificationCommandExecute);
+            NotificationCommand = new DelegateCommand(NotificationCommandExecute);
             
-        }
-
-        private DelegateCommand calcComamnd;
-        public DelegateCommand calcCommand
-        {
-            get { return calcComamnd = calcComamnd ?? new DelegateCommand(CHangeTitle); }
-        }
-
-        private void CHangeTitle()
-        {
-            Title = model.CHangeTitle();
+            
         }
 
         // ソフトの世代
@@ -92,28 +99,25 @@ namespace PokemonUtility.ViewModels
 
         // 自分のパーティー表示
         private DelegateCommand _checkMyPartyComamnd;
-        public DelegateCommand CheckMyPartyComamnd
-        {
-            get { return calcComamnd = calcComamnd ?? new DelegateCommand(CHangeTitle); }
-        }
-
         private void ShowMyPartyWindow()
         {
             model.ShowMyPartyWindow(true);
         }
 
-        //InteractionRequestクラスのプロパティ
-        public InteractionRequest<Notification> NotificationRequest { get; } = new InteractionRequest<Notification>();
-
-
         public DelegateCommand NotificationCommand { get; }
         //コンストラクタでDelegateCommand にNotificationCommandExecuteメソッドを指定
 
+        // キャプチャ
+        private InteractionRequest<CaptureRectangleNotification> capNotificationRequest = new InteractionRequest<CaptureRectangleNotification>();
+        public InteractionRequest<CaptureRectangleNotification> CapNotificationRequest { get; } = new InteractionRequest<CaptureRectangleNotification>();
 
-        //Raiseイベントの実装
+        // キャプチャ
         private void NotificationCommandExecute()
         {
-            this.NotificationRequest.Raise(new Notification { Title = "Alert", Content = "Notification message." });
+            CapNotificationRequest.Raise(new CaptureRectangleNotification{ Title = "aa"}, 
+                r => { Capture = r.CaptureRectangle.Width; Title = Capture.ToString(); });
         }
+
+
     }
 }
