@@ -71,6 +71,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CaptureMoveBehavior.cs" />
     <Compile Include="Models\CaptureRectangleNotification.cs" />
     <Compile Include="Models\CaptureWindowCommand.cs" />
     <Compile Include="ViewModels\CaptureWindowViewModel.cs" />
