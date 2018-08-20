@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interactivity;
@@ -15,34 +10,27 @@ namespace PokemonUtility
         protected override void OnAttached()
         {
             // AssociatedObjectのイベントを購読する
-            this.AssociatedObject.Click += this.ButtonClicked;
+            AssociatedObject.PreviewMouseLeftButtonDown += MouseMove;
         }
 
         protected override void OnDetaching()
         {
             // イベントの購読解除
-            this.AssociatedObject.Click += this.ButtonClicked;
+            AssociatedObject.PreviewMouseLeftButtonDown += MouseMove;
         }
 
         // イベントで処理をする
-        private void ButtonClicked(object sender, System.Windows.RoutedEventArgs e)
+        private void ButtonClicked(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Hello world");
-        }
-    }
-
-    class CaptureMoveBehavior2 : Behavior<Border>
-    {
-        protected override void OnAttached()
-        {
-            // AssociatedObjectのイベントを購読する
-            this.AssociatedObject.MouseDown += this.ButtonClicked;
         }
 
         // イベントで処理をする
-        private void ButtonClicked(object sender, System.Windows.RoutedEventArgs e)
+        private void MouseMove(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("Hello world");
+            UIElement el = sender as UIElement;
+            Point point = e.GetPosition(el);
+            MessageBox.Show(point.ToString());
         }
     }
 }

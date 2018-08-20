@@ -3,6 +3,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:PokemonUtility.Views"
+        xmlns:me="clr-namespace:PokemonUtility"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         Title="{Binding Title}" Height="288.044" Width="475.981">
@@ -51,9 +52,6 @@
         </GroupBox>
 
         <i:Interaction.Triggers>
-            <i:EventTrigger EventName="MouseLeftButtonDown">
-                
-            </i:EventTrigger>
             <prism:InteractionRequestTrigger SourceObject="{Binding CapNotificationRequest, Mode=OneWay}">
                 <prism:PopupWindowAction>
                     <prism:PopupWindowAction.WindowStyle>

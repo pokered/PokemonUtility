@@ -6,6 +6,11 @@
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True">
     <Grid Height="300" Width="300">
-        <Button x:Name="button" Content="Button" Margin="10"/>
+        <Button x:Name="button" Content="Button" Margin="10">
+            <i:Interaction.Behaviors>
+                <me:CaptureMoveBehavior />
+            </i:Interaction.Behaviors>
+
+        </Button>
     </Grid>
 </UserControl>
