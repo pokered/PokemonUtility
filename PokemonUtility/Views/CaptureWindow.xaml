@@ -10,7 +10,6 @@
             <i:Interaction.Behaviors>
                 <me:CaptureMoveBehavior />
             </i:Interaction.Behaviors>
-
         </Button>
     </Grid>
 </UserControl>

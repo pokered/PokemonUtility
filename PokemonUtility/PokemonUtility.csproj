@@ -78,11 +78,15 @@
     <Compile Include="ViewModels\CaptureWindowViewModel.cs" />
     <Compile Include="ViewModels\MyPartyWindowViewModel.cs" />
     <Compile Include="ViewModels\PrismUserControl1ViewModel.cs" />
+    <Compile Include="ViewModels\TestWindowViewModel.cs" />
     <Compile Include="Views\CaptureWindow.xaml.cs">
       <DependentUpon>CaptureWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MyPartyWindow.xaml.cs">
       <DependentUpon>MyPartyWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TestWindow.xaml.cs">
+      <DependentUpon>TestWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\CaptureWindow.xaml">
       <SubType>Designer</SubType>
@@ -105,6 +109,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\MyPartyWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TestWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

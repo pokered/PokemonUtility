@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 using System.Windows.Interactivity;
 
 namespace PokemonUtility
@@ -8,17 +9,17 @@ namespace PokemonUtility
         protected override void OnAttached()
         {
             // AssociatedObjectのイベントを購読する
-            this.AssociatedObject.MouseLeftButtonDown += this.ButtonClicked;
+            this.AssociatedObject.PreviewMouseDown += this.ButtonClicked;
         }
 
         protected override void OnDetaching()
         {
             // イベントの購読解除
-            this.AssociatedObject.MouseLeftButtonDown += this.ButtonClicked;
+            this.AssociatedObject.PreviewMouseDown += this.ButtonClicked;
         }
 
         // イベントで処理をする
-        private void ButtonClicked(object sender, System.Windows.RoutedEventArgs e)
+        private void ButtonClicked(object sender, MouseButtonEventArgs e)
         {
             MessageBox.Show("aaa");
         }

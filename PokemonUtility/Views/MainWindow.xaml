@@ -53,9 +53,10 @@
 
         <i:Interaction.Triggers>
             <prism:InteractionRequestTrigger SourceObject="{Binding CapNotificationRequest, Mode=OneWay}">
-                <prism:PopupWindowAction>
+                <prism:PopupWindowAction CenterOverAssociatedObject="True">
                     <prism:PopupWindowAction.WindowStyle>
-                        <Style TargetType="Window">
+
+                        <Style TargetType="local:TestWindow">
                             <Setter Property="WindowStyle" Value="None"/>
                             <Setter Property="SizeToContent" Value="Manual"/>
                             <Setter Property="ResizeMode" Value="CanResize" />
@@ -69,6 +70,9 @@
             </prism:InteractionRequestTrigger>
         </i:Interaction.Triggers>
     </Grid>
+    <i:Interaction.Behaviors>
+        <me:MainMoveBehavior />
+    </i:Interaction.Behaviors>
 </Window>
 
 
