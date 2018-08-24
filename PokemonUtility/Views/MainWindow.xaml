@@ -2,8 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:PokemonUtility.Views"
-        xmlns:me="clr-namespace:PokemonUtility"
+        xmlns:local="clr-namespace:PokemonUtility"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         Title="{Binding Title}" Height="288.044" Width="475.981">
@@ -51,7 +50,7 @@
             <Image x:Name="image" HorizontalAlignment="Left" Height="219" VerticalAlignment="Top" Width="232" Margin="0,0,-2,-1"/>
         </GroupBox>
 
-        <i:Interaction.Triggers>
+        <!--<i:Interaction.Triggers>
             <prism:InteractionRequestTrigger SourceObject="{Binding CapNotificationRequest, Mode=OneWay}">
                 <prism:PopupWindowAction CenterOverAssociatedObject="True">
                     <prism:PopupWindowAction.WindowStyle>
@@ -68,11 +67,13 @@
                     </prism:PopupWindowAction.WindowContent>
                 </prism:PopupWindowAction>
             </prism:InteractionRequestTrigger>
-        </i:Interaction.Triggers>
+        </i:Interaction.Triggers>-->
     </Grid>
-    <i:Interaction.Behaviors>
-        <me:MainMoveBehavior />
-    </i:Interaction.Behaviors>
+    <i:Interaction.Triggers>
+        <prism:InteractionRequestTrigger SourceObject="{Binding CapNotificationRequest, Mode=OneWay}">
+            <local:ShowAnotherWindowAction />
+        </prism:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
 </Window>
 
 

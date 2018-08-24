@@ -1,11 +1,11 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
 
 namespace PokemonUtility.Views
 {
     /// <summary>
-    /// Interaction logic for CaptureWindow
+    /// Interaction logic for CaptureWindow.xaml
     /// </summary>
-    public partial class CaptureWindow : UserControl
+    public partial class CaptureWindow : Window
     {
         public CaptureWindow()
         {
