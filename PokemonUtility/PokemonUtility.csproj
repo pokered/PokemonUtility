@@ -75,6 +75,8 @@
     <Compile Include="CaptureMoveBehavior.cs" />
     <Compile Include="Models\CaptureRectangleNotification.cs" />
     <Compile Include="Models\CaptureWindowCommand.cs" />
+    <Compile Include="PopupWindowActionBase.cs" />
+    <Compile Include="SampleAction.cs" />
     <Compile Include="ShowAnotherWindowAction.cs" />
     <Compile Include="ViewModels\CaptureWindowViewModel.cs" />
     <Compile Include="ViewModels\MyPartyWindowViewModel.cs" />

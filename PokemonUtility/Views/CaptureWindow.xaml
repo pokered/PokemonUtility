@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+            WindowStyle="None">
     <Grid>
         <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="140,83,0,0" VerticalAlignment="Top" Width="75" Command="{Binding CloseCommand}" />
     </Grid>

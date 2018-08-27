@@ -71,7 +71,7 @@
     </Grid>
     <i:Interaction.Triggers>
         <prism:InteractionRequestTrigger SourceObject="{Binding CapNotificationRequest, Mode=OneWay}">
-            <local:ShowAnotherWindowAction />
+            <local:SampleAction />
         </prism:InteractionRequestTrigger>
     </i:Interaction.Triggers>
 </Window>
