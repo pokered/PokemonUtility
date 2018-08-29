@@ -117,7 +117,5 @@ namespace PokemonUtility.ViewModels
             CapNotificationRequest.Raise(new CaptureRectangleNotification{ Title = "aa"}, 
                 r => { Capture = r.CaptureRectangle.Width; Title = Capture.ToString(); });
         }
-
-
     }
 }

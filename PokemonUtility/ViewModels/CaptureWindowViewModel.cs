@@ -7,18 +7,9 @@ using System.Drawing;
 
 namespace PokemonUtility.ViewModels
 {
-    public class CaptureWindowViewModel : BindableBase, IInteractionRequestAware
+    public class CaptureWindowViewModel : BindableBase
     {
-        // IInteractionRequestAware
-        public Action FinishInteraction { get; set; }
-        private INotification notification;
-        public INotification Notification
-        {
-            get { return notification; }
-            set { notification = value; }
-        }
-
-        private int _captureWidth = 600;
+        private int _captureWidth = 100;
         public int CaptureWidth
         {
             get { return _captureWidth; }
@@ -42,12 +33,11 @@ namespace PokemonUtility.ViewModels
             get { return closeCommand = closeCommand ?? new DelegateCommand(CloseWindow); }
         }
 
+        public InteractionRequest<INotification> NotificationRequest { get; } = new InteractionRequest<INotification>();
+
         private void CloseWindow()
         {
-            Rectangle test = new Rectangle(110, 110, 300, 110);
-            ((CaptureRectangleNotification)Notification).CaptureRectangle = test;
-            FinishInteraction();
+            NotificationRequest.Raise(new Notification());
         }
-
     }
 }

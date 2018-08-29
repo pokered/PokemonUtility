@@ -10,8 +10,6 @@ namespace PokemonUtility.Views
         public CaptureWindow()
         {
             InitializeComponent();
-
-            this.DragMove();
         }
     }
 }

@@ -10,5 +10,10 @@ namespace PokemonUtility
         {
             return new CaptureWindow() { Title = notification.Title };
         }
+
+        protected override void ApplyWindowToNotification(Window windown, INotification notification)
+        {
+            MessageBox.Show("aa");
+        }
     }
 }
