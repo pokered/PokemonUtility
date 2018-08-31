@@ -74,11 +74,13 @@
     <Compile Include="Behaviors\WindowMoveBehavior.cs" />
     <Compile Include="CloseWindowAction.cs" />
     <Compile Include="CaptureMoveBehavior.cs" />
-    <Compile Include="Models\CaptureRectangleNotification.cs" />
+    <Compile Include="Models\RectangleNotification.cs" />
     <Compile Include="Models\CaptureWindowCommand.cs" />
     <Compile Include="PopupWindowActionBase.cs" />
     <Compile Include="SampleAction.cs" />
     <Compile Include="ShowAnotherWindowAction.cs" />
+    <Compile Include="TriggerActions\CloseWindowAction.cs" />
+    <Compile Include="TriggerActions\PopupWindowActionBase.cs" />
     <Compile Include="ViewModels\CaptureWindowViewModel.cs" />
     <Compile Include="ViewModels\MyPartyWindowViewModel.cs" />
     <Compile Include="ViewModels\PrismUserControl1ViewModel.cs" />

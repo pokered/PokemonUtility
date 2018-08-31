@@ -21,26 +21,17 @@ namespace PokemonUtility.Behaviors
             AssociatedObject.PreviewMouseMove -= MouseMove;
         }
 
-        // イベントで処理をする
-        private void LeftButtonClicked(object sender, MouseButtonEventArgs e)
+        // ウィンドウの位置を記憶する
+        private void LeftButtonClicked(object sender, MouseEventArgs e)
         {
             //マウスボタン押下状態でなければ何もしない
-            if (e.ButtonState != MouseButtonState.Pressed) return;
+            if (e.LeftButton != MouseButtonState.Pressed) return;
 
             UIElement el = sender as UIElement;
             mousePoint = e.GetPosition(el);
-
-
-
-            //var win = (Window)AssociatedObject;
-            //win.Left = 100;
-
-
-            //MessageBox.Show(point.ToString());
-
-            //位置を記憶する
         }
 
+        // ウィンドウを移動させる
         private void MouseMove(object sender, MouseEventArgs e)
         {
             //マウスボタン押下状態でなければ何もしない

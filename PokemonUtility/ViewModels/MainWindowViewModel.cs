@@ -18,29 +18,46 @@ namespace PokemonUtility.ViewModels
             set { SetProperty(ref _title, value); }
         }
 
-        private int _capture = 0;
-        public int Capture
+        private Rectangle _captureRectangle = new Rectangle();
+
+        public int CaptureX
         {
-            get { return _capture; }
-            set { SetProperty(ref _capture, value); }
+            get { return _captureRectangle.X; }
+            set { _captureRectangle.X = value; }
         }
 
+        public int CaptureY
+        {
+            get { return _captureRectangle.Y; }
+            set { _captureRectangle.Y = value; }
+        }
+
+        public int CaptureWidth
+        {
+            get { return _captureRectangle.Width; }
+            set { _captureRectangle.Width = value; }
+        }
+
+        public int CaptureHeight
+        {
+            get { return _captureRectangle.Height; }
+            set { _captureRectangle.Height = value; }
+        }
+
+        // モデル
         private MainModel model;
+        
+        // リクエスト
+        private InteractionRequest<RectangleNotification> captureNotificationRequest = new InteractionRequest<RectangleNotification>();
+        public InteractionRequest<RectangleNotification> CaptureNotificationRequest { get; } = new InteractionRequest<RectangleNotification>();
 
-        private MyPartyWindow _myPartyWindow;
-
-        // キャプチャウィンドウの矩形情報
-        public InteractionRequest<CaptureRectangleNotification> CaptureRectangleNotificationRequest { get; } = new InteractionRequest<CaptureRectangleNotification>();
 
         // コマンド
-        public DelegateCommand ShowCaptureWindowNotificationCommand { get; }
+        public DelegateCommand CaptureWindowOpenCommand { get; }
 
         public MainWindowViewModel()
         {
             model = new MainModel();
-
-            // 自分のパーティーウィンドウ
-            _myPartyWindow = new MyPartyWindow();
 
             // 世代コンボボックスのアイテム設定
             var softGenerationList = new List<SoftGeneration>();
@@ -58,7 +75,7 @@ namespace PokemonUtility.ViewModels
             // コマンド
             //ShowCaptureWindowNotificationCommand = new DelegateCommand(ShowCaptureWindow);
 
-            NotificationCommand = new DelegateCommand(NotificationCommandExecute);
+            CaptureWindowOpenCommand = new DelegateCommand(CaptureWindowOpenCommandExecute);
             
             
         }
@@ -96,26 +113,19 @@ namespace PokemonUtility.ViewModels
             get { return _radioDraw; }
             set { SetProperty(ref _radioDraw, value); }
         }
-
-        // 自分のパーティー表示
-        private DelegateCommand _checkMyPartyComamnd;
-        private void ShowMyPartyWindow()
-        {
-            model.ShowMyPartyWindow(true);
-        }
-
-        public DelegateCommand NotificationCommand { get; }
-        //コンストラクタでDelegateCommand にNotificationCommandExecuteメソッドを指定
-
+        
         // キャプチャ
-        private InteractionRequest<CaptureRectangleNotification> capNotificationRequest = new InteractionRequest<CaptureRectangleNotification>();
-        public InteractionRequest<CaptureRectangleNotification> CapNotificationRequest { get; } = new InteractionRequest<CaptureRectangleNotification>();
-
-        // キャプチャ
-        private void NotificationCommandExecute()
+        private void CaptureWindowOpenCommandExecute()
         {
-            CapNotificationRequest.Raise(new CaptureRectangleNotification{ Title = "aa"}, 
-                r => { Capture = r.CaptureRectangle.Width; Title = Capture.ToString(); });
+            RectangleNotification rectangleNotification = new RectangleNotification();
+            rectangleNotification.X = CaptureX;
+            rectangleNotification.Y = CaptureY;
+            rectangleNotification.Width = CaptureWidth;
+            rectangleNotification.Height = CaptureHeight;
+            rectangleNotification.Title = "aa";
+
+            CaptureNotificationRequest.Raise(rectangleNotification, 
+                r => { CaptureX = r.Width; Title = CaptureX.ToString(); });
         }
     }
 }

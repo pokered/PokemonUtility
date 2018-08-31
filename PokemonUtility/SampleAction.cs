@@ -8,7 +8,7 @@ namespace PokemonUtility
     {
         protected override Window CreateWindow(INotification notification)
         {
-            return new CaptureWindow() { Title = notification.Title };
+            return new CaptureWindow() {};
         }
 
         protected override void ApplyWindowToNotification(Window windown, INotification notification)
