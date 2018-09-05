@@ -3,6 +3,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:PokemonUtility"
+        xmlns:actions="clr-namespace:PokemonUtility.TriggerActions"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         Title="{Binding Title}" Height="288.044" Width="475.981">
@@ -25,7 +26,7 @@
         </GroupBox>
         <GroupBox x:Name="gb_capture" Header="キャプチャ設定" HorizontalAlignment="Left" Height="82" Margin="115,153,0,0" VerticalAlignment="Top" Width="100" Grid.ColumnSpan="2">
             <StackPanel HorizontalAlignment="Left" Height="60" VerticalAlignment="Bottom" Width="90" Margin="0,0,-2,0">
-                <Button x:Name="button" Content="範囲設定" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3,3,0,3" Width="84" Command="{Binding CaptureWindowOpenCommand}" />
+                <Button x:Name="button" Content="範囲設定" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3,3,0,3" Width="84" Command="{Binding ShowCaptureWindowCommand}" />
                 <Button x:Name="btn_analysis" Content="分析" VerticalAlignment="Top" Margin="3" Width="84" HorizontalAlignment="Left">
                     <Button.InputBindings>
                         <MouseBinding Command="{Binding NotificationCommand}" MouseAction="LeftDoubleClick" />
@@ -70,8 +71,8 @@
         </i:Interaction.Triggers>-->
     </Grid>
     <i:Interaction.Triggers>
-        <prism:InteractionRequestTrigger SourceObject="{Binding CaptureNotificationRequest, Mode=OneWay}">
-            <local:SampleAction />
+        <prism:InteractionRequestTrigger SourceObject="{Binding ShowCaptureWindowRequest, Mode=OneWay}">
+            <actions:CaptureWindowAction />
         </prism:InteractionRequestTrigger>
     </i:Interaction.Triggers>
 </Window>

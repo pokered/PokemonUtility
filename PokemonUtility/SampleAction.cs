@@ -1,4 +1,5 @@
-﻿using PokemonUtility.Views;
+﻿using PokemonUtility.Models;
+using PokemonUtility.Views;
 using Prism.Interactivity.InteractionRequest;
 using System.Windows;
 
@@ -13,7 +14,7 @@ namespace PokemonUtility
 
         protected override void ApplyWindowToNotification(Window windown, INotification notification)
         {
-            MessageBox.Show("aa");
+            ((RectangleNotification)notification).X = (int)windown.Left;
         }
     }
 }

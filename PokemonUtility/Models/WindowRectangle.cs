@@ -1,9 +1,8 @@
-﻿using Prism.Interactivity.InteractionRequest;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace PokemonUtility.Models
 {
-    public class RectangleNotification : Notification
+    public class WindowRectangle
     {
         private Rectangle _rectangle;
 
@@ -12,7 +11,7 @@ namespace PokemonUtility.Models
             get { return _rectangle.X; }
             set { _rectangle.X = value; }
         }
-        
+
         public int Y
         {
             get { return _rectangle.Y; }
@@ -31,9 +30,8 @@ namespace PokemonUtility.Models
             set { _rectangle.Height = value; }
         }
 
-        public RectangleNotification()
+        public WindowRectangle()
         {
-            Title = "";
             _rectangle = new Rectangle();
         }
     }

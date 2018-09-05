@@ -2,25 +2,37 @@
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
-using System;
-using System.Drawing;
 
 namespace PokemonUtility.ViewModels
 {
     public class CaptureWindowViewModel : BindableBase
     {
-        private int _captureWidth = 100;
-        public int CaptureWidth
+        private int _x;
+        public int X
         {
-            get { return _captureWidth; }
-            set { SetProperty(ref _captureWidth, value); }
+            get { return _x; }
+            set { SetProperty(ref _x, value); }
         }
 
-        private int _captureX = 10;
-        public int CaptureX
+        private int _y;
+        public int Y
         {
-            get { return _captureX; }
-            set { SetProperty(ref _captureX, value); }
+            get { return _y; }
+            set { _y = value; }
+        }
+
+        private int _width;
+        public int Width
+        {
+            get { return _width; }
+            set { _width = value; }
+        }
+
+        private int _height;
+        public int Height
+        {
+            get { return _height; }
+            set { _height = value; }
         }
 
         public CaptureWindowViewModel()
@@ -33,11 +45,11 @@ namespace PokemonUtility.ViewModels
             get { return closeCommand = closeCommand ?? new DelegateCommand(CloseWindow); }
         }
 
-        public InteractionRequest<INotification> NotificationRequest { get; } = new InteractionRequest<INotification>();
+        public InteractionRequest<RectangleNotification> NotificationRequest { get; } = new InteractionRequest<RectangleNotification>();
 
         private void CloseWindow()
         {
-            NotificationRequest.Raise(new Notification());
+            NotificationRequest.Raise(null);
         }
     }
 }

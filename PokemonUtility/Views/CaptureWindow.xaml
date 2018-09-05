@@ -6,15 +6,19 @@
              xmlns:b="clr-namespace:PokemonUtility.Behaviors"
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True"
-             Title="{Binding Title}"
-            WindowStyle="SingleBorderWindow">
+             Left="{Binding X, Mode=TwoWay}"
+             Top="{Binding Y, Mode=TwoWay}"
+             Width="{Binding Width, Mode=TwoWay}"
+             Height="{Binding Height, Mode=TwoWay}"
+             WindowStartupLocation="Manual"
+             WindowStyle="None">
     <Grid>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="484" Margin="10,10,0,0" VerticalAlignment="Top" Width="740">
             <Border.InputBindings>
                 <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding CloseCommand}"/>
             </Border.InputBindings>
         </Border>
-        <!--<Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="140,83,0,0" VerticalAlignment="Top" Width="75" Command="{Binding CloseCommand}" />-->
+        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="140,83,0,0" VerticalAlignment="Top" Width="75" Command="{Binding CloseCommand}" />
     </Grid>
 
     <i:Interaction.Triggers>

@@ -18,42 +18,23 @@ namespace PokemonUtility.ViewModels
             set { SetProperty(ref _title, value); }
         }
 
-        private Rectangle _captureRectangle = new Rectangle();
-
-        public int CaptureX
+        // ウィンドウ位置・サイズ
+        private WindowRectangle _captureRectangle = new WindowRectangle();
+        public WindowRectangle CaptureRectangle
         {
-            get { return _captureRectangle.X; }
-            set { _captureRectangle.X = value; }
-        }
-
-        public int CaptureY
-        {
-            get { return _captureRectangle.Y; }
-            set { _captureRectangle.Y = value; }
-        }
-
-        public int CaptureWidth
-        {
-            get { return _captureRectangle.Width; }
-            set { _captureRectangle.Width = value; }
-        }
-
-        public int CaptureHeight
-        {
-            get { return _captureRectangle.Height; }
-            set { _captureRectangle.Height = value; }
+            get { return _captureRectangle; }
         }
 
         // モデル
         private MainModel model;
         
         // リクエスト
-        private InteractionRequest<RectangleNotification> captureNotificationRequest = new InteractionRequest<RectangleNotification>();
-        public InteractionRequest<RectangleNotification> CaptureNotificationRequest { get; } = new InteractionRequest<RectangleNotification>();
+        private InteractionRequest<RectangleNotification> _showCaptureWindowRequest = new InteractionRequest<RectangleNotification>();
+        public InteractionRequest<RectangleNotification> ShowCaptureWindowRequest { get; } = new InteractionRequest<RectangleNotification>();
 
 
         // コマンド
-        public DelegateCommand CaptureWindowOpenCommand { get; }
+        public DelegateCommand ShowCaptureWindowCommand { get; }
 
         public MainWindowViewModel()
         {
@@ -75,9 +56,7 @@ namespace PokemonUtility.ViewModels
             // コマンド
             //ShowCaptureWindowNotificationCommand = new DelegateCommand(ShowCaptureWindow);
 
-            CaptureWindowOpenCommand = new DelegateCommand(CaptureWindowOpenCommandExecute);
-            
-            
+            ShowCaptureWindowCommand = new DelegateCommand(ShowCaptureWindowCommandExecute);
         }
 
         // ソフトの世代
@@ -115,17 +94,23 @@ namespace PokemonUtility.ViewModels
         }
         
         // キャプチャ
-        private void CaptureWindowOpenCommandExecute()
+        private void ShowCaptureWindowCommandExecute()
         {
             RectangleNotification rectangleNotification = new RectangleNotification();
-            rectangleNotification.X = CaptureX;
-            rectangleNotification.Y = CaptureY;
-            rectangleNotification.Width = CaptureWidth;
-            rectangleNotification.Height = CaptureHeight;
-            rectangleNotification.Title = "aa";
+            rectangleNotification.X = CaptureRectangle.X;
+            rectangleNotification.Y = CaptureRectangle.Y;
+            rectangleNotification.Width = CaptureRectangle.Width;
+            rectangleNotification.Height = CaptureRectangle.Height;
 
-            CaptureNotificationRequest.Raise(rectangleNotification, 
-                r => { CaptureX = r.Width; Title = CaptureX.ToString(); });
+            ShowCaptureWindowRequest.Raise(rectangleNotification, 
+                r => 
+                {
+                    CaptureRectangle.X = r.X;
+                    CaptureRectangle.Y = r.Y;
+                    CaptureRectangle.Width = r.Width;
+                    CaptureRectangle.Height = r.Height;
+                    Title = CaptureRectangle.X.ToString() + " " + CaptureRectangle.Y.ToString() + " " + CaptureRectangle.Width.ToString() + " " + CaptureRectangle.Height.ToString();
+                });
         }
     }
 }
