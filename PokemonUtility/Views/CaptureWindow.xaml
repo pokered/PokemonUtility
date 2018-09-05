@@ -10,7 +10,6 @@
              Top="{Binding Y, Mode=TwoWay}"
              Width="{Binding Width, Mode=TwoWay}"
              Height="{Binding Height, Mode=TwoWay}"
-             WindowStartupLocation="Manual"
              WindowStyle="None">
     <Grid>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="484" Margin="10,10,0,0" VerticalAlignment="Top" Width="740">

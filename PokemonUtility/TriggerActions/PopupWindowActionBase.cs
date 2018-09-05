@@ -83,7 +83,7 @@ namespace PokemonUtility.TriggerActions
 
             //Windowへプロパティをセット
             if (this.WindowStyle != null) this.Window.Style = this.WindowStyle;
-            this.Window.WindowStartupLocation = this.WindowStartupLocation ?? System.Windows.WindowStartupLocation.CenterOwner;
+            //this.Window.WindowStartupLocation = this.WindowStartupLocation ?? System.Windows.WindowStartupLocation.CenterOwner;
 
             //Windowを閉じた時にコールバックを発火
             var callback = args.Callback;
