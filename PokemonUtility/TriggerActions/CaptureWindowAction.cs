@@ -10,20 +10,21 @@ namespace PokemonUtility.TriggerActions
     {
         protected override Window CreateWindow(INotification notification)
         {
+            // モーダル表示
+            IsModal = true;
+
+            // キャプチャ画面生成
             return new CaptureWindow() {};
         }
+
 
         protected override void ApplyNotificationToWindow(Window window, INotification notification)
         {
             RectangleNotification rec = ((RectangleNotification)notification);
             CaptureWindowViewModel vm = (CaptureWindowViewModel)window.DataContext;
 
-            windowcont(ref window, ref rec);
-
-            //vm.X = rec.X;
-            //vm.Y = rec.Y;
-            //vm.Width = rec.Width;
-            //vm.Height = rec.Height;
+            FitWithinScreen(ref window, ref rec);
+            
             window.Left = rec.X;
             window.Top = rec.Y;
             window.Width = rec.Width;
@@ -40,8 +41,8 @@ namespace PokemonUtility.TriggerActions
             rec.Height = vm.Height;
         }
 
-        // ウィンドウのサイズ・位置調整
-        private void windowcont(ref Window window, ref RectangleNotification rec)
+        // ウィンドウをスクリーン内に収める
+        private void FitWithinScreen(ref Window window, ref RectangleNotification rec)
         {
             // 初期値の場合は中央にデフォルトサイズで表示
             if (rec.X == 0 && rec.Y == 0 && rec.Width == 0 && rec.Height == 0)

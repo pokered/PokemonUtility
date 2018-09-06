@@ -4,7 +4,7 @@ using System.Windows.Interactivity;
 
 namespace PokemonUtility.Behaviors
 {
-    class WindowMoveBehavior : Behavior<Window>
+    public class WindowMoveBehavior : Behavior<Window>
     {
         private Point mousePoint;
         protected override void OnAttached()
@@ -12,7 +12,6 @@ namespace PokemonUtility.Behaviors
             // AssociatedObjectのイベントを購読する
             AssociatedObject.PreviewMouseLeftButtonDown += LeftButtonClicked;
             AssociatedObject.PreviewMouseMove += MouseMove;
-            AssociatedObject.PreviewMouseDoubleClick += RightButtonDoubleClicked;
         }
 
         protected override void OnDetaching()
@@ -20,7 +19,6 @@ namespace PokemonUtility.Behaviors
             // イベントの購読解除
             AssociatedObject.PreviewMouseLeftButtonDown -= LeftButtonClicked;
             AssociatedObject.PreviewMouseMove -= MouseMove;
-            AssociatedObject.PreviewMouseDoubleClick -= RightButtonDoubleClicked;
         }
 
         // ウィンドウの位置を記憶する
@@ -44,15 +42,6 @@ namespace PokemonUtility.Behaviors
 
             AssociatedObject.Left += e.GetPosition(el).X - mousePoint.X;
             AssociatedObject.Top += e.GetPosition(el).Y - mousePoint.Y;
-        }
-        
-        // ウィンドウを閉じる
-        private void RightButtonDoubleClicked(object sender, MouseEventArgs e)
-        {
-            // 右ダブルクリックでなければ何もしない
-            if (e.RightButton != MouseButtonState.Pressed) return;
-
-            AssociatedObject.Close();
         }
     }
 }

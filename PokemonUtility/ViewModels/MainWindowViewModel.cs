@@ -1,10 +1,8 @@
 ﻿using Prism.Mvvm;
 using Prism.Commands;
 using PokemonUtility.Models;
-using PokemonUtility.Views;
 using System.Collections.Generic;
 using Prism.Interactivity.InteractionRequest;
-using System.Drawing;
 
 namespace PokemonUtility.ViewModels
 {

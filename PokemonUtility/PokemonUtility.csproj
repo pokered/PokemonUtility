@@ -71,22 +71,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviors\CaptureWindowBehavior.cs" />
     <Compile Include="Behaviors\WindowMoveBehavior.cs" />
-    <Compile Include="CloseWindowAction.cs" />
-    <Compile Include="CaptureMoveBehavior.cs" />
     <Compile Include="Models\RectangleNotification.cs" />
-    <Compile Include="Models\CaptureWindowCommand.cs" />
     <Compile Include="Models\WindowRectangle.cs" />
-    <Compile Include="PopupWindowActionBase.cs" />
-    <Compile Include="SampleAction.cs" />
-    <Compile Include="ShowAnotherWindowAction.cs" />
     <Compile Include="TriggerActions\CaptureWindowAction.cs" />
     <Compile Include="TriggerActions\CloseWindowAction.cs" />
     <Compile Include="TriggerActions\PopupWindowActionBase.cs" />
     <Compile Include="ViewModels\CaptureWindowViewModel.cs" />
     <Compile Include="ViewModels\MyPartyWindowViewModel.cs" />
-    <Compile Include="ViewModels\PrismUserControl1ViewModel.cs" />
-    <Compile Include="ViewModels\TestWindowViewModel.cs" />
     <Compile Include="Views\CaptureWindow.xaml.cs">
       <DependentUpon>CaptureWindow.xaml</DependentUpon>
     </Compile>

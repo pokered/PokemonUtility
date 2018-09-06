@@ -38,18 +38,5 @@ namespace PokemonUtility.ViewModels
         public CaptureWindowViewModel()
         {
         }
-
-        private DelegateCommand closeCommand;
-        public DelegateCommand CloseCommand
-        {
-            get { return closeCommand = closeCommand ?? new DelegateCommand(CloseWindow); }
-        }
-
-        public InteractionRequest<RectangleNotification> NotificationRequest { get; } = new InteractionRequest<RectangleNotification>();
-
-        private void CloseWindow()
-        {
-            NotificationRequest.Raise(null);
-        }
     }
 }
