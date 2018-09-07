@@ -42,26 +42,29 @@ namespace PokemonUtility.TriggerActions
         }
 
         // ウィンドウをスクリーン内に収める
-        private void FitWithinScreen(ref Window window, ref RectangleNotification rec)
+        private void FitWithinScreen(ref Window window, ref RectangleNotification CaptureRect)
         {
-            // 初期値の場合は中央にデフォルトサイズで表示
-            if (rec.X == 0 && rec.Y == 0 && rec.Width == 0 && rec.Height == 0)
+            // スクリーンの矩形情報
+            Rect screenRect = new Rect();
+            screenRect.Width = (int)SystemParameters.PrimaryScreenWidth;
+            screenRect.Height = (int)SystemParameters.PrimaryScreenHeight;
+
+            // キャプチャ範囲の最小範囲
+            if (CaptureRect.Width < 50 || CaptureRect.Height < 50)
             {
-                window.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
-                rec.Width = 640;
-                rec.Height = 360;
+                CaptureRect.Width = (int)(screenRect.Width / 2);
+                CaptureRect.Height = (int)(screenRect.Height / 2);
             }
 
-            // 領域内に収める
-            Rect re = new Rect();
-            //double aa = SystemParameters.PrimaryScreenWidth;
+            Point captureLeftTop = new Point(CaptureRect.X, CaptureRect.Y);
+            Point captureRightBottom = new Point(CaptureRect.X + CaptureRect.Width, CaptureRect.Y + CaptureRect.Height);
 
-            // width
-            if (rec.Width < 50) rec.Width = 50;
-
-            // height
-            if (rec.Width < 50) rec.Width = 50;
-
+            if (!screenRect.Contains(captureLeftTop) || !screenRect.Contains(captureRightBottom))
+            {
+                window.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
+                CaptureRect.X = (int)window.Left;
+                CaptureRect.Y = (int)window.Top;
+            }
         }
     }
 }
