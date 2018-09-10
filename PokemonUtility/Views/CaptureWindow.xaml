@@ -9,6 +9,10 @@
              Top="{Binding Y, Mode=TwoWay}"
              Width="{Binding Width, Mode=TwoWay}"
              Height="{Binding Height, Mode=TwoWay}"
+             MinWidth="100"
+             MinHeight="100"
+             MaxWidth="{Binding SystemParameters.PrimaryScreenWidth}"
+             MaxHeight="{Binding SystemParameters.PrimaryScreenHeight}"
              WindowStyle="None"
              AllowsTransparency="True"
              ResizeMode="CanResizeWithGrip" Opacity="0.8">
