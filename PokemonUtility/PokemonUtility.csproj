@@ -77,6 +77,7 @@
     <Compile Include="Models\WindowRectangle.cs" />
     <Compile Include="TriggerActions\CaptureWindowAction.cs" />
     <Compile Include="TriggerActions\CloseWindowAction.cs" />
+    <Compile Include="TriggerActions\PartyWindowAction.cs" />
     <Compile Include="TriggerActions\PopupWindowActionBase.cs" />
     <Compile Include="ViewModels\CaptureWindowViewModel.cs" />
     <Compile Include="ViewModels\MyPartyWindowViewModel.cs" />
@@ -136,6 +137,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -30,13 +30,23 @@ namespace PokemonUtility.ViewModels
         private InteractionRequest<RectangleNotification> _showCaptureWindowRequest = new InteractionRequest<RectangleNotification>();
         public InteractionRequest<RectangleNotification> ShowCaptureWindowRequest { get; } = new InteractionRequest<RectangleNotification>();
 
+        private InteractionRequest<RectangleNotification> _showMyPartyWindowRequest = new InteractionRequest<RectangleNotification>();
+        public InteractionRequest<RectangleNotification> ShowMyPartyWindowRequest { get; } = new InteractionRequest<RectangleNotification>();
+
 
         // コマンド
         public DelegateCommand ShowCaptureWindowCommand { get; }
+        public DelegateCommand ShowMyWindowWindowCommand { get; }
 
         public MainWindowViewModel()
         {
             model = new MainModel();
+
+            // キャプチャ画面の範囲
+            CaptureRectangle.X = Properties.Settings.Default.CaptureX;
+            CaptureRectangle.Y = Properties.Settings.Default.CaptureY;
+            CaptureRectangle.Width = Properties.Settings.Default.CaptureWidth;
+            CaptureRectangle.Height = Properties.Settings.Default.CaptureHeight;
 
             // 世代コンボボックスのアイテム設定
             var softGenerationList = new List<SoftGeneration>();
@@ -103,11 +113,20 @@ namespace PokemonUtility.ViewModels
             ShowCaptureWindowRequest.Raise(rectangleNotification, 
                 r => 
                 {
+                    // キャプチャサイズを設定
                     CaptureRectangle.X = r.X;
                     CaptureRectangle.Y = r.Y;
                     CaptureRectangle.Width = r.Width;
                     CaptureRectangle.Height = r.Height;
-                    Title = CaptureRectangle.X.ToString() + " " + CaptureRectangle.Y.ToString() + " " + CaptureRectangle.Width.ToString() + " " + CaptureRectangle.Height.ToString();
+
+                    // SettingPropertyに保存する
+                    Properties.Settings.Default.CaptureX = r.X;
+                    Properties.Settings.Default.CaptureY = r.Y;
+                    Properties.Settings.Default.CaptureWidth = r.Width;
+                    Properties.Settings.Default.CaptureHeight = r.Height;
+
+                    // ファイルに保存
+                    Properties.Settings.Default.Save();
                 });
         }
     }
