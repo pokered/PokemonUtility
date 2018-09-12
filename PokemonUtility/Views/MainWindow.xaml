@@ -1,6 +1,6 @@
 ﻿<Window x:Class="PokemonUtility.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:PokemonUtility"
         xmlns:actions="clr-namespace:PokemonUtility.TriggerActions"
@@ -18,7 +18,7 @@
         <GroupBox x:Name="groupBox" Header="各種ウィンドウ" Height="82" Margin="0,153,66,0" VerticalAlignment="Top">
             <StackPanel HorizontalAlignment="Left" Width="98
                         ">
-                <CheckBox x:Name="chk_my_party" Content="自分のパーティー" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding ShowMyWindowWindowCommand}"/>
+                <CheckBox x:Name="chk_my_party" Content="自分のパーティー" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding MycheckBox.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Command="{Binding ShowMyPartyWindowCommand}" />
                 <CheckBox x:Name="chk_your_party" Content="相手のパーティー" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <CheckBox x:Name="chk_my_data" Content="自分の成績" Margin="0,0,10,0"/>
                 <CheckBox x:Name="chk_history" Content="履歴"/>
@@ -57,8 +57,8 @@
             <actions:CaptureWindowAction />
         </prism:InteractionRequestTrigger>
 
-        <prism:InteractionRequestTrigger SourceObject="{Binding ShowCaptureWindowRequest, Mode=OneWay}">
-            <actions:CaptureWindowAction />
+        <prism:InteractionRequestTrigger SourceObject="{Binding ShowMyPartyWindowRequest, Mode=OneWay}">
+            <actions:MyPartyWindowAction />
         </prism:InteractionRequestTrigger>
     </i:Interaction.Triggers>
 </Window>

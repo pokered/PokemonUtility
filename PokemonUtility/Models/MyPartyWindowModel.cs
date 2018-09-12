@@ -27,11 +27,11 @@ namespace PokemonUtility.Models
         }
         private string _mess = "bbb";
 
-        public bool IsEnable
+        public bool IsShowWindow
         {
-            get { return _isEnable; }
-            set { SetProperty(ref _isEnable, value); }
+            get { return _isShowWindow; }
+            set { SetProperty(ref _isShowWindow, value); }
         }
-        private bool _isEnable = false;
+        private bool _isShowWindow = false;
     }
 }

@@ -4,6 +4,9 @@ using PokemonUtility.Models;
 using System.Collections.Generic;
 using Prism.Interactivity.InteractionRequest;
 using PokemonUtility.Views;
+using Reactive.Bindings;
+using Reactive.Bindings.Extensions;
+using System.Reactive.Linq;
 
 namespace PokemonUtility.ViewModels
 {
@@ -32,18 +35,26 @@ namespace PokemonUtility.ViewModels
         private InteractionRequest<RectangleNotification> _showCaptureWindowRequest = new InteractionRequest<RectangleNotification>();
         public InteractionRequest<RectangleNotification> ShowCaptureWindowRequest { get; } = new InteractionRequest<RectangleNotification>();
 
-        //private InteractionRequest<RectangleNotification> _showMyPartyWindowRequest = new InteractionRequest<RectangleNotification>();
-        //public InteractionRequest<RectangleNotification> ShowMyPartyWindowRequest { get; } = new InteractionRequest<RectangleNotification>();
-
+        public InteractionRequest<RectangleNotification> ShowMyPartyWindowRequest { get; } = new InteractionRequest<RectangleNotification>();
+        
 
         // コマンド
         public DelegateCommand ShowCaptureWindowCommand { get; }
-        public DelegateCommand ShowMyWindowWindowCommand { get; }
+
+        // ReactiveCommand
+        public DelegateCommand ShowMyPartyWindowCommand { get; }
+
+        // マイウィンドウ
+        public ReactiveProperty<bool> MycheckBox { get; }
+
+
 
         public MainWindowViewModel()
         {
             model = new MainModel();
+
             mymodel = MyPartyWindowModel.GetInstance();
+            MycheckBox = mymodel.ToReactivePropertyAsSynchronized(m => m.IsShowWindow);
 
             // キャプチャ画面の範囲
             CaptureRectangle.X = Properties.Settings.Default.CaptureX;
@@ -68,13 +79,8 @@ namespace PokemonUtility.ViewModels
             //ShowCaptureWindowNotificationCommand = new DelegateCommand(ShowCaptureWindow);
 
             ShowCaptureWindowCommand = new DelegateCommand(ShowCaptureWindowCommandExecute);
-            ShowMyWindowWindowCommand = new DelegateCommand(IsMyPartyWindowCommandExecute);
-
-            PartyWindow = new MyPartyWindow();
-            PartyWindow.Show();
+            ShowMyPartyWindowCommand = new DelegateCommand(ShowMyPartyWindowCommandExecute);
         }
-
-        MyPartyWindow PartyWindow;
 
         // ソフトの世代
         public SoftGeneration SelectedSoftGeneration { get; set; }	// 変更通知
@@ -109,7 +115,9 @@ namespace PokemonUtility.ViewModels
             get { return _radioDraw; }
             set { SetProperty(ref _radioDraw, value); }
         }
+
         
+
         // キャプチャ
         private void ShowCaptureWindowCommandExecute()
         {
@@ -140,9 +148,16 @@ namespace PokemonUtility.ViewModels
         }
 
         // 自分のパーティー画面の表示切替
-        private void IsMyPartyWindowCommandExecute()
+        private void ShowMyPartyWindowCommandExecute()
         {
-            mymodel.Mess = "test";
+            if (MycheckBox.Value)
+            {
+                ShowMyPartyWindowRequest.Raise(null);
+            }
+            else
+            {
+                mymodel.Mess = "ccc";
+            }
         }
     }
 }

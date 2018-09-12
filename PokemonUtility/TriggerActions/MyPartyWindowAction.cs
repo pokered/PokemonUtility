@@ -4,22 +4,19 @@ using System.Windows;
 
 namespace PokemonUtility.TriggerActions
 {
-    abstract class PartyWindowAction : PopupWindowActionBase
-    {
-        protected override void ApplyWindowToNotification(Window windown, INotification notification)
-        {
-        }
-    }
-
-    class MyPartyWindowAction : PartyWindowAction
+    class MyPartyWindowAction : PopupWindowActionBase
     {
         protected override Window CreateWindow(INotification notification)
         {
             // モーダル表示
-            IsModal = true;
+            IsModal = false;
 
             // キャプチャ画面生成
             return new MyPartyWindow() { };
+        }
+
+        protected override void ApplyNotificationToWindow(Window window, INotification notification)
+        {
         }
     }
 }
