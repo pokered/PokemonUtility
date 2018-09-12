@@ -18,7 +18,7 @@
         <GroupBox x:Name="groupBox" Header="各種ウィンドウ" Height="82" Margin="0,153,66,0" VerticalAlignment="Top">
             <StackPanel HorizontalAlignment="Left" Width="98
                         ">
-                <CheckBox x:Name="chk_my_party" Content="自分のパーティー" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <CheckBox x:Name="chk_my_party" Content="自分のパーティー" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding ShowMyWindowWindowCommand}"/>
                 <CheckBox x:Name="chk_your_party" Content="相手のパーティー" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <CheckBox x:Name="chk_my_data" Content="自分の成績" Margin="0,0,10,0"/>
                 <CheckBox x:Name="chk_history" Content="履歴"/>

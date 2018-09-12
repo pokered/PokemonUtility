@@ -3,6 +3,7 @@ using Prism.Commands;
 using PokemonUtility.Models;
 using System.Collections.Generic;
 using Prism.Interactivity.InteractionRequest;
+using PokemonUtility.Views;
 
 namespace PokemonUtility.ViewModels
 {
@@ -25,13 +26,14 @@ namespace PokemonUtility.ViewModels
 
         // モデル
         private MainModel model;
+        private MyPartyWindowModel mymodel;
         
         // リクエスト
         private InteractionRequest<RectangleNotification> _showCaptureWindowRequest = new InteractionRequest<RectangleNotification>();
         public InteractionRequest<RectangleNotification> ShowCaptureWindowRequest { get; } = new InteractionRequest<RectangleNotification>();
 
-        private InteractionRequest<RectangleNotification> _showMyPartyWindowRequest = new InteractionRequest<RectangleNotification>();
-        public InteractionRequest<RectangleNotification> ShowMyPartyWindowRequest { get; } = new InteractionRequest<RectangleNotification>();
+        //private InteractionRequest<RectangleNotification> _showMyPartyWindowRequest = new InteractionRequest<RectangleNotification>();
+        //public InteractionRequest<RectangleNotification> ShowMyPartyWindowRequest { get; } = new InteractionRequest<RectangleNotification>();
 
 
         // コマンド
@@ -41,6 +43,7 @@ namespace PokemonUtility.ViewModels
         public MainWindowViewModel()
         {
             model = new MainModel();
+            mymodel = MyPartyWindowModel.GetInstance();
 
             // キャプチャ画面の範囲
             CaptureRectangle.X = Properties.Settings.Default.CaptureX;
@@ -65,7 +68,13 @@ namespace PokemonUtility.ViewModels
             //ShowCaptureWindowNotificationCommand = new DelegateCommand(ShowCaptureWindow);
 
             ShowCaptureWindowCommand = new DelegateCommand(ShowCaptureWindowCommandExecute);
+            ShowMyWindowWindowCommand = new DelegateCommand(IsMyPartyWindowCommandExecute);
+
+            PartyWindow = new MyPartyWindow();
+            PartyWindow.Show();
         }
+
+        MyPartyWindow PartyWindow;
 
         // ソフトの世代
         public SoftGeneration SelectedSoftGeneration { get; set; }	// 変更通知
@@ -128,6 +137,12 @@ namespace PokemonUtility.ViewModels
                     // ファイルに保存
                     Properties.Settings.Default.Save();
                 });
+        }
+
+        // 自分のパーティー画面の表示切替
+        private void IsMyPartyWindowCommandExecute()
+        {
+            mymodel.Mess = "test";
         }
     }
 }

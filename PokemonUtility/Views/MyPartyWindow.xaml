@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True"
-             WindowStyle="None"
-             Height="110" Width="550">
+             Height="186.252" Width="379.846">
     <Grid>
         <Image HorizontalAlignment="Left" Height="80" Margin="10,10,0,0" VerticalAlignment="Top" Width="80"/>
         <Image HorizontalAlignment="Left" Height="80" Margin="90,10,0,0" VerticalAlignment="Top" Width="80"/>
@@ -12,5 +11,6 @@
         <Image HorizontalAlignment="Left" Height="80" Margin="270,10,0,0" VerticalAlignment="Top" Width="80"/>
         <Image HorizontalAlignment="Left" Height="80" Margin="360,10,0,0" VerticalAlignment="Top" Width="80"/>
         <Image Margin="450,10,12,12"/>
+        <TextBox HorizontalAlignment="Left" Height="45" Margin="10,10,0,0" TextWrapping="Wrap" Text="{Binding Mess.Value,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="117"/>
     </Grid>
 </Window>
