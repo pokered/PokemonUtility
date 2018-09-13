@@ -2,7 +2,7 @@
 
 namespace PokemonUtility.Behaviors
 {
-    public class CaptureWindowBehavior : WindowMoveBehavior
+    class CaptureWindowBehavior : WindowMoveBehavior
     {
         protected override void OnAttached()
         {

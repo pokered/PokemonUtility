@@ -8,9 +8,9 @@ namespace PokemonUtility.TriggerActions
         /// <summary>Windowを「閉じる」アクションクラス</summary>
         protected override void Invoke(object parameter)
         {
-            DependencyPropertyChangedEventArgs iswin = (DependencyPropertyChangedEventArgs)parameter;
-
-            if ((bool)iswin.NewValue == false)
+            DependencyPropertyChangedEventArgs property = (DependencyPropertyChangedEventArgs)parameter;
+            
+            if (!(bool)property.NewValue)
             {
                 AssociatedObject.Close();
             }

@@ -11,12 +11,28 @@ namespace PokemonUtility.TriggerActions
             // モーダル表示
             IsModal = false;
 
-            // キャプチャ画面生成
-            return new MyPartyWindow() { };
+            // 画面生成
+            Window window = new MyPartyWindow() { };
+
+            // 位置設定
+            window.Left = Properties.Settings.Default.MyPartyWindowX;
+            window.Top = Properties.Settings.Default.MyPartyWindowY;
+            
+            return window;
         }
 
         protected override void ApplyNotificationToWindow(Window window, INotification notification)
         {
+        }
+
+        protected override void ApplyWindowToNotification(Window windown, INotification notification)
+        {
+            // 位置保存
+            Properties.Settings.Default.MyPartyWindowX = windown.Left;
+            Properties.Settings.Default.MyPartyWindowY = windown.Top;
+
+            // ファイルに保存
+            Properties.Settings.Default.Save();
         }
     }
 }

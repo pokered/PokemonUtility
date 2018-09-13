@@ -70,5 +70,29 @@ namespace PokemonUtility.Properties {
                 this["CaptureHeight"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double MyPartyWindowX {
+            get {
+                return ((double)(this["MyPartyWindowX"]));
+            }
+            set {
+                this["MyPartyWindowX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double MyPartyWindowY {
+            get {
+                return ((double)(this["MyPartyWindowY"]));
+            }
+            set {
+                this["MyPartyWindowY"] = value;
+            }
+        }
     }
 }

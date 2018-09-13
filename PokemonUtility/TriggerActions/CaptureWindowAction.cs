@@ -16,8 +16,7 @@ namespace PokemonUtility.TriggerActions
             // キャプチャ画面生成
             return new CaptureWindow() {};
         }
-
-
+        
         protected override void ApplyNotificationToWindow(Window window, INotification notification)
         {
             RectangleNotification rec = ((RectangleNotification)notification);
@@ -38,12 +37,11 @@ namespace PokemonUtility.TriggerActions
         protected override void ApplyWindowToNotification(Window windown, INotification notification)
         {
             RectangleNotification rec = ((RectangleNotification)notification);
-            CaptureWindowViewModel vm = (CaptureWindowViewModel)windown.DataContext;
 
-            rec.X = vm.X;
-            rec.Y = vm.Y;
-            rec.Width = vm.Width;
-            rec.Height = vm.Height;
+            rec.X = (int)windown.Left;
+            rec.Y = (int)windown.Top;
+            rec.Width = (int)windown.Width;
+            rec.Height = (int)windown.Height;
         }
 
         // ウィンドウをスクリーン内に収める

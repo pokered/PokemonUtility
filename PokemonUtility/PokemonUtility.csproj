@@ -72,6 +72,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Behaviors\CaptureWindowBehavior.cs" />
+    <Compile Include="Behaviors\HideCloseButtonOnWindowBehavior.cs" />
+    <Compile Include="Behaviors\MainWIndowBehavior.cs" />
     <Compile Include="Behaviors\WindowMoveBehavior.cs" />
     <Compile Include="Models\MyPartyWindowModel.cs" />
     <Compile Include="Models\RectangleNotification.cs" />
@@ -87,9 +89,6 @@
     </Compile>
     <Compile Include="Views\MyPartyWindow.xaml.cs">
       <DependentUpon>MyPartyWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TestWindow.xaml.cs">
-      <DependentUpon>TestWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\CaptureWindow.xaml">
       <SubType>Designer</SubType>
@@ -112,10 +111,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\MyPartyWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\TestWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

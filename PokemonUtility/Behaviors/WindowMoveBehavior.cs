@@ -4,7 +4,7 @@ using System.Windows.Interactivity;
 
 namespace PokemonUtility.Behaviors
 {
-    public class WindowMoveBehavior : Behavior<Window>
+    class WindowMoveBehavior : Behavior<Window>
     {
         private Point mousePoint;
         protected override void OnAttached()

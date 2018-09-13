@@ -3,10 +3,8 @@ using Prism.Commands;
 using PokemonUtility.Models;
 using System.Collections.Generic;
 using Prism.Interactivity.InteractionRequest;
-using PokemonUtility.Views;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
-using System.Reactive.Linq;
 
 namespace PokemonUtility.ViewModels
 {
@@ -29,7 +27,7 @@ namespace PokemonUtility.ViewModels
 
         // モデル
         private MainModel model;
-        private MyPartyWindowModel mymodel;
+        private MyPartyWindowModel myPartyWindowModel;
         
         // リクエスト
         private InteractionRequest<RectangleNotification> _showCaptureWindowRequest = new InteractionRequest<RectangleNotification>();
@@ -40,21 +38,17 @@ namespace PokemonUtility.ViewModels
 
         // コマンド
         public DelegateCommand ShowCaptureWindowCommand { get; }
-
-        // ReactiveCommand
         public DelegateCommand ShowMyPartyWindowCommand { get; }
 
         // マイウィンドウ
-        public ReactiveProperty<bool> MycheckBox { get; }
-
-
-
+        public ReactiveProperty<bool> IsShowMyPartyWindow { get; }
+        
         public MainWindowViewModel()
         {
             model = new MainModel();
 
-            mymodel = MyPartyWindowModel.GetInstance();
-            MycheckBox = mymodel.ToReactivePropertyAsSynchronized(m => m.IsShowWindow);
+            myPartyWindowModel = MyPartyWindowModel.GetInstance();
+            IsShowMyPartyWindow = myPartyWindowModel.ToReactivePropertyAsSynchronized(m => m.IsShowWindow);
 
             // キャプチャ画面の範囲
             CaptureRectangle.X = Properties.Settings.Default.CaptureX;
@@ -76,8 +70,6 @@ namespace PokemonUtility.ViewModels
             SoftGenerations = softGenerationList;
 
             // コマンド
-            //ShowCaptureWindowNotificationCommand = new DelegateCommand(ShowCaptureWindow);
-
             ShowCaptureWindowCommand = new DelegateCommand(ShowCaptureWindowCommandExecute);
             ShowMyPartyWindowCommand = new DelegateCommand(ShowMyPartyWindowCommandExecute);
         }
@@ -115,9 +107,7 @@ namespace PokemonUtility.ViewModels
             get { return _radioDraw; }
             set { SetProperty(ref _radioDraw, value); }
         }
-
         
-
         // キャプチャ
         private void ShowCaptureWindowCommandExecute()
         {
@@ -147,16 +137,12 @@ namespace PokemonUtility.ViewModels
                 });
         }
 
-        // 自分のパーティー画面の表示切替
+        // 自分のパーティー画面を表示
         private void ShowMyPartyWindowCommandExecute()
         {
-            if (MycheckBox.Value)
+            if (IsShowMyPartyWindow.Value)
             {
                 ShowMyPartyWindowRequest.Raise(null);
-            }
-            else
-            {
-                mymodel.Mess = "ccc";
             }
         }
     }
