@@ -5,18 +5,18 @@ namespace PokemonUtility.Models
 {
     class PokemonImageModel : BindableBase
     {
-        private int _pokemonID = -1;
-        public int PokemonID
+        private int _id = -1;
+        public int ID
         {
-            get { return _pokemonID; }
-            set { SetProperty(ref _pokemonID, value); }
+            get { return _id; }
+            set { SetProperty(ref _id, value); }
         }
 
-        private BitmapImage bmp;
-        public BitmapImage Bmp
+        private BitmapImage _image;
+        public BitmapImage Image
         {
-            get { return bmp; }
-            set { SetProperty(ref bmp, value); }
+            get { return _image; }
+            set { SetProperty(ref _image, value); }
         }
     }
 }
