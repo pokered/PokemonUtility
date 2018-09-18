@@ -53,6 +53,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -169,9 +170,10 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Resource Include="Images\pokemon\0\icon.png" />
+    <Resource Include="Images\pokemon\0\icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\pokemon\100\icon.png" />
     <Resource Include="Images\pokemon\101\icon.png" />
     <Resource Include="Images\pokemon\102\icon.png" />
@@ -282,7 +284,9 @@
     <Resource Include="Images\pokemon\198\icon.png" />
     <Resource Include="Images\pokemon\199\icon.png" />
     <Resource Include="Images\pokemon\19\icon.png" />
-    <Resource Include="Images\pokemon\1\icon.png" />
+    <Resource Include="Images\pokemon\1\icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\pokemon\200\icon.png" />
     <Resource Include="Images\pokemon\201\icon.png" />
     <Resource Include="Images\pokemon\202\icon.png" />
@@ -1156,6 +1160,12 @@
     <Resource Include="Images\pokemon\98\icon.png" />
     <Resource Include="Images\pokemon\99\icon.png" />
     <Resource Include="Images\pokemon\9\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\progress\progress0.png" />
+    <Resource Include="Images\progress\progress1.png" />
+    <Resource Include="Images\progress\progress2.png" />
+    <Resource Include="Images\progress\progress3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

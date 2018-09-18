@@ -9,7 +9,8 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              Height="138.06" Width="499.348">
     <Grid>
-        <Image HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Source="{Binding PokemonImage1}"  Width="{Binding RelativeSource={RelativeSource Self}, Path=Source.PixelWidth}" Height="{Binding RelativeSource={RelativeSource Self}, Path=Source.PixelHeight}" />
+        <Image HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Source="{Binding Frame1.Value}" Width="80" Height="80" />
+        <Image HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Source="{Binding PokemonImage1.Value}" Width="80" Height="80" />
         <Image HorizontalAlignment="Left" Height="80" Margin="90,10,0,0" VerticalAlignment="Top" Width="80"/>
         <Image HorizontalAlignment="Left" Height="80" Margin="180,10,0,0" VerticalAlignment="Top" Width="80"/>
         <Image HorizontalAlignment="Left" Height="80" Margin="270,10,0,0" VerticalAlignment="Top" Width="80"/>
