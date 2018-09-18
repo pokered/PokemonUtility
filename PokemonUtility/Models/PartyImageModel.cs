@@ -14,14 +14,9 @@ namespace PokemonUtility.Models
         public PokemonImageModel Pokemon5 { get; }
         public PokemonImageModel Pokemon6 { get; }
 
-        // 選出順
-        private BitmapImage _frame = new BitmapImage();
-        public BitmapImage Frame
-        {
-            get { return _frame; }
-            set { SetProperty(ref _frame, value); }
-        }
-
+        private int[] _selected_order = new int[] { };
+        private int[] _order = new int[] { 0, 1, 2, 3, 4, 5 };
+        
         public PartyImageModel()
         {
             Pokemon1 = new PokemonImageModel();
@@ -39,8 +34,7 @@ namespace PokemonUtility.Models
             tmpBmp.DecodePixelWidth = 200;
             tmpBmp.DecodePixelHeight = 200;
             tmpBmp.EndInit();
-
-            Frame = tmpBmp;
+            
         }
     }
 }

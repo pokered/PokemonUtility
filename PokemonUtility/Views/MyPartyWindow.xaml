@@ -22,6 +22,10 @@
         <ei:PropertyChangedTrigger Binding="{Binding IsShowMyPartyWindow.Value}" >
             <actions:CloseWindowAction />
         </ei:PropertyChangedTrigger>
+
+        <ei:PropertyChangedTrigger Binding="{Binding PokemonImage1.Value}" >
+            <actions:WindowReDisplayAction />
+        </ei:PropertyChangedTrigger>
     </i:Interaction.Triggers>
 
     <i:Interaction.Behaviors>

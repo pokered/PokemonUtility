@@ -1,6 +1,10 @@
-﻿using Prism.Mvvm;
+﻿using OpenCvSharp;
+using OpenCvSharp.Extensions;
+using Prism.Mvvm;
 using System;
+using System.Drawing;
 using System.IO;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace PokemonUtility.Models
@@ -18,8 +22,8 @@ namespace PokemonUtility.Models
             }
         }
 
-        private BitmapImage _image = new BitmapImage();
-        public BitmapImage Image
+        private BitmapSource _image;
+        public BitmapSource Image
         {
             get { return _image; }
             set { SetProperty(ref _image, value); }
@@ -44,6 +48,38 @@ namespace PokemonUtility.Models
             Image = tmpBmp;
         }
 
+        //private void test()
+        //{
+        //    // オリジナルポケモン画像
+        //    String currentDir = Directory.GetCurrentDirectory();
+        //    String imagePath = string.Format("Images/pokemon/{0}/icon.png", 0);
+        //    String relativeImagePath = Path.Combine(currentDir, imagePath);
+        //    var PokemonImg = new Mat(relativeImagePath);
+
+        //    var ResizedPokemonImg = new Mat();
+        //    Cv2.Resize(PokemonImg, ResizedPokemonImg, new OpenCvSharp.Size(80, 80), 0, 0, InterpolationFlags.Lanczos4);
+
+        //    // フレーム
+        //    imagePath = "Images/frame/order_first.png";
+        //    relativeImagePath = Path.Combine(currentDir, imagePath);
+        //    var frameImg = new Mat(relativeImagePath);
+
+        //    var ResizedFrameImg = new Mat();
+        //    Cv2.Resize(frameImg, ResizedFrameImg, new OpenCvSharp.Size(80, 80), 0, 0, InterpolationFlags.Lanczos4);
+
+        //    var pastedMat = new Mat();
+        //    Cv2.Add(ResizedPokemonImg, ResizedFrameImg, pastedMat);
+
+        //    BitmapSource bitmap = BitmapSourceConverter.ToBitmapSource(pastedMat);
+        //    Image = bitmap;
+
+        //    // 破棄
+        //    ResizedPokemonImg.Dispose();
+        //    ResizedFrameImg.Dispose();
+        //    pastedMat.Dispose();
+        //}
+
+
         private string CreateImagePath()
         {
             String currentDir = Directory.GetCurrentDirectory();
@@ -57,6 +93,7 @@ namespace PokemonUtility.Models
 
         public PokemonImageModel()
         {
+            // イメージ初期化
             ID = -1;
         }
     }
