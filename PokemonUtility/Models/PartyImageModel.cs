@@ -1,4 +1,5 @@
 ﻿using Prism.Mvvm;
+using Reactive.Bindings;
 using System;
 using System.IO;
 using System.Windows.Media.Imaging;
@@ -14,6 +15,15 @@ namespace PokemonUtility.Models
         public PokemonImageModel Pokemon5 { get; }
         public PokemonImageModel Pokemon6 { get; }
 
+        public int[] Selected_Order { get; private set; }
+
+        public int PokemonID1
+        {
+            get { return _pokemonList[0]; }
+            set { SetProperty(ref _pokemonList[0], value); }
+        }
+
+        private int[] _pokemonList = new int[]{0, -1, -1, -1, -1, -1};
         private int[] _selected_order = new int[] { };
         private int[] _order = new int[] { 0, 1, 2, 3, 4, 5 };
         

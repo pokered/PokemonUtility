@@ -75,7 +75,9 @@
     <Compile Include="Behaviors\CaptureWindowBehavior.cs" />
     <Compile Include="Behaviors\HideCloseButtonOnWindowBehavior.cs" />
     <Compile Include="Behaviors\MainWIndowBehavior.cs" />
+    <Compile Include="Behaviors\MyPartyBehavior.cs" />
     <Compile Include="Behaviors\WindowMoveBehavior.cs" />
+    <Compile Include="Models\ImageModel.cs" />
     <Compile Include="Models\MyPartyImageModel.cs" />
     <Compile Include="Models\MyPartyWindowModel.cs" />
     <Compile Include="Models\PokemonImageModel.cs" />

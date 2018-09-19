@@ -22,8 +22,8 @@ namespace PokemonUtility.Models
             }
         }
 
-        private BitmapSource _image;
-        public BitmapSource Image
+        private BitmapImage _image = new BitmapImage();
+        public BitmapImage Image
         {
             get { return _image; }
             set { SetProperty(ref _image, value); }
@@ -38,14 +38,9 @@ namespace PokemonUtility.Models
 
         private void ChangeImage()
         {
-            BitmapImage tmpBmp = new BitmapImage();
-            tmpBmp.BeginInit();
-            tmpBmp.UriSource = new Uri(CreateImagePath());
-            tmpBmp.DecodePixelWidth = 200;
-            tmpBmp.DecodePixelHeight = 200;
-            tmpBmp.EndInit();
-
-            Image = tmpBmp;
+            Image.UriSource = new Uri(CreateImagePath());
+            Image.DecodePixelWidth = 200;
+            Image.DecodePixelHeight = 200;
         }
 
         //private void test()
@@ -94,7 +89,11 @@ namespace PokemonUtility.Models
         public PokemonImageModel()
         {
             // イメージ初期化
-            ID = -1;
+            Image.BeginInit();
+            Image.UriSource = new Uri(CreateImagePath());
+            Image.DecodePixelWidth = 200;
+            Image.DecodePixelHeight = 200;
+            Image.EndInit();
         }
     }
 }
