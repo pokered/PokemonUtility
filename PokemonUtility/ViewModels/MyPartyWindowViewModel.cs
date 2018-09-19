@@ -14,90 +14,61 @@ namespace PokemonUtility.ViewModels
         // プロパティ
         public ReactiveProperty<bool> IsShowMyPartyWindow { get; private set; }
         
-        public ReactiveProperty<int> pokemonID1 { get; private set; }
-        public ReactiveProperty<int> pokemonID2 { get; private set; }
-        public ReactiveProperty<int> pokemonID3 { get; private set; }
-        public ReactiveProperty<int> pokemonID4 { get; private set; }
-        public ReactiveProperty<int> pokemonID5 { get; private set; }
-        public ReactiveProperty<int> pokemonID6 { get; private set; }
+        // ポケモンID
+        public ReactiveProperty<int> pokemonId1 { get; private set; }
+        public ReactiveProperty<int> pokemonId2 { get; private set; }
+        public ReactiveProperty<int> pokemonId3 { get; private set; }
+        public ReactiveProperty<int> pokemonId4 { get; private set; }
+        public ReactiveProperty<int> pokemonId5 { get; private set; }
+        public ReactiveProperty<int> pokemonId6 { get; private set; }
 
-        private ReactiveProperty<int>[] pokemonIdList;
+        // 選出番号
+        public ReactiveProperty<int> OrderOfIndex1 { get; private set; }
+        public ReactiveProperty<int> FrameId2 { get; private set; }
+        public ReactiveProperty<int> FrameId3 { get; private set; }
+        public ReactiveProperty<int> FrameId4 { get; private set; }
+        public ReactiveProperty<int> FrameId5 { get; private set; }
+        public ReactiveProperty<int> FrameId6 { get; private set; }
 
-        private BitmapSource _pokemonImage1;
-        public BitmapSource PokemonImage1
+        private BitmapImage _pokemonImage1;
+        public BitmapImage PokemonImage1
         {
             get { return _pokemonImage1; }
             set { SetProperty(ref _pokemonImage1, value); }
         }
 
-        private BitmapSource _frameImage1;
-        public BitmapSource FrameImage1
+        private BitmapImage _frameImage1;
+        public BitmapImage FrameImage1
         {
             get { return _frameImage1; }
             set { SetProperty(ref _frameImage1, value); }
         }
 
-
-        //public ReactiveProperty<BitmapImage> PokemonImage1 { get; private set; }
-        public ReactiveProperty<BitmapImage> PokemonImage2 { get; private set; }
-        public ReactiveProperty<BitmapImage> PokemonImage3 { get; private set; }
-        public ReactiveProperty<BitmapImage> PokemonImage4 { get; private set; }
-        public ReactiveProperty<BitmapImage> PokemonImage5 { get; private set; }
-        public ReactiveProperty<BitmapImage> PokemonImage6 { get; private set; }
-
-        public ReactiveProperty<int[]> SelectedOrder { get; private set; }
-
-        public ReactiveProperty<BitmapImage> Frame1 { get; private set; }
-
         // モデル
-        private MyPartyWindowModel myPartyWindowModel;
-        private MyPartyImageModel myPartyImageModel;
+        private MyPartyWindowModel myPartyWindowModel = MyPartyWindowModel.GetInstance();
+        private MyPartyModel myPartyModel = MyPartyModel.GetInstance();
 
         // コマンド
         public DelegateCommand ChangeImageCommand { get; }
 
         public MyPartyWindowViewModel()
         {
-            myPartyWindowModel = MyPartyWindowModel.GetInstance();
-            myPartyImageModel = MyPartyImageModel.GetInstance();
-            
             IsShowMyPartyWindow = myPartyWindowModel.ObserveProperty(m => m.IsShowWindow).ToReactiveProperty();
 
-            //PokemonImage1 = myPartyImageModel.ObserveProperty(m => m.Pokemon1.Image).ToReactiveProperty();
-            //PokemonImage2 = myPartyImageModel.ObserveProperty(m => m.Pokemon2.Image).ToReactiveProperty();
+            pokemonId1 = myPartyModel.ObserveProperty(m => m.PokemonId1).ToReactiveProperty();
+            pokemonId1.Subscribe(pokemonId => PokemonImage1 = ImageFactoryModel.CreatePokemonImage(pokemonId));
 
-            //SelectedOrder = myPartyImageModel.ObserveProperty(m => m.Selected_Order).ToReactiveProperty();
-            pokemonID1 = myPartyImageModel.ObserveProperty(m => m.PokemonID1).ToReactiveProperty();
-            pokemonID1.Subscribe(id => ChangeImage(id));
+            OrderOfIndex1 = myPartyModel.ObserveProperty(m => m.OrderOfIndex1).ToReactiveProperty();
+            OrderOfIndex1.Subscribe(order => FrameImage1 = ImageFactoryModel.CreateFrameImage(pokemonId1.Value, order));
 
-            // ポケモンIDリスト
-            pokemonIdList = new []{ pokemonID1, pokemonID2, pokemonID3, pokemonID4, pokemonID5, pokemonID6 };
-            
+            // コマンド
             ChangeImageCommand = new DelegateCommand(ChangeImageCommandExecute);
         }
 
         // キャプチャ
         private void ChangeImageCommandExecute()
         {
-            myPartyImageModel.PokemonID1 = 6;
-        }
-
-        private void ChangeImage(int PokemonId)
-        {
-            ImageModel test = new ImageModel();
-
-            PokemonImage1 = test.createImage(pokemonID1.Value);
-        }
-
-        private string CreateImagePath()
-        {
-            String currentDir = Directory.GetCurrentDirectory();
-            String imagePath = string.Format("Images/pokemon/{0}/icon.png", myPartyImageModel.Pokemon1.ID);
-            String relativeImagePath = Path.Combine(currentDir, imagePath);
-
-            if (File.Exists(relativeImagePath)) return relativeImagePath;
-
-            return Path.Combine(currentDir, "Images/progress/progress3.png");
+            pokemonId1.Value = 6;
         }
     }
 }
