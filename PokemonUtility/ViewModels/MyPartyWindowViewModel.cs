@@ -14,12 +14,12 @@ namespace PokemonUtility.ViewModels
         public ReactiveProperty<bool> IsShowMyPartyWindow { get; private set; }
         
         // ポケモンID
-        public ReactiveProperty<int> pokemonId1 { get; private set; }
-        public ReactiveProperty<int> pokemonId2 { get; private set; }
-        public ReactiveProperty<int> pokemonId3 { get; private set; }
-        public ReactiveProperty<int> pokemonId4 { get; private set; }
-        public ReactiveProperty<int> pokemonId5 { get; private set; }
-        public ReactiveProperty<int> pokemonId6 { get; private set; }
+        public ReactiveProperty<int> PokemonId1 { get; private set; }
+        public ReactiveProperty<int> PokemonId2 { get; private set; }
+        public ReactiveProperty<int> PokemonId3 { get; private set; }
+        public ReactiveProperty<int> PokemonId4 { get; private set; }
+        public ReactiveProperty<int> PokemonId5 { get; private set; }
+        public ReactiveProperty<int> PokemonId6 { get; private set; }
 
         // 選出番号
         public ReactiveProperty<int> PokemonOrder1 { get; private set; }
@@ -115,24 +115,24 @@ namespace PokemonUtility.ViewModels
             set { SetProperty(ref _frameImage6, value); }
         }
 
+        // コマンド
+        public DelegateCommand sanpleCommand { get; }
+
         // モデル
         private MyPartyWindowModel myPartyWindowModel = MyPartyWindowModel.GetInstance();
-        private MyPartyModel myPartyModel = MyPartyModel.GetInstance();
-
-        // コマンド
-        public DelegateCommand ChangeImageCommand { get; }
-
+        private MyPartyManegementModel myPartyModel = MyPartyManegementModel.GetInstance();
+        
         public MyPartyWindowViewModel()
         {
             IsShowMyPartyWindow = myPartyWindowModel.ObserveProperty(m => m.IsShowWindow).ToReactiveProperty();
 
             // ポケモンIDプロパティ紐づけ
-            pokemonId1 = myPartyModel.ObserveProperty(m => m.PokemonId1).ToReactiveProperty();
-            pokemonId2 = myPartyModel.ObserveProperty(m => m.PokemonId2).ToReactiveProperty();
-            pokemonId3 = myPartyModel.ObserveProperty(m => m.PokemonId3).ToReactiveProperty();
-            pokemonId4 = myPartyModel.ObserveProperty(m => m.PokemonId4).ToReactiveProperty();
-            pokemonId5 = myPartyModel.ObserveProperty(m => m.PokemonId5).ToReactiveProperty();
-            pokemonId6 = myPartyModel.ObserveProperty(m => m.PokemonId6).ToReactiveProperty();
+            PokemonId1 = myPartyModel.ObserveProperty(m => m.PokemonId1).ToReactiveProperty();
+            PokemonId2 = myPartyModel.ObserveProperty(m => m.PokemonId2).ToReactiveProperty();
+            PokemonId3 = myPartyModel.ObserveProperty(m => m.PokemonId3).ToReactiveProperty();
+            PokemonId4 = myPartyModel.ObserveProperty(m => m.PokemonId4).ToReactiveProperty();
+            PokemonId5 = myPartyModel.ObserveProperty(m => m.PokemonId5).ToReactiveProperty();
+            PokemonId6 = myPartyModel.ObserveProperty(m => m.PokemonId6).ToReactiveProperty();
 
             // ポケモン選出順プロパティ紐づけ
             PokemonOrder1 = myPartyModel.ObserveProperty(m => m.PokemonOrder1).ToReactiveProperty();
@@ -143,20 +143,28 @@ namespace PokemonUtility.ViewModels
             PokemonOrder6 = myPartyModel.ObserveProperty(m => m.PokemonOrder6).ToReactiveProperty();
 
             // ポケモンID変更時の処理登録
-            pokemonId1.Subscribe(pokemonId => PokemonImage1 = ImageFactoryModel.CreatePokemonImage(pokemonId));
-            //pokemonId1.Subscribe(pokemonId => FrameImage1 = ImageFactoryModel.CreateFrameImage(pokemonId, PokemonOrder1.Value));
+            PokemonId1.Subscribe(pokemonId => PokemonImage1 = ImageFactoryModel.CreatePokemonImage(pokemonId));
+            PokemonId2.Subscribe(pokemonId => PokemonImage2 = ImageFactoryModel.CreatePokemonImage(pokemonId));
+            PokemonId3.Subscribe(pokemonId => PokemonImage3 = ImageFactoryModel.CreatePokemonImage(pokemonId));
+            PokemonId4.Subscribe(pokemonId => PokemonImage4 = ImageFactoryModel.CreatePokemonImage(pokemonId));
+            PokemonId5.Subscribe(pokemonId => PokemonImage5 = ImageFactoryModel.CreatePokemonImage(pokemonId));
+            PokemonId6.Subscribe(pokemonId => PokemonImage6 = ImageFactoryModel.CreatePokemonImage(pokemonId));
 
             // 選出番号変更時の処理登録
-            PokemonOrder1.Subscribe(order => FrameImage1 = ImageFactoryModel.CreateFrameImage(pokemonId1.Value, order));
+            PokemonOrder1.Subscribe(order => FrameImage1 = ImageFactoryModel.CreateFrameImage(PokemonId1.Value, order));
+            PokemonOrder2.Subscribe(order => FrameImage2 = ImageFactoryModel.CreateFrameImage(PokemonId2.Value, order));
+            PokemonOrder3.Subscribe(order => FrameImage3 = ImageFactoryModel.CreateFrameImage(PokemonId3.Value, order));
+            PokemonOrder4.Subscribe(order => FrameImage4 = ImageFactoryModel.CreateFrameImage(PokemonId4.Value, order));
+            PokemonOrder5.Subscribe(order => FrameImage5 = ImageFactoryModel.CreateFrameImage(PokemonId5.Value, order));
+            PokemonOrder6.Subscribe(order => FrameImage6 = ImageFactoryModel.CreateFrameImage(PokemonId6.Value, order));
 
-            // コマンド
-            ChangeImageCommand = new DelegateCommand(ChangeImageCommandExecute);
+            // コマンド登録
+            sanpleCommand = new DelegateCommand(sanpleCommandExecute);
         }
-        
-        // キャプチャ
-        private void ChangeImageCommandExecute()
+
+        private void sanpleCommandExecute()
         {
-            pokemonId1.Value = 6;
+            myPartyModel.PokemonOrder1 = 0;
         }
     }
 }

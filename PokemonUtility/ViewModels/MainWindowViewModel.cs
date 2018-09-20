@@ -11,12 +11,7 @@ namespace PokemonUtility.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         // プロパティ
-        private string _title = "Prism Application";
-        public string Title
-        {
-            get { return _title; }
-            set { SetProperty(ref _title, value); }
-        }
+        public ReactiveProperty<bool> IsShowMyPartyWindow { get; }
 
         // ウィンドウ位置・サイズ
         private WindowRectangle _captureRectangle = new WindowRectangle();
@@ -26,8 +21,8 @@ namespace PokemonUtility.ViewModels
         }
 
         // モデル
-        private MainModel model;
-        private MyPartyWindowModel myPartyWindowModel;
+        private MainModel mainModel = new MainModel();
+        private MyPartyWindowModel myPartyWindowModel = MyPartyWindowModel.GetInstance();
         
         // リクエスト
         private InteractionRequest<RectangleNotification> _showCaptureWindowRequest = new InteractionRequest<RectangleNotification>();
@@ -35,19 +30,13 @@ namespace PokemonUtility.ViewModels
 
         public InteractionRequest<RectangleNotification> ShowMyPartyWindowRequest { get; } = new InteractionRequest<RectangleNotification>();
         
-
         // コマンド
         public DelegateCommand ShowCaptureWindowCommand { get; }
         public DelegateCommand ShowMyPartyWindowCommand { get; }
+        public DelegateCommand AnalysisCommand { get; }
 
-        // マイウィンドウ
-        public ReactiveProperty<bool> IsShowMyPartyWindow { get; }
-        
         public MainWindowViewModel()
         {
-            model = new MainModel();
-
-            myPartyWindowModel = MyPartyWindowModel.GetInstance();
             IsShowMyPartyWindow = myPartyWindowModel.ToReactivePropertyAsSynchronized(m => m.IsShowWindow);
 
             // キャプチャ画面の範囲
@@ -72,6 +61,7 @@ namespace PokemonUtility.ViewModels
             // コマンド
             ShowCaptureWindowCommand = new DelegateCommand(ShowCaptureWindowCommandExecute);
             ShowMyPartyWindowCommand = new DelegateCommand(ShowMyPartyWindowCommandExecute);
+            AnalysisCommand = new DelegateCommand(AnalysisCommandExecute);
         }
 
         // ソフトの世代
@@ -144,6 +134,21 @@ namespace PokemonUtility.ViewModels
             {
                 ShowMyPartyWindowRequest.Raise(null);
             }
+        }
+
+        // 分析
+        private void AnalysisCommandExecute()
+        {
+            AnalysisModel analysisModel = AnalysisModel.GetInstance();
+            int[] pokemonIdList = analysisModel.start();
+
+            MyPartyManegementModel myParty = MyPartyManegementModel.GetInstance();
+            myParty.PokemonId1 = pokemonIdList[0];
+            myParty.PokemonId2 = pokemonIdList[1];
+            myParty.PokemonId3 = pokemonIdList[2];
+            myParty.PokemonId4 = pokemonIdList[3];
+            myParty.PokemonId5 = pokemonIdList[4];
+            myParty.PokemonId6 = pokemonIdList[5];
         }
     }
 }

@@ -12,100 +12,107 @@ namespace PokemonUtility.Models
         private const int POKEMON_INDEX5 = 4;
         private const int POKEMON_INDEX6 = 5;
 
-        private int[] _pokemonList = new int[] { -1, -1, -1, -1, -1, -1 };
+        private int[] _pokemonIdList = new int[] { -1, -1, -1, -1, -1, -1 };
 
         public int PokemonId1
         {
-            get { return _pokemonList[POKEMON_INDEX1]; }
+            get { return _pokemonIdList[POKEMON_INDEX1]; }
             set
             {
-                SetProperty(ref _pokemonList[POKEMON_INDEX1], value);
-                ChangeSelectedOrder(POKEMON_INDEX1);
+                SetProperty(ref _pokemonIdList[POKEMON_INDEX1], value);
+                CorrectOrder(POKEMON_INDEX1);
             }
         }
 
         public int PokemonId2
         {
-            get { return _pokemonList[POKEMON_INDEX2]; }
+            get { return _pokemonIdList[POKEMON_INDEX2]; }
             set
             {
-                SetProperty(ref _pokemonList[POKEMON_INDEX2], value);
-                ChangeSelectedOrder(POKEMON_INDEX2);
+                SetProperty(ref _pokemonIdList[POKEMON_INDEX2], value);
+                CorrectOrder(POKEMON_INDEX2);
             }
         }
 
         public int PokemonId3
         {
-            get { return _pokemonList[POKEMON_INDEX3]; }
+            get { return _pokemonIdList[POKEMON_INDEX3]; }
             set
             {
-                SetProperty(ref _pokemonList[POKEMON_INDEX3], value);
-                ChangeSelectedOrder(POKEMON_INDEX3);
+                SetProperty(ref _pokemonIdList[POKEMON_INDEX3], value);
+                CorrectOrder(POKEMON_INDEX3);
             }
         }
 
         public int PokemonId4
         {
-            get { return _pokemonList[POKEMON_INDEX4]; }
+            get { return _pokemonIdList[POKEMON_INDEX4]; }
             set
             {
-                SetProperty(ref _pokemonList[POKEMON_INDEX4], value);
-                ChangeSelectedOrder(POKEMON_INDEX4);
+                SetProperty(ref _pokemonIdList[POKEMON_INDEX4], value);
+                CorrectOrder(POKEMON_INDEX4);
             }
         }
 
         public int PokemonId5
         {
-            get { return _pokemonList[POKEMON_INDEX5]; }
+            get { return _pokemonIdList[POKEMON_INDEX5]; }
             set
             {
-                SetProperty(ref _pokemonList[POKEMON_INDEX5], value);
-                ChangeSelectedOrder(POKEMON_INDEX5);
+                SetProperty(ref _pokemonIdList[POKEMON_INDEX5], value);
+                CorrectOrder(POKEMON_INDEX5);
             }
         }
 
         public int PokemonId6
         {
-            get { return _pokemonList[POKEMON_INDEX6]; }
+            get { return _pokemonIdList[POKEMON_INDEX6]; }
             set
             {
-                SetProperty(ref _pokemonList[POKEMON_INDEX6], value);
-                ChangeSelectedOrder(POKEMON_INDEX6);
+                SetProperty(ref _pokemonIdList[POKEMON_INDEX6], value);
+                CorrectOrder(POKEMON_INDEX6);
             }
         }
 
         // 選出・非選出順
+        private int[] _pokemonOrderList = new int[] { -1, -1, -1, -1, -1, -1 };
         private List<int> _selectedOrder = new List<int> { };
         private List<int> _notSelectedOrder = new List<int> { };
 
         public int PokemonOrder1
         {
-            get { return GetOrder(POKEMON_INDEX1); }
+            get { return _pokemonOrderList[POKEMON_INDEX1]; }
+            set { SetProperty(ref _pokemonOrderList[POKEMON_INDEX1], value); }
         }
 
         public int PokemonOrder2
         {
-            get { return GetOrder(POKEMON_INDEX2); }
+            get { return _pokemonOrderList[POKEMON_INDEX2]; }
+            set { SetProperty(ref _pokemonOrderList[POKEMON_INDEX2], value); }
         }
 
         public int PokemonOrder3
         {
-            get { return GetOrder(POKEMON_INDEX3); }
+            get { return _pokemonOrderList[POKEMON_INDEX3]; }
+            set { SetProperty(ref _pokemonOrderList[POKEMON_INDEX3], value); }
         }
 
         public int PokemonOrder4
         {
-            get { return GetOrder(POKEMON_INDEX4); }
+            get { return _pokemonOrderList[POKEMON_INDEX4]; }
+            set { SetProperty(ref _pokemonOrderList[POKEMON_INDEX4], value); }
         }
 
         public int PokemonOrder5
         {
-            get { return GetOrder(POKEMON_INDEX5); }
+            get { return _pokemonOrderList[POKEMON_INDEX5]; }
+            set { SetProperty(ref _pokemonOrderList[POKEMON_INDEX5], value); }
         }
 
         public int PokemonOrder6
         {
-            get { return GetOrder(POKEMON_INDEX6); }
+            get { return _pokemonOrderList[POKEMON_INDEX6]; }
+            set { SetProperty(ref _pokemonOrderList[POKEMON_INDEX6], value); }
         }
 
         public PartyManegementModel()
@@ -122,9 +129,10 @@ namespace PokemonUtility.Models
             return -1;
         }
 
-        private void ChangeSelectedOrder(int pokemonIndex)
+        // ポケモンID変更に伴い選出も修正する
+        private void CorrectOrder(int pokemonIndex)
         {
-            int pokemonId = _pokemonList[pokemonIndex];
+            int pokemonId = _pokemonIdList[pokemonIndex];
 
             // not exist
             if (!ImageFactoryModel.ExistPokemonImage(pokemonId))
@@ -140,6 +148,20 @@ namespace PokemonUtility.Models
             {
                 _notSelectedOrder.Add(pokemonIndex);
             }
+
+            // 更新
+            UpdateOrder();
+        }
+
+        // 選出リスト更新
+        private void UpdateOrder()
+        {
+            PokemonOrder1 = GetOrder(POKEMON_INDEX1);
+            PokemonOrder2 = GetOrder(POKEMON_INDEX2);
+            PokemonOrder3 = GetOrder(POKEMON_INDEX3);
+            PokemonOrder4 = GetOrder(POKEMON_INDEX4);
+            PokemonOrder5 = GetOrder(POKEMON_INDEX5);
+            PokemonOrder6 = GetOrder(POKEMON_INDEX6);
         }
     }
 }

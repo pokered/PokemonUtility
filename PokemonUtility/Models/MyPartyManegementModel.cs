@@ -1,20 +1,20 @@
 ﻿namespace PokemonUtility.Models
 {
-    class MyPartyModel : PartyManegementModel
+    class MyPartyManegementModel : PartyManegementModel
     {
         #region Singleton
 
-        static MyPartyModel Instance;
-        public static MyPartyModel GetInstance()
+        static MyPartyManegementModel Instance;
+        public static MyPartyManegementModel GetInstance()
         {
             if (Instance == null)
-                Instance = new MyPartyModel();
+                Instance = new MyPartyManegementModel();
             return Instance;
         }
 
         #endregion
 
-        public MyPartyModel()
+        public MyPartyManegementModel()
         {
         }
     }

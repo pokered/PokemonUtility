@@ -7,18 +7,33 @@
              xmlns:actions="clr-namespace:PokemonUtility.TriggerActions"
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True"
-             Height="138.06" Width="499.348">
+             Height="131" Width="558">
     <Grid>
-        <Image HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Source="{Binding PokemonImage1}" Width="80" Height="80"/>
-        <Image HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Source="{Binding FrameImage1}" Width="80" Height="80" />
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage1}">
+            <Image.InputBindings>
+                <MouseBinding Command="{Binding SampleCommand}" Gesture="LeftClick"/>
+            </Image.InputBindings>
+        </Image>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Width="80" Height="80" Source="{Binding FrameImage1}">
+            <Image.InputBindings>
+                <MouseBinding Command="{Binding SampleCommand}" Gesture="LeftClick"/>
+            </Image.InputBindings>
+        </Image>
 
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage2}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,10,0,0" Width="80" Height="80" Source="{Binding FrameImage2}"/>
 
-        <Image HorizontalAlignment="Left" Height="80" Margin="90,10,0,0" VerticalAlignment="Top" Width="80"/>
-        <Image HorizontalAlignment="Left" Height="80" Margin="180,10,0,0" VerticalAlignment="Top" Width="80"/>
-        <Image HorizontalAlignment="Left" Height="80" Margin="175,10,0,0" VerticalAlignment="Top" Width="80"/>
-        <Image HorizontalAlignment="Left" Height="80" Margin="360,10,0,0" VerticalAlignment="Top" Width="80"/>
-        <Image Margin="450,10,12,12"/>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Height="36" Margin="265,44,0,0" VerticalAlignment="Top" Width="78" Command="{Binding ChangeImageCommand}" />
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage3}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,10,0,0" Width="80" Height="80" Source="{Binding FrameImage3}"/>
+
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="280,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage4}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="280,10,0,0" Width="80" Height="80" Source="{Binding FrameImage4}"/>
+
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="370,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage5}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="370,10,0,0" Width="80" Height="80" Source="{Binding FrameImage5}"/>
+
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="460,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage6}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="460,10,0,0" Width="80" Height="80" Source="{Binding FrameImage6}"/>
     </Grid>
 
     <i:Interaction.Triggers>

@@ -27,12 +27,7 @@
         <GroupBox x:Name="gb_capture" Header="キャプチャ設定" HorizontalAlignment="Left" Height="82" Margin="115,153,0,0" VerticalAlignment="Top" Width="100" Grid.ColumnSpan="2">
             <StackPanel HorizontalAlignment="Left" Height="60" VerticalAlignment="Bottom" Width="90" Margin="0,0,-2,0">
                 <Button x:Name="button" Content="範囲設定" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3,3,0,3" Width="84" Command="{Binding ShowCaptureWindowCommand}" />
-                <Button x:Name="btn_analysis" Content="分析" VerticalAlignment="Top" Margin="3" Width="84" HorizontalAlignment="Left">
-                    <Button.InputBindings>
-                        <MouseBinding Command="{Binding NotificationCommand}" MouseAction="LeftDoubleClick" />
-                        <MouseBinding Command="{Binding NotificationCommand}" MouseAction="RightClick" />
-                    </Button.InputBindings>
-                </Button>
+                <Button x:Name="btn_analysis" Content="分析" VerticalAlignment="Top" Margin="3" Width="84" HorizontalAlignment="Left" Command="{Binding AnalysisCommand}"/>
             </StackPanel>
         </GroupBox>
         <GroupBox x:Name="groupBox1" Header="ログ" HorizontalAlignment="Left" Height="94" VerticalAlignment="Top" Width="215" Grid.ColumnSpan="2">
