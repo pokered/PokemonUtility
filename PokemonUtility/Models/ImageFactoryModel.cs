@@ -55,7 +55,7 @@ namespace PokemonUtility.Models
         {
             string frameName = "not_selected";
 
-            if (!ExistPokemonImage(pokemonId))
+            if (order < 0)
             {
                 frameName = "normal_frame";
             }

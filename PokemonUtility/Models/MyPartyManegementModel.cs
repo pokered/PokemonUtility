@@ -1,6 +1,6 @@
 ﻿namespace PokemonUtility.Models
 {
-    class MyPartyModel : PokemonPartyModel
+    class MyPartyModel : PartyManegementModel
     {
         #region Singleton
 

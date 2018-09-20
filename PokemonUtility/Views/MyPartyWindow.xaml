@@ -9,14 +9,8 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              Height="138.06" Width="499.348">
     <Grid>
+        <Image HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Source="{Binding PokemonImage1}" Width="80" Height="80"/>
         <Image HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Source="{Binding FrameImage1}" Width="80" Height="80" />
-        <Image HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Source="{Binding PokemonImage1}" Width="80" Height="80">
-            <i:Interaction.Triggers>
-                <ei:PropertyChangedTrigger Binding="{Binding PokemonImage1.Value}" >
-                    <actions:WindowReDisplayAction />
-                </ei:PropertyChangedTrigger>
-            </i:Interaction.Triggers>
-        </Image>
 
 
         <Image HorizontalAlignment="Left" Height="80" Margin="90,10,0,0" VerticalAlignment="Top" Width="80"/>

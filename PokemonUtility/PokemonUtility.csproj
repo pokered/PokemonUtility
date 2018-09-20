@@ -78,9 +78,9 @@
     <Compile Include="Behaviors\MyPartyBehavior.cs" />
     <Compile Include="Behaviors\WindowMoveBehavior.cs" />
     <Compile Include="Models\ImageFactoryModel.cs" />
-    <Compile Include="Models\MyPartyModel.cs" />
+    <Compile Include="Models\MyPartyManegementModel.cs" />
     <Compile Include="Models\MyPartyWindowModel.cs" />
-    <Compile Include="Models\PokemonPartyModel.cs" />
+    <Compile Include="Models\PartyManegementModel.cs" />
     <Compile Include="Models\RectangleNotification.cs" />
     <Compile Include="Models\WindowRectangle.cs" />
     <Compile Include="TriggerActions\CaptureWindowAction.cs" />
