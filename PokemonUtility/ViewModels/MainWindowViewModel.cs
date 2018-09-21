@@ -12,6 +12,7 @@ namespace PokemonUtility.ViewModels
     {
         // プロパティ
         public ReactiveProperty<bool> IsShowMyPartyWindow { get; }
+        public ReactiveProperty<bool> IsShowOpponentPartyWindow { get; }
 
         // ウィンドウ位置・サイズ
         private WindowRectangle _captureRectangle = new WindowRectangle();
@@ -27,12 +28,13 @@ namespace PokemonUtility.ViewModels
         // リクエスト
         private InteractionRequest<RectangleNotification> _showCaptureWindowRequest = new InteractionRequest<RectangleNotification>();
         public InteractionRequest<RectangleNotification> ShowCaptureWindowRequest { get; } = new InteractionRequest<RectangleNotification>();
-
         public InteractionRequest<RectangleNotification> ShowMyPartyWindowRequest { get; } = new InteractionRequest<RectangleNotification>();
-        
+        public InteractionRequest<RectangleNotification> ShowOpponentPartyWindowRequest { get; } = new InteractionRequest<RectangleNotification>();
+
         // コマンド
         public DelegateCommand ShowCaptureWindowCommand { get; }
         public DelegateCommand ShowMyPartyWindowCommand { get; }
+        public DelegateCommand ShowOpponentPartyWindowCommand { get; }
         public DelegateCommand AnalysisCommand { get; }
 
         public MainWindowViewModel()
@@ -61,6 +63,7 @@ namespace PokemonUtility.ViewModels
             // コマンド
             ShowCaptureWindowCommand = new DelegateCommand(ShowCaptureWindowCommandExecute);
             ShowMyPartyWindowCommand = new DelegateCommand(ShowMyPartyWindowCommandExecute);
+            ShowOpponentPartyWindowCommand = new DelegateCommand(ShowOpponentPartyWindowCommandExecute);
             AnalysisCommand = new DelegateCommand(AnalysisCommandExecute);
         }
 
@@ -130,10 +133,13 @@ namespace PokemonUtility.ViewModels
         // 自分のパーティー画面を表示
         private void ShowMyPartyWindowCommandExecute()
         {
-            if (IsShowMyPartyWindow.Value)
-            {
-                ShowMyPartyWindowRequest.Raise(null);
-            }
+            if (IsShowMyPartyWindow.Value) ShowMyPartyWindowRequest.Raise(null);
+        }
+
+        // 相手のパーティー画面を表示
+        private void ShowOpponentPartyWindowCommandExecute()
+        {
+            if (IsShowOpponentPartyWindow.Value) ShowOpponentPartyWindowRequest.Raise(null);
         }
 
         // 分析

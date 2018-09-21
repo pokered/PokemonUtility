@@ -13,9 +13,5 @@
         }
 
         #endregion
-
-        public MyPartyManegementModel()
-        {
-        }
     }
 }
