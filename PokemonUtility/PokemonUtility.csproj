@@ -72,12 +72,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Behaviors\CaptureWindowBehavior.cs" />
+    <Compile Include="Behaviors\CloseWindowBehavior.cs" />
+    <Compile Include="Behaviors\FitWithinScreenBehavior.cs" />
     <Compile Include="Behaviors\HideCloseButtonOnWindowBehavior.cs" />
     <Compile Include="Behaviors\MainWIndowBehavior.cs" />
-    <Compile Include="Behaviors\MyPartyBehavior.cs" />
     <Compile Include="Behaviors\WindowMoveBehavior.cs" />
     <Compile Include="Models\AnalysisModel.cs" />
+    <Compile Include="Models\CaptureWindowModel.cs" />
     <Compile Include="Models\ImageFactoryModel.cs" />
     <Compile Include="Models\MyPartyManegementModel.cs" />
     <Compile Include="Models\MyPartyWindowModel.cs" />
@@ -85,13 +86,14 @@
     <Compile Include="Models\OpponentPartyWindowModel.cs" />
     <Compile Include="Models\PartyManegementModel.cs" />
     <Compile Include="Models\PartyWindowModel.cs" />
-    <Compile Include="Models\RectangleNotification.cs" />
-    <Compile Include="Models\WindowRectangle.cs" />
+    <Compile Include="Models\WindowModel.cs" />
+    <Compile Include="PokemonAnalysis.cs" />
+    <Compile Include="PythonProcess.cs" />
     <Compile Include="TriggerActions\CaptureWindowAction.cs" />
     <Compile Include="TriggerActions\CloseWindowAction.cs" />
     <Compile Include="TriggerActions\MyPartyWindowAction.cs" />
+    <Compile Include="TriggerActions\OpponentPartyWindowAction.cs" />
     <Compile Include="TriggerActions\PopupWindowActionBase.cs" />
-    <Compile Include="TriggerActions\WindowReDisplayAction.cs" />
     <Compile Include="ViewModels\CaptureWindowViewModel.cs" />
     <Compile Include="ViewModels\MyPartyWindowViewModel.cs" />
     <Compile Include="ViewModels\OpponentPartyWindowViewModel.cs" />
@@ -118,7 +120,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Models\MainModel.cs" />
     <Compile Include="Models\SoftGeneration.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
@@ -1180,10 +1181,10 @@
     <Resource Include="Images\pokemon\9\icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\progress\progress0.png" />
-    <Resource Include="Images\progress\progress1.png" />
-    <Resource Include="Images\progress\progress2.png" />
-    <Resource Include="Images\progress\progress3.png" />
+    <Resource Include="Images\Progress\progress0.png" />
+    <Resource Include="Images\Progress\progress1.png" />
+    <Resource Include="Images\Progress\progress2.png" />
+    <Resource Include="Images\Progress\progress3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -74,9 +74,9 @@ namespace PokemonUtility.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public double MyPartyWindowX {
+        public int MyPartyWindowX {
             get {
-                return ((double)(this["MyPartyWindowX"]));
+                return ((int)(this["MyPartyWindowX"]));
             }
             set {
                 this["MyPartyWindowX"] = value;
@@ -86,12 +86,36 @@ namespace PokemonUtility.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public double MyPartyWindowY {
+        public int MyPartyWindowY {
             get {
-                return ((double)(this["MyPartyWindowY"]));
+                return ((int)(this["MyPartyWindowY"]));
             }
             set {
                 this["MyPartyWindowY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int OpponentPartyWindowX {
+            get {
+                return ((int)(this["OpponentPartyWindowX"]));
+            }
+            set {
+                this["OpponentPartyWindowX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int OpponentPartyWindowY {
+            get {
+                return ((int)(this["OpponentPartyWindowY"]));
+            }
+            set {
+                this["OpponentPartyWindowY"] = value;
             }
         }
     }

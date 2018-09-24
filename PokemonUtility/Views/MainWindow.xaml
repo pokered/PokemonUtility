@@ -48,12 +48,20 @@
 
     </Grid>
     <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding CloseWindowCommand}" />
+        </i:EventTrigger>
+        
         <prism:InteractionRequestTrigger SourceObject="{Binding ShowCaptureWindowRequest, Mode=OneWay}">
             <actions:CaptureWindowAction />
         </prism:InteractionRequestTrigger>
 
         <prism:InteractionRequestTrigger SourceObject="{Binding ShowMyPartyWindowRequest, Mode=OneWay}">
             <actions:MyPartyWindowAction />
+        </prism:InteractionRequestTrigger>
+
+        <prism:InteractionRequestTrigger SourceObject="{Binding ShowOpponentPartyWindowRequest, Mode=OneWay}">
+            <actions:OpponentPartyWindowAction />
         </prism:InteractionRequestTrigger>
     </i:Interaction.Triggers>
 </Window>

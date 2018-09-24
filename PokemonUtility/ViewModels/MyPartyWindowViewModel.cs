@@ -1,4 +1,5 @@
-﻿using PokemonUtility.Models;
+﻿using System;
+using PokemonUtility.Models;
 
 namespace PokemonUtility.ViewModels
 {

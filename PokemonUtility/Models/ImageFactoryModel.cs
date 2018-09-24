@@ -12,6 +12,13 @@ namespace PokemonUtility.Models
         private const int ORDER_SECOND = 1;
         private const int ORDER_THIRD = 2;
 
+        // 待機状態
+        public const int WAIT_END = -1;
+        public const int WAIT_ONE = 0;
+        public const int WAIT_TWO = 1;
+        public const int WAIT_THREE = 2;
+        public const int WAIT_FOUR = 3;
+
         public static BitmapImage CreatePokemonImage(int pokemonId)
         {
             // ポケモンイメージパス取得
@@ -90,6 +97,24 @@ namespace PokemonUtility.Models
             string relativeFrameImagePath = Path.Combine(currentDir, frameImagePath);
 
             return relativeFrameImagePath;
+        }
+
+        public static BitmapImage CreateProgressImage(int waitState)
+        {
+            // 待機イメージパス取得
+            string progressImagePath = string.Format("Images/Progress/progress{0}.png", waitState);
+            string relativeProgressImagePath = Path.Combine(Directory.GetCurrentDirectory(), progressImagePath);
+
+            // パスが存在しなければ空の画像を返す
+            if (!File.Exists(relativeProgressImagePath)) return new BitmapImage();
+
+            // イメージ取得
+            BitmapImage progressImage = new BitmapImage();
+            progressImage.BeginInit();
+            progressImage.UriSource = new Uri(relativeProgressImagePath);
+            progressImage.EndInit();
+
+            return progressImage;
         }
     }
 }

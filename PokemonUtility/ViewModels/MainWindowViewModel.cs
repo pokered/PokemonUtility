@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Prism.Interactivity.InteractionRequest;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
+using System.Threading.Tasks;
 
 namespace PokemonUtility.ViewModels
 {
@@ -13,25 +14,19 @@ namespace PokemonUtility.ViewModels
         // プロパティ
         public ReactiveProperty<bool> IsShowMyPartyWindow { get; }
         public ReactiveProperty<bool> IsShowOpponentPartyWindow { get; }
-
-        // ウィンドウ位置・サイズ
-        private WindowRectangle _captureRectangle = new WindowRectangle();
-        public WindowRectangle CaptureRectangle
-        {
-            get { return _captureRectangle; }
-        }
-
-        // モデル
-        private MainModel mainModel = new MainModel();
-        private MyPartyWindowModel myPartyWindowModel = MyPartyWindowModel.GetInstance();
         
+        // モデル
+        private CaptureWindowModel _captureWindowModel = CaptureWindowModel.GetInstance();
+        private MyPartyWindowModel _myPartyWindowModel = MyPartyWindowModel.GetInstance();
+        private OpponentPartyWindowModel _opponentPartyWindowModel = OpponentPartyWindowModel.GetInstance();
+
         // リクエスト
-        private InteractionRequest<RectangleNotification> _showCaptureWindowRequest = new InteractionRequest<RectangleNotification>();
-        public InteractionRequest<RectangleNotification> ShowCaptureWindowRequest { get; } = new InteractionRequest<RectangleNotification>();
-        public InteractionRequest<RectangleNotification> ShowMyPartyWindowRequest { get; } = new InteractionRequest<RectangleNotification>();
-        public InteractionRequest<RectangleNotification> ShowOpponentPartyWindowRequest { get; } = new InteractionRequest<RectangleNotification>();
+        public InteractionRequest<INotification> ShowCaptureWindowRequest { get; } = new InteractionRequest<INotification>();
+        public InteractionRequest<INotification> ShowMyPartyWindowRequest { get; } = new InteractionRequest<INotification>();
+        public InteractionRequest<INotification> ShowOpponentPartyWindowRequest { get; } = new InteractionRequest<INotification>();
 
         // コマンド
+        public DelegateCommand CloseWindowCommand { get; }
         public DelegateCommand ShowCaptureWindowCommand { get; }
         public DelegateCommand ShowMyPartyWindowCommand { get; }
         public DelegateCommand ShowOpponentPartyWindowCommand { get; }
@@ -39,32 +34,49 @@ namespace PokemonUtility.ViewModels
 
         public MainWindowViewModel()
         {
-            IsShowMyPartyWindow = myPartyWindowModel.ToReactivePropertyAsSynchronized(m => m.IsShowWindow);
+            // 添付プロパティ設定
+            SettingProperty();
 
-            // キャプチャ画面の範囲
-            CaptureRectangle.X = Properties.Settings.Default.CaptureX;
-            CaptureRectangle.Y = Properties.Settings.Default.CaptureY;
-            CaptureRectangle.Width = Properties.Settings.Default.CaptureWidth;
-            CaptureRectangle.Height = Properties.Settings.Default.CaptureHeight;
-
+            IsShowMyPartyWindow = _myPartyWindowModel.ToReactivePropertyAsSynchronized(m => m.IsShowWindow);
+            IsShowOpponentPartyWindow = _opponentPartyWindowModel.ToReactivePropertyAsSynchronized(m => m.IsShowWindow);
+            
             // 世代コンボボックスのアイテム設定
             var softGenerationList = new List<SoftGeneration>();
-            softGenerationList.Add(new SoftGeneration(){ID = 0, Name = "赤緑"});
-            softGenerationList.Add(new SoftGeneration(){ID = 1, Name = "金銀"});
-            softGenerationList.Add(new SoftGeneration(){ID = 2, Name = "ＲＳ"});
-            softGenerationList.Add(new SoftGeneration(){ID = 3, Name = "ＤＰ"});
-            softGenerationList.Add(new SoftGeneration(){ID = 4, Name = "黒白"});
-            softGenerationList.Add(new SoftGeneration(){ID = 5, Name = "ＸＹ"});
-            softGenerationList.Add(new SoftGeneration(){ID = 6, Name = "ＳＭ"});
+            softGenerationList.Add(new SoftGeneration() { ID = 0, Name = "赤緑" });
+            softGenerationList.Add(new SoftGeneration() { ID = 1, Name = "金銀" });
+            softGenerationList.Add(new SoftGeneration() { ID = 2, Name = "ＲＳ" });
+            softGenerationList.Add(new SoftGeneration() { ID = 3, Name = "ＤＰ" });
+            softGenerationList.Add(new SoftGeneration() { ID = 4, Name = "黒白" });
+            softGenerationList.Add(new SoftGeneration() { ID = 5, Name = "ＸＹ" });
+            softGenerationList.Add(new SoftGeneration() { ID = 6, Name = "ＳＭ" });
             // 先にselecteditemに値を設定しないとダメ
             SelectedSoftGeneration = softGenerationList[0];
             SoftGenerations = softGenerationList;
 
             // コマンド
+            CloseWindowCommand = new DelegateCommand(CloseWindowCommandExecute);
             ShowCaptureWindowCommand = new DelegateCommand(ShowCaptureWindowCommandExecute);
             ShowMyPartyWindowCommand = new DelegateCommand(ShowMyPartyWindowCommandExecute);
             ShowOpponentPartyWindowCommand = new DelegateCommand(ShowOpponentPartyWindowCommandExecute);
-            AnalysisCommand = new DelegateCommand(AnalysisCommandExecute);
+            AnalysisCommand = new DelegateCommand(async () => await AnalysisCommandExecute());
+        }
+
+        // 添付プロパティ設定
+        private void SettingProperty()
+        {
+            // キャプチャ画面の範囲
+            _captureWindowModel.X = Properties.Settings.Default.CaptureX;
+            _captureWindowModel.Y = Properties.Settings.Default.CaptureY;
+            _captureWindowModel.Width = Properties.Settings.Default.CaptureWidth;
+            _captureWindowModel.Height = Properties.Settings.Default.CaptureHeight;
+
+            // 自分のパーティー位置
+            _myPartyWindowModel.X = Properties.Settings.Default.MyPartyWindowX;
+            _myPartyWindowModel.Y = Properties.Settings.Default.MyPartyWindowY;
+
+            // 相手のパーティー位置
+            _opponentPartyWindowModel.X = Properties.Settings.Default.OpponentPartyWindowX;
+            _opponentPartyWindowModel.Y = Properties.Settings.Default.OpponentPartyWindowY;
         }
 
         // ソフトの世代
@@ -101,33 +113,30 @@ namespace PokemonUtility.ViewModels
             set { SetProperty(ref _radioDraw, value); }
         }
         
-        // キャプチャ
+        // 閉じる際に添付プロパティ保存
+        private void CloseWindowCommandExecute()
+        {
+            // キャプチャ矩形情報
+            Properties.Settings.Default.CaptureX = _captureWindowModel.X;
+            Properties.Settings.Default.CaptureY = _captureWindowModel.Y;
+            Properties.Settings.Default.CaptureWidth = _captureWindowModel.Width;
+            Properties.Settings.Default.CaptureHeight = _captureWindowModel.Height;
+
+            // 自分のパーティー
+            Properties.Settings.Default.MyPartyWindowX = _myPartyWindowModel.X;
+            Properties.Settings.Default.MyPartyWindowY = _myPartyWindowModel.Y;
+
+            // 相手のパーティー
+            Properties.Settings.Default.OpponentPartyWindowX = _opponentPartyWindowModel.X;
+            Properties.Settings.Default.OpponentPartyWindowY = _opponentPartyWindowModel.Y;
+
+            Properties.Settings.Default.Save();
+        }
+
+        // キャプチャ画面を表示
         private void ShowCaptureWindowCommandExecute()
         {
-            RectangleNotification rectangleNotification = new RectangleNotification();
-            rectangleNotification.X = CaptureRectangle.X;
-            rectangleNotification.Y = CaptureRectangle.Y;
-            rectangleNotification.Width = CaptureRectangle.Width;
-            rectangleNotification.Height = CaptureRectangle.Height;
-
-            ShowCaptureWindowRequest.Raise(rectangleNotification, 
-                r => 
-                {
-                    // キャプチャサイズを設定
-                    CaptureRectangle.X = r.X;
-                    CaptureRectangle.Y = r.Y;
-                    CaptureRectangle.Width = r.Width;
-                    CaptureRectangle.Height = r.Height;
-
-                    // SettingPropertyに保存する
-                    Properties.Settings.Default.CaptureX = r.X;
-                    Properties.Settings.Default.CaptureY = r.Y;
-                    Properties.Settings.Default.CaptureWidth = r.Width;
-                    Properties.Settings.Default.CaptureHeight = r.Height;
-
-                    // ファイルに保存
-                    Properties.Settings.Default.Save();
-                });
+            ShowCaptureWindowRequest.Raise(null);
         }
 
         // 自分のパーティー画面を表示
@@ -143,18 +152,31 @@ namespace PokemonUtility.ViewModels
         }
 
         // 分析
-        private void AnalysisCommandExecute()
+        private Task AnalysisCommandExecute()
         {
-            AnalysisModel analysisModel = AnalysisModel.GetInstance();
-            int[] pokemonIdList = analysisModel.start();
+            //AnalysisModel analysisModel = AnalysisModel.GetInstance();
+            //int[] pokemonIdList = analysisModel.start();
 
-            MyPartyManegementModel myParty = MyPartyManegementModel.GetInstance();
-            myParty.PokemonId1 = pokemonIdList[0];
-            myParty.PokemonId2 = pokemonIdList[1];
-            myParty.PokemonId3 = pokemonIdList[2];
-            myParty.PokemonId4 = pokemonIdList[3];
-            myParty.PokemonId5 = pokemonIdList[4];
-            myParty.PokemonId6 = pokemonIdList[5];
+            //MyPartyManegementModel myParty = MyPartyManegementModel.GetInstance();
+            //myParty.PokemonId1 = pokemonIdList[0];
+            //myParty.PokemonId2 = pokemonIdList[1];
+            //myParty.PokemonId3 = pokemonIdList[2];
+            //myParty.PokemonId4 = pokemonIdList[3];
+            //myParty.PokemonId5 = pokemonIdList[4];
+            //myParty.PokemonId6 = pokemonIdList[5];
+
+            _myPartyWindowModel.IsAnalysisPokemon1 = true;
+
+            int aaa = WaitTaskAsync();
+
+            _myPartyWindowModel.IsAnalysisPokemon1 = false;
+        }
+
+        private int WaitTaskAsync()
+        {
+            Task task = Task.Delay(300);
+
+            return 1;
         }
     }
 }

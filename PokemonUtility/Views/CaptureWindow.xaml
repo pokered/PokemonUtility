@@ -5,13 +5,15 @@
              xmlns:b="clr-namespace:PokemonUtility.Behaviors"
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True"
+             WindowStyle="None"
+             AllowsTransparency="True"
+             ResizeMode="CanResizeWithGrip" Opacity="0.8"
              MinWidth="100"
              MinHeight="100"
              MaxWidth="{Binding SystemParameters.PrimaryScreenWidth}"
              MaxHeight="{Binding SystemParameters.PrimaryScreenHeight}"
-             WindowStyle="None"
-             AllowsTransparency="True"
-             ResizeMode="CanResizeWithGrip" Opacity="0.8">
+             Left="{Binding X.Value, Mode=TwoWay}" Top="{Binding Y.Value, Mode=TwoWay}"
+             Width="{Binding Width.Value, Mode=TwoWay}" Height="{Binding Height.Value, Mode=TwoWay}">
     <Grid>
         <Border BorderBrush="Black" BorderThickness="1" Cursor="Arrow" Opacity="0.8" >
             <Border BorderBrush="Black" BorderThickness="1" Margin="9" Cursor="Arrow" Opacity="0.8">
@@ -20,7 +22,15 @@
         </Border>
     </Grid>
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding CloseWindowCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <i:Interaction.Behaviors>
-        <b:CaptureWindowBehavior />
+        <b:CloseWindowBehavior />
+        <b:WindowMoveBehavior />
+        <b:FitWithinScreenBehavior />
     </i:Interaction.Behaviors>
 </Window>

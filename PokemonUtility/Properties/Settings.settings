@@ -14,10 +14,16 @@
     <Setting Name="CaptureHeight" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">360</Value>
     </Setting>
-    <Setting Name="MyPartyWindowX" Type="System.Double" Scope="User">
+    <Setting Name="MyPartyWindowX" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="MyPartyWindowY" Type="System.Double" Scope="User">
+    <Setting Name="MyPartyWindowY" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="OpponentPartyWindowX" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="OpponentPartyWindowY" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>

@@ -5,16 +5,22 @@ using Prism.Mvvm;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System.Windows.Media.Imaging;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace PokemonUtility.ViewModels
 {
     class PartyWindowViewModel : BindableBase
     {
+        // 位置
+        public ReactiveProperty<int> X { get; private set; }
+        public ReactiveProperty<int> Y { get; private set; }
+
         // ウィンドウ表示フラグ
         public ReactiveProperty<bool> IsShowPartyWindow { get; private set; }
 
         // ポケモンID
-        public ReactiveProperty<int> PokemonId1 { get; } = new ReactiveProperty<int>();
+        public ReactiveProperty<int> PokemonId1 { get; private set; }
         public ReactiveProperty<int> PokemonId2 { get; private set; }
         public ReactiveProperty<int> PokemonId3 { get; private set; }
         public ReactiveProperty<int> PokemonId4 { get; private set; }
@@ -28,6 +34,14 @@ namespace PokemonUtility.ViewModels
         public ReactiveProperty<int> PokemonOrder4 { get; private set; }
         public ReactiveProperty<int> PokemonOrder5 { get; private set; }
         public ReactiveProperty<int> PokemonOrder6 { get; private set; }
+
+        // 待機状態
+        public ReactiveProperty<bool> IsAnalysisPokemon1 { get; private set; }
+        public ReactiveProperty<bool> IsAnalysisPokemon2 { get; private set; }
+        public ReactiveProperty<bool> IsAnalysisPokemon3 { get; private set; }
+        public ReactiveProperty<bool> IsAnalysisPokemon4 { get; private set; }
+        public ReactiveProperty<bool> IsAnalysisPokemon5 { get; private set; }
+        public ReactiveProperty<bool> IsAnalysisPokemon6 { get; private set; }
 
         // ポケモンイメージ
         private BitmapImage _pokemonImage1;
@@ -115,9 +129,16 @@ namespace PokemonUtility.ViewModels
             set { SetProperty(ref _frameImage6, value); }
         }
 
+        private BitmapImage _waitImage1;
+        public BitmapImage WaitImage1
+        {
+            get { return _waitImage1; }
+            set { SetProperty(ref _waitImage1, value); }
+        }
+
         // モデル
-        private PartyWindowModel _partyWindowModel;
-        private PartyManegementModel _partyManegementModel;
+        protected PartyWindowModel _partyWindowModel;
+        protected PartyManegementModel _partyManegementModel;
 
         // コマンド
         public DelegateCommand sanpleCommand { get; }
@@ -129,11 +150,18 @@ namespace PokemonUtility.ViewModels
             // モデル設定
             _partyWindowModel = partyWindowModel;
             _partyManegementModel = partyManegementModel;
-
-
+            
+            // ウィンドウ表示フラグ紐づけ
             IsShowPartyWindow = _partyWindowModel.ObserveProperty(m => m.IsShowWindow).ToReactiveProperty();
+            
+            // ウィンドウ位置紐づけ
+            X = _partyWindowModel.ToReactivePropertyAsSynchronized(m => m.X);
+            Y = _partyWindowModel.ToReactivePropertyAsSynchronized(m => m.Y);
 
-            PokemonId1 = new ReactiveProperty<int>();
+            // 分析
+            IsAnalysisPokemon1 = _partyWindowModel.ObserveProperty(m => m.IsAnalysisPokemon1).ToReactiveProperty();
+            IsAnalysisPokemon1.Subscribe(async _ => await WaitAnimation());
+
             // ポケモンIDプロパティ紐づけ
             PokemonId1 = _partyManegementModel.ObserveProperty(m => m.PokemonId1).ToReactiveProperty();
             PokemonId2 = _partyManegementModel.ObserveProperty(m => m.PokemonId2).ToReactiveProperty();
@@ -149,7 +177,7 @@ namespace PokemonUtility.ViewModels
             PokemonOrder4 = _partyManegementModel.ObserveProperty(m => m.PokemonOrder4).ToReactiveProperty();
             PokemonOrder5 = _partyManegementModel.ObserveProperty(m => m.PokemonOrder5).ToReactiveProperty();
             PokemonOrder6 = _partyManegementModel.ObserveProperty(m => m.PokemonOrder6).ToReactiveProperty();
-
+            
             // ポケモンID変更時の処理登録
             PokemonId1.Subscribe(pokemonId => PokemonImage1 = ImageFactoryModel.CreatePokemonImage(pokemonId));
             PokemonId2.Subscribe(pokemonId => PokemonImage2 = ImageFactoryModel.CreatePokemonImage(pokemonId));
@@ -165,6 +193,25 @@ namespace PokemonUtility.ViewModels
             PokemonOrder4.Subscribe(order => FrameImage4 = ImageFactoryModel.CreateFrameImage(PokemonId4.Value, order));
             PokemonOrder5.Subscribe(order => FrameImage5 = ImageFactoryModel.CreateFrameImage(PokemonId5.Value, order));
             PokemonOrder6.Subscribe(order => FrameImage6 = ImageFactoryModel.CreateFrameImage(PokemonId6.Value, order));
+        }
+
+        // 待機演出
+        private async Task WaitAnimation()
+        {
+            while(IsAnalysisPokemon1.Value)
+            {
+                // 別スレッドで分析
+                await Task.Run(() => {
+                    WaitImage1 = ImageFactoryModel.CreateProgressImage(ImageFactoryModel.WAIT_ONE);
+                    Task.Delay(30);
+                    WaitImage1 = ImageFactoryModel.CreateProgressImage(ImageFactoryModel.WAIT_TWO);
+                    Task.Delay(30);
+                    WaitImage1 = ImageFactoryModel.CreateProgressImage(ImageFactoryModel.WAIT_THREE);
+                    Task.Delay(30);
+                    WaitImage1 = ImageFactoryModel.CreateProgressImage(ImageFactoryModel.WAIT_FOUR);
+                    Task.Delay(30);
+                });
+            }
         }
     }
 }

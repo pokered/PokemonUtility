@@ -11,7 +11,7 @@ namespace PokemonUtility.Models
         private const int POKEMON_INDEX4 = 3;
         private const int POKEMON_INDEX5 = 4;
         private const int POKEMON_INDEX6 = 5;
-
+        
         private int[] _pokemonIdList = new int[] { -1, -1, -1, -1, -1, -1 };
 
         public int PokemonId1

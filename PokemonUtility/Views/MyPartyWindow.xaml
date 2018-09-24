@@ -7,19 +7,13 @@
              xmlns:actions="clr-namespace:PokemonUtility.TriggerActions"
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True"
+             Left="{Binding X.Value, Mode=TwoWay}" Top="{Binding Y.Value, Mode=TwoWay}"
              Height="131" Width="558">
     <Grid>
-        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage1}">
-            <Image.InputBindings>
-                <MouseBinding Command="{Binding SampleCommand}" Gesture="LeftClick"/>
-            </Image.InputBindings>
-        </Image>
-        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Width="80" Height="80" Source="{Binding FrameImage1}">
-            <Image.InputBindings>
-                <MouseBinding Command="{Binding SampleCommand}" Gesture="LeftClick"/>
-            </Image.InputBindings>
-        </Image>
-
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage1}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Width="80" Height="80" Source="{Binding FrameImage1}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Width="80" Height="80" Source="{Binding WaitImage1}"/>
+        
         <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage2}"/>
         <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,10,0,0" Width="80" Height="80" Source="{Binding FrameImage2}"/>
 
@@ -37,7 +31,7 @@
     </Grid>
 
     <i:Interaction.Triggers>
-        <ei:PropertyChangedTrigger Binding="{Binding IsShowMyPartyWindow.Value}" >
+        <ei:PropertyChangedTrigger Binding="{Binding IsShowPartyWindow.Value}" >
             <actions:CloseWindowAction />
         </ei:PropertyChangedTrigger>
     </i:Interaction.Triggers>
