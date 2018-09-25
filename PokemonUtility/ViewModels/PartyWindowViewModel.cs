@@ -195,23 +195,22 @@ namespace PokemonUtility.ViewModels
             PokemonOrder6.Subscribe(order => FrameImage6 = ImageFactoryModel.CreateFrameImage(PokemonId6.Value, order));
         }
 
-        // 待機演出
+        // 待機演出 UI部分の処理をtaskでやってはいけない
         private async Task WaitAnimation()
         {
             while(IsAnalysisPokemon1.Value)
             {
-                // 別スレッドで分析
-                await Task.Run(() => {
-                    WaitImage1 = ImageFactoryModel.CreateProgressImage(ImageFactoryModel.WAIT_ONE);
-                    Task.Delay(30);
-                    WaitImage1 = ImageFactoryModel.CreateProgressImage(ImageFactoryModel.WAIT_TWO);
-                    Task.Delay(30);
-                    WaitImage1 = ImageFactoryModel.CreateProgressImage(ImageFactoryModel.WAIT_THREE);
-                    Task.Delay(30);
-                    WaitImage1 = ImageFactoryModel.CreateProgressImage(ImageFactoryModel.WAIT_FOUR);
-                    Task.Delay(30);
-                });
+                WaitImage1 = ImageFactoryModel.CreateProgressImage(ImageFactoryModel.WAIT_ONE);
+                await Task.Delay(300);
+                WaitImage1 = ImageFactoryModel.CreateProgressImage(ImageFactoryModel.WAIT_TWO);
+                await Task.Delay(300);
+                WaitImage1 = ImageFactoryModel.CreateProgressImage(ImageFactoryModel.WAIT_THREE);
+                await Task.Delay(300);
+                WaitImage1 = ImageFactoryModel.CreateProgressImage(ImageFactoryModel.WAIT_FOUR);
             }
+
+            // 終了したら消す
+            WaitImage1 = ImageFactoryModel.CreateProgressImage(ImageFactoryModel.WAIT_END);
         }
     }
 }

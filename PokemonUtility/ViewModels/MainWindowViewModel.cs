@@ -6,6 +6,7 @@ using Prism.Interactivity.InteractionRequest;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace PokemonUtility.ViewModels
 {
@@ -18,6 +19,7 @@ namespace PokemonUtility.ViewModels
         // モデル
         private CaptureWindowModel _captureWindowModel = CaptureWindowModel.GetInstance();
         private MyPartyWindowModel _myPartyWindowModel = MyPartyWindowModel.GetInstance();
+        private MyPartyManegementModel _myPartyManegementModel = MyPartyManegementModel.GetInstance();
         private OpponentPartyWindowModel _opponentPartyWindowModel = OpponentPartyWindowModel.GetInstance();
 
         // リクエスト
@@ -58,7 +60,7 @@ namespace PokemonUtility.ViewModels
             ShowCaptureWindowCommand = new DelegateCommand(ShowCaptureWindowCommandExecute);
             ShowMyPartyWindowCommand = new DelegateCommand(ShowMyPartyWindowCommandExecute);
             ShowOpponentPartyWindowCommand = new DelegateCommand(ShowOpponentPartyWindowCommandExecute);
-            AnalysisCommand = new DelegateCommand(async () => await AnalysisCommandExecute());
+            AnalysisCommand = new DelegateCommand(AnalysisCommandExecute);
         }
 
         // 添付プロパティ設定
@@ -152,7 +154,7 @@ namespace PokemonUtility.ViewModels
         }
 
         // 分析
-        private Task AnalysisCommandExecute()
+        private async void AnalysisCommandExecute()
         {
             //AnalysisModel analysisModel = AnalysisModel.GetInstance();
             //int[] pokemonIdList = analysisModel.start();
@@ -165,17 +167,21 @@ namespace PokemonUtility.ViewModels
             //myParty.PokemonId5 = pokemonIdList[4];
             //myParty.PokemonId6 = pokemonIdList[5];
 
+
+
             _myPartyWindowModel.IsAnalysisPokemon1 = true;
 
-            int aaa = WaitTaskAsync();
+            int result = await Task.Run(() => DoWork(1000));
+            _myPartyManegementModel.PokemonId1 = result;
 
             _myPartyWindowModel.IsAnalysisPokemon1 = false;
         }
 
-        private int WaitTaskAsync()
+        private int DoWork(int n)
         {
-            Task task = Task.Delay(300);
+            System.Threading.Thread.Sleep(800);
 
+            // このメソッドからの戻り値
             return 1;
         }
     }
