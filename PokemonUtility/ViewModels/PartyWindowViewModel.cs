@@ -7,6 +7,7 @@ using Reactive.Bindings.Extensions;
 using System.Windows.Media.Imaging;
 using System.Threading.Tasks;
 using System.Threading;
+using PokemonUtility.Models.Analysis;
 
 namespace PokemonUtility.ViewModels
 {
@@ -37,11 +38,12 @@ namespace PokemonUtility.ViewModels
 
         // 待機状態
         public ReactiveProperty<bool> IsAnalysisPokemon1 { get; private set; }
-        public ReactiveProperty<bool> IsAnalysisPokemon2 { get; private set; }
-        public ReactiveProperty<bool> IsAnalysisPokemon3 { get; private set; }
-        public ReactiveProperty<bool> IsAnalysisPokemon4 { get; private set; }
-        public ReactiveProperty<bool> IsAnalysisPokemon5 { get; private set; }
-        public ReactiveProperty<bool> IsAnalysisPokemon6 { get; private set; }
+        public ReactiveProperty<int> WaitState1 { get; private set; }
+        public ReactiveProperty<int> WaitState2 { get; private set; }
+        public ReactiveProperty<int> WaitState3 { get; private set; }
+        public ReactiveProperty<int> WaitState4 { get; private set; }
+        public ReactiveProperty<int> WaitState5 { get; private set; }
+        public ReactiveProperty<int> WaitState6 { get; private set; }
 
         // ポケモンイメージ
         private BitmapImage _pokemonImage1;
@@ -138,17 +140,21 @@ namespace PokemonUtility.ViewModels
 
         // モデル
         protected PartyWindowModel _partyWindowModel;
+        protected PartyAnalysisModel _partyAnalysisModel;
         protected PartyManegementModel _partyManegementModel;
-
+        
         // コマンド
         public DelegateCommand sanpleCommand { get; }
         
         public PartyWindowViewModel(
             PartyWindowModel partyWindowModel,
-            PartyManegementModel partyManegementModel )
+            PartyAnalysisModel partyAnalysisModel,
+            PartyManegementModel partyManegementModel
+            )
         {
             // モデル設定
             _partyWindowModel = partyWindowModel;
+            _partyAnalysisModel = partyAnalysisModel;
             _partyManegementModel = partyManegementModel;
             
             // ウィンドウ表示フラグ紐づけ
@@ -159,8 +165,11 @@ namespace PokemonUtility.ViewModels
             Y = _partyWindowModel.ToReactivePropertyAsSynchronized(m => m.Y);
 
             // 分析
-            IsAnalysisPokemon1 = _partyWindowModel.ObserveProperty(m => m.IsAnalysisPokemon1).ToReactiveProperty();
-            IsAnalysisPokemon1.Subscribe(async _ => await WaitAnimation());
+            IsAnalysisPokemon1 = _partyAnalysisModel.ObserveProperty(m => m.IsAnalysisPokemon1).ToReactiveProperty();
+            IsAnalysisPokemon1.Subscribe(async _ => await _partyAnalysisModel.WaitAnimation());
+
+            WaitState1 = _partyAnalysisModel.ObserveProperty(m => m.WaitState1).ToReactiveProperty();
+            WaitState1.Subscribe(waiteState => PokemonImage1 = ImageFactoryModel.CreateProgressImage(waiteState));
 
             // ポケモンIDプロパティ紐づけ
             PokemonId1 = _partyManegementModel.ObserveProperty(m => m.PokemonId1).ToReactiveProperty();
@@ -193,24 +202,6 @@ namespace PokemonUtility.ViewModels
             PokemonOrder4.Subscribe(order => FrameImage4 = ImageFactoryModel.CreateFrameImage(PokemonId4.Value, order));
             PokemonOrder5.Subscribe(order => FrameImage5 = ImageFactoryModel.CreateFrameImage(PokemonId5.Value, order));
             PokemonOrder6.Subscribe(order => FrameImage6 = ImageFactoryModel.CreateFrameImage(PokemonId6.Value, order));
-        }
-
-        // 待機演出 UI部分の処理をtaskでやってはいけない
-        private async Task WaitAnimation()
-        {
-            while(IsAnalysisPokemon1.Value)
-            {
-                WaitImage1 = ImageFactoryModel.CreateProgressImage(ImageFactoryModel.WAIT_ONE);
-                await Task.Delay(300);
-                WaitImage1 = ImageFactoryModel.CreateProgressImage(ImageFactoryModel.WAIT_TWO);
-                await Task.Delay(300);
-                WaitImage1 = ImageFactoryModel.CreateProgressImage(ImageFactoryModel.WAIT_THREE);
-                await Task.Delay(300);
-                WaitImage1 = ImageFactoryModel.CreateProgressImage(ImageFactoryModel.WAIT_FOUR);
-            }
-
-            // 終了したら消す
-            WaitImage1 = ImageFactoryModel.CreateProgressImage(ImageFactoryModel.WAIT_END);
         }
     }
 }
