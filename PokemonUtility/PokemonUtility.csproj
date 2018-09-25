@@ -77,7 +77,6 @@
     <Compile Include="Behaviors\HideCloseButtonOnWindowBehavior.cs" />
     <Compile Include="Behaviors\MainWIndowBehavior.cs" />
     <Compile Include="Behaviors\WindowMoveBehavior.cs" />
-    <Compile Include="Models\Analysis\AnalysisSynthesis.cs" />
     <Compile Include="Models\Analysis\MyPartyAnalysisModel.cs" />
     <Compile Include="Models\Analysis\OpponentPartyAnalysisModel.cs" />
     <Compile Include="Models\Analysis\PartyAnalysisModel.cs" />
