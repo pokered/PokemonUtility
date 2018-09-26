@@ -165,9 +165,9 @@ namespace PokemonUtility.ViewModels
             Y = _partyWindowModel.ToReactivePropertyAsSynchronized(m => m.Y);
 
             // 分析
-            IsAnalysisPokemon1 = _partyAnalysisModel.ObserveProperty(m => m.IsAnalysisPokemon1).ToReactiveProperty();
+            IsAnalysisPokemon1 = _partyAnalysisModel.ObserveProperty(m => m.IsAnalyzingPokemon1).ToReactiveProperty();
             IsAnalysisPokemon1.Subscribe(async _ => await _partyAnalysisModel.WaitAnimation());
-
+            
             WaitState1 = _partyAnalysisModel.ObserveProperty(m => m.WaitState1).ToReactiveProperty();
             WaitState1.Subscribe(waiteState => PokemonImage1 = ImageFactoryModel.CreateProgressImage(waiteState));
 

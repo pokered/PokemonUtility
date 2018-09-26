@@ -2,8 +2,6 @@
 {
     class PartyWindowModel : WindowModel
     {
-        bool[] _isAlalyzingList = new bool[] { false, false, false, false, false, false };
-
         private bool _isShowWindow = false;
         public bool IsShowWindow
         {

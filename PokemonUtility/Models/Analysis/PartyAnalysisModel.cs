@@ -1,58 +1,48 @@
-﻿using Prism.Mvvm;
+﻿using PokemonUtility.Const;
+using Prism.Mvvm;
 using System.Threading.Tasks;
 
 namespace PokemonUtility.Models.Analysis
 {
     class PartyAnalysisModel : BindableBase
     {
-        private const int POKEMON_INDEX1 = 0;
-        private const int POKEMON_INDEX2 = 1;
-        private const int POKEMON_INDEX3 = 2;
-        private const int POKEMON_INDEX4 = 3;
-        private const int POKEMON_INDEX5 = 4;
-        private const int POKEMON_INDEX6 = 5;
+        private bool[] _isAnalyzingPokemonList = new bool[] { false, false, false, false, false, false };
 
         // 分析中か否か
-        private bool _isAnalysisPokemon1 = false;
-        public bool IsAnalysisPokemon1
+        public bool IsAnalyzingPokemon1
         {
-            get { return _isAnalysisPokemon1; }
-            set { SetProperty(ref _isAnalysisPokemon1, value); }
+            get { return _isAnalyzingPokemonList[PartyConst.PARTY_INDEX1]; }
+            set { SetProperty(ref _isAnalyzingPokemonList[PartyConst.PARTY_INDEX1], value); }
         }
-
-        private bool _isAnalysisPokemon2 = false;
-        public bool IsAnalysisPokemon2
+        
+        public bool IsAnalyzingPokemon2
         {
-            get { return _isAnalysisPokemon2; }
-            set { SetProperty(ref _isAnalysisPokemon2, value); }
+            get { return _isAnalyzingPokemonList[PartyConst.PARTY_INDEX2]; }
+            set { SetProperty(ref _isAnalyzingPokemonList[PartyConst.PARTY_INDEX2], value); }
         }
-
-        private bool _isAnalysisPokemon3 = false;
-        public bool IsAnalysisPokemon3
+        
+        public bool IsAnalyzingPokemon3
         {
-            get { return _isAnalysisPokemon3; }
-            set { SetProperty(ref _isAnalysisPokemon3, value); }
+            get { return _isAnalyzingPokemonList[PartyConst.PARTY_INDEX3]; }
+            set { SetProperty(ref _isAnalyzingPokemonList[PartyConst.PARTY_INDEX3], value); }
         }
-
-        private bool _isAnalysisPokemon4 = false;
-        public bool IsAnalysisPokemon4
+        
+        public bool IsAnalyzingPokemon4
         {
-            get { return _isAnalysisPokemon4; }
-            set { SetProperty(ref _isAnalysisPokemon4, value); }
+            get { return _isAnalyzingPokemonList[PartyConst.PARTY_INDEX4]; }
+            set { SetProperty(ref _isAnalyzingPokemonList[PartyConst.PARTY_INDEX4], value); }
         }
-
-        private bool _isAnalysisPokemon5 = false;
-        public bool IsAnalysisPokemon5
+        
+        public bool IsAnalyzingPokemon5
         {
-            get { return _isAnalysisPokemon5; }
-            set { SetProperty(ref _isAnalysisPokemon5, value); }
+            get { return _isAnalyzingPokemonList[PartyConst.PARTY_INDEX5]; }
+            set { SetProperty(ref _isAnalyzingPokemonList[PartyConst.PARTY_INDEX5], value); }
         }
-
-        private bool _isAnalysisPokemon6 = false;
-        public bool IsAnalysisPokemon6
+        
+        public bool IsAnalyzingPokemon6
         {
-            get { return _isAnalysisPokemon6; }
-            set { SetProperty(ref _isAnalysisPokemon6, value); }
+            get { return _isAnalyzingPokemonList[PartyConst.PARTY_INDEX6]; }
+            set { SetProperty(ref _isAnalyzingPokemonList[PartyConst.PARTY_INDEX6], value); }
         }
 
         public void StartAnalysis(int index)
@@ -69,55 +59,55 @@ namespace PokemonUtility.Models.Analysis
 
         public int WaitState1
         {
-            get { return _waitStateList[POKEMON_INDEX1]; }
+            get { return _waitStateList[PartyConst.PARTY_INDEX1]; }
             set
             {
-                SetProperty(ref _waitStateList[POKEMON_INDEX1], value);
+                SetProperty(ref _waitStateList[PartyConst.PARTY_INDEX1], value);
             }
         }
 
         public int WaitState2
         {
-            get { return _waitStateList[POKEMON_INDEX2]; }
+            get { return _waitStateList[PartyConst.PARTY_INDEX2]; }
             set
             {
-                SetProperty(ref _waitStateList[POKEMON_INDEX2], value);
+                SetProperty(ref _waitStateList[PartyConst.PARTY_INDEX2], value);
             }
         }
 
         public int WaitState3
         {
-            get { return _waitStateList[POKEMON_INDEX3]; }
+            get { return _waitStateList[PartyConst.PARTY_INDEX3]; }
             set
             {
-                SetProperty(ref _waitStateList[POKEMON_INDEX3], value);
+                SetProperty(ref _waitStateList[PartyConst.PARTY_INDEX3], value);
             }
         }
 
         public int WaitState4
         {
-            get { return _waitStateList[POKEMON_INDEX4]; }
+            get { return _waitStateList[PartyConst.PARTY_INDEX4]; }
             set
             {
-                SetProperty(ref _waitStateList[POKEMON_INDEX4], value);
+                SetProperty(ref _waitStateList[PartyConst.PARTY_INDEX4], value);
             }
         }
 
         public int WaitState5
         {
-            get { return _waitStateList[POKEMON_INDEX5]; }
+            get { return _waitStateList[PartyConst.PARTY_INDEX5]; }
             set
             {
-                SetProperty(ref _waitStateList[POKEMON_INDEX5], value);
+                SetProperty(ref _waitStateList[PartyConst.PARTY_INDEX5], value);
             }
         }
 
         public int WaitState6
         {
-            get { return _waitStateList[POKEMON_INDEX6]; }
+            get { return _waitStateList[PartyConst.PARTY_INDEX6]; }
             set
             {
-                SetProperty(ref _waitStateList[POKEMON_INDEX6], value);
+                SetProperty(ref _waitStateList[PartyConst.PARTY_INDEX6], value);
             }
         }
 

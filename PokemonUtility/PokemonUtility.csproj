@@ -77,19 +77,24 @@
     <Compile Include="Behaviors\HideCloseButtonOnWindowBehavior.cs" />
     <Compile Include="Behaviors\MainWIndowBehavior.cs" />
     <Compile Include="Behaviors\WindowMoveBehavior.cs" />
+    <Compile Include="Const\PartyConst.cs" />
     <Compile Include="Models\Analysis\MyPartyAnalysisModel.cs" />
     <Compile Include="Models\Analysis\OpponentPartyAnalysisModel.cs" />
     <Compile Include="Models\Analysis\PartyAnalysisModel.cs" />
     <Compile Include="Models\Analysis\PokemonImageAnalysisModel.cs" />
-    <Compile Include="Models\CaptureWindowModel.cs" />
+    <Compile Include="Models\WaitState\MyPartyWaitStateModel.cs" />
+    <Compile Include="Models\WaitState\OpponentPartyWaitStateModel.cs" />
+    <Compile Include="Models\WaitState\WaitStateModel.cs" />
+    <Compile Include="Models\WaitState\PartyWaitStateModel.cs" />
+    <Compile Include="Models\Window\CaptureWindowModel.cs" />
     <Compile Include="Models\ImageFactoryModel.cs" />
-    <Compile Include="Models\MyPartyManegementModel.cs" />
-    <Compile Include="Models\MyPartyWindowModel.cs" />
-    <Compile Include="Models\OpponentPartyManegementModel.cs" />
-    <Compile Include="Models\OpponentPartyWindowModel.cs" />
-    <Compile Include="Models\PartyManegementModel.cs" />
-    <Compile Include="Models\PartyWindowModel.cs" />
-    <Compile Include="Models\WindowModel.cs" />
+    <Compile Include="Models\Manegement\MyPartyManegementModel.cs" />
+    <Compile Include="Models\Window\MyPartyWindowModel.cs" />
+    <Compile Include="Models\Manegement\OpponentPartyManegementModel.cs" />
+    <Compile Include="Models\Window\OpponentPartyWindowModel.cs" />
+    <Compile Include="Models\Manegement\PartyManegementModel.cs" />
+    <Compile Include="Models\Window\PartyWindowModel.cs" />
+    <Compile Include="Models\Window\WindowModel.cs" />
     <Compile Include="PokemonAnalysis.cs" />
     <Compile Include="PythonProcess.cs" />
     <Compile Include="TriggerActions\CaptureWindowAction.cs" />
@@ -1189,5 +1194,6 @@
     <Resource Include="Images\Progress\progress2.png" />
     <Resource Include="Images\Progress\progress3.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

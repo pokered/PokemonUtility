@@ -6,8 +6,8 @@ using Prism.Interactivity.InteractionRequest;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System.Threading.Tasks;
-using System.Windows;
 using PokemonUtility.Models.Analysis;
+using PokemonUtility.Models.WaitState;
 
 namespace PokemonUtility.ViewModels
 {
@@ -20,7 +20,7 @@ namespace PokemonUtility.ViewModels
         // モデル
         private CaptureWindowModel _captureWindowModel = CaptureWindowModel.GetInstance();
         private MyPartyWindowModel _myPartyWindowModel = MyPartyWindowModel.GetInstance();
-        private MyPartyAnalysisModel _myPartyAnalysisModel = MyPartyAnalysisModel.GetInstance();
+        private MyPartyWaitStateModel _myPartyWaitStateModel = MyPartyWaitStateModel.GetInstance();
         private OpponentPartyWindowModel _opponentPartyWindowModel = OpponentPartyWindowModel.GetInstance();
 
         // リクエスト
@@ -159,12 +159,12 @@ namespace PokemonUtility.ViewModels
         {
             for (int i = 0; i < 6; i++)
             {
-                _myPartyAnalysisModel.StartAnalysis(i);
+                _myPartyWaitStateModel.WaitState1.Start();
 
                 int result = await Task.Run(() => DoWork(1000));
                 //_myPartyManegementModel.PokemonId1 = result;
 
-                _myPartyAnalysisModel.EndAnalysis(i);
+                _myPartyWaitStateModel.WaitState1.End();
             }
         }
 
