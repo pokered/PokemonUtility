@@ -1,12 +1,11 @@
-﻿using System;
-using PokemonUtility.Models;
-using PokemonUtility.Models.Analysis;
+﻿using PokemonUtility.Models;
+using PokemonUtility.Models.WaitState;
 
 namespace PokemonUtility.ViewModels
 {
     class MyPartyWindowViewModel : PartyWindowViewModel
     {
-        public MyPartyWindowViewModel() : base(MyPartyWindowModel.GetInstance(), MyPartyAnalysisModel.GetInstance(), MyPartyManegementModel.GetInstance())
+        public MyPartyWindowViewModel() : base(MyPartyWindowModel.GetInstance(), MyPartyWaitStateModel.GetInstance(), MyPartyManegementModel.GetInstance())
         {
         }
     }

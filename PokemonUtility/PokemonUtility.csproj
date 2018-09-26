@@ -78,10 +78,6 @@
     <Compile Include="Behaviors\MainWIndowBehavior.cs" />
     <Compile Include="Behaviors\WindowMoveBehavior.cs" />
     <Compile Include="Const\PartyConst.cs" />
-    <Compile Include="Models\Analysis\MyPartyAnalysisModel.cs" />
-    <Compile Include="Models\Analysis\OpponentPartyAnalysisModel.cs" />
-    <Compile Include="Models\Analysis\PartyAnalysisModel.cs" />
-    <Compile Include="Models\Analysis\PokemonImageAnalysisModel.cs" />
     <Compile Include="Models\WaitState\MyPartyWaitStateModel.cs" />
     <Compile Include="Models\WaitState\OpponentPartyWaitStateModel.cs" />
     <Compile Include="Models\WaitState\WaitStateModel.cs" />

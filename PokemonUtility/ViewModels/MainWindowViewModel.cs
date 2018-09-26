@@ -6,7 +6,6 @@ using Prism.Interactivity.InteractionRequest;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System.Threading.Tasks;
-using PokemonUtility.Models.Analysis;
 using PokemonUtility.Models.WaitState;
 
 namespace PokemonUtility.ViewModels
@@ -159,13 +158,15 @@ namespace PokemonUtility.ViewModels
         {
             for (int i = 0; i < 6; i++)
             {
-                _myPartyWaitStateModel.WaitState1.Start();
-
-                int result = await Task.Run(() => DoWork(1000));
-                //_myPartyManegementModel.PokemonId1 = result;
-
-                _myPartyWaitStateModel.WaitState1.End();
+                
             }
+
+            _myPartyWaitStateModel.Start();
+
+            int result = await Task.Run(() => DoWork(1000));
+            //_myPartyManegementModel.PokemonId1 = result;
+
+            _myPartyWaitStateModel.End();
         }
 
         private int DoWork(int n)

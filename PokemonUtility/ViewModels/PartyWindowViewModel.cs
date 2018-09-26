@@ -5,9 +5,7 @@ using Prism.Mvvm;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System.Windows.Media.Imaging;
-using System.Threading.Tasks;
-using System.Threading;
-using PokemonUtility.Models.Analysis;
+using PokemonUtility.Models.WaitState;
 
 namespace PokemonUtility.ViewModels
 {
@@ -37,7 +35,6 @@ namespace PokemonUtility.ViewModels
         public ReactiveProperty<int> PokemonOrder6 { get; private set; }
 
         // 待機状態
-        public ReactiveProperty<bool> IsAnalysisPokemon1 { get; private set; }
         public ReactiveProperty<int> WaitState1 { get; private set; }
         public ReactiveProperty<int> WaitState2 { get; private set; }
         public ReactiveProperty<int> WaitState3 { get; private set; }
@@ -140,7 +137,7 @@ namespace PokemonUtility.ViewModels
 
         // モデル
         protected PartyWindowModel _partyWindowModel;
-        protected PartyAnalysisModel _partyAnalysisModel;
+        protected PartyWaiStatetModel _partyWaitStateModel;
         protected PartyManegementModel _partyManegementModel;
         
         // コマンド
@@ -148,13 +145,13 @@ namespace PokemonUtility.ViewModels
         
         public PartyWindowViewModel(
             PartyWindowModel partyWindowModel,
-            PartyAnalysisModel partyAnalysisModel,
+            PartyWaiStatetModel partyWaitStateModel,
             PartyManegementModel partyManegementModel
             )
         {
             // モデル設定
             _partyWindowModel = partyWindowModel;
-            _partyAnalysisModel = partyAnalysisModel;
+            _partyWaitStateModel = partyWaitStateModel;
             _partyManegementModel = partyManegementModel;
             
             // ウィンドウ表示フラグ紐づけ
@@ -164,12 +161,11 @@ namespace PokemonUtility.ViewModels
             X = _partyWindowModel.ToReactivePropertyAsSynchronized(m => m.X);
             Y = _partyWindowModel.ToReactivePropertyAsSynchronized(m => m.Y);
 
-            // 分析
-            IsAnalysisPokemon1 = _partyAnalysisModel.ObserveProperty(m => m.IsAnalyzingPokemon1).ToReactiveProperty();
-            IsAnalysisPokemon1.Subscribe(async _ => await _partyAnalysisModel.WaitAnimation());
-            
-            WaitState1 = _partyAnalysisModel.ObserveProperty(m => m.WaitState1).ToReactiveProperty();
-            WaitState1.Subscribe(waiteState => PokemonImage1 = ImageFactoryModel.CreateProgressImage(waiteState));
+            // 待機状態紐づけ
+            WaitState1 = _partyWaitStateModel.ObserveProperty(m => m.WaitState1).ToReactiveProperty();
+
+
+            WaitState1.Subscribe(waiteState => WaitImage1 = ImageFactoryModel.CreateProgressImage(waiteState));
 
             // ポケモンIDプロパティ紐づけ
             PokemonId1 = _partyManegementModel.ObserveProperty(m => m.PokemonId1).ToReactiveProperty();
