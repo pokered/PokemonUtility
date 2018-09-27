@@ -78,12 +78,15 @@
     <Compile Include="Behaviors\MainWIndowBehavior.cs" />
     <Compile Include="Behaviors\WindowMoveBehavior.cs" />
     <Compile Include="Const\PartyConst.cs" />
+    <Compile Include="Const\WaitStateConst.cs" />
+    <Compile Include="Models\Image\PokemonIconCutModel.cs" />
+    <Compile Include="Models\Image\ScreenCaptureModel.cs" />
     <Compile Include="Models\WaitState\MyPartyWaitStateModel.cs" />
     <Compile Include="Models\WaitState\OpponentPartyWaitStateModel.cs" />
     <Compile Include="Models\WaitState\WaitStateModel.cs" />
     <Compile Include="Models\WaitState\PartyWaitStateModel.cs" />
     <Compile Include="Models\Window\CaptureWindowModel.cs" />
-    <Compile Include="Models\ImageFactoryModel.cs" />
+    <Compile Include="Models\Image\ImageFactoryModel.cs" />
     <Compile Include="Models\Manegement\MyPartyManegementModel.cs" />
     <Compile Include="Models\Window\MyPartyWindowModel.cs" />
     <Compile Include="Models\Manegement\OpponentPartyManegementModel.cs" />
@@ -1190,6 +1193,8 @@
     <Resource Include="Images\Progress\progress2.png" />
     <Resource Include="Images\Progress\progress3.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Models\Analysis\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

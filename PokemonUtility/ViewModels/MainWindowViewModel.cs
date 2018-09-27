@@ -20,6 +20,7 @@ namespace PokemonUtility.ViewModels
         // モデル
         private CaptureWindowModel _captureWindowModel = CaptureWindowModel.GetInstance();
         private MyPartyWindowModel _myPartyWindowModel = MyPartyWindowModel.GetInstance();
+        private MyPartyManegementModel _myPartyManegementModel = MyPartyManegementModel.GetInstance();
         private MyPartyWaitStateModel _myPartyWaitStateModel = MyPartyWaitStateModel.GetInstance();
         private OpponentPartyWindowModel _opponentPartyWindowModel = OpponentPartyWindowModel.GetInstance();
 
@@ -157,12 +158,13 @@ namespace PokemonUtility.ViewModels
         // 分析
         private async void AnalysisCommandExecute()
         {
-            for (int i = 2; i <= 2; i++)
+            for (int i = PartyConst.PARTY_INDEX_FIRST; i <= PartyConst.PARTY_INDEX_SIXTH; i++)
             {
                 _myPartyWaitStateModel.Start(i);
 
                 int result = await Task.Run(() => DoWork(1000));
-                //_myPartyManegementModel.PokemonId1 = result;
+
+                _myPartyManegementModel.ChangePokemonId(i, i);
 
                 _myPartyWaitStateModel.End(i);
             }

@@ -2,14 +2,11 @@
 {
     class PartyConst
     {
-        public static readonly int PARTY_INDEX1 = 0;
-        public static readonly int PARTY_INDEX2 = 1;
-        public static readonly int PARTY_INDEX3 = 2;
-        public static readonly int PARTY_INDEX4 = 3;
-        public static readonly int PARTY_INDEX5 = 4;
-        public static readonly int PARTY_INDEX6 = 5;
-
-        public static readonly int PARTY_NUMBER_MIN = 1;
-        public static readonly int PARTY_NUMBER_MAX = 6;
+        public static readonly int PARTY_INDEX_FIRST = 0;
+        public static readonly int PARTY_INDEX_SECOND = 1;
+        public static readonly int PARTY_INDEX_THIRD = 2;
+        public static readonly int PARTY_INDEX_FOUR = 3;
+        public static readonly int PARTY_INDEX_FIFTH = 4;
+        public static readonly int PARTY_INDEX_SIXTH = 5;
     }
 }
