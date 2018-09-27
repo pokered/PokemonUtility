@@ -8,5 +8,8 @@
         public static readonly int PARTY_INDEX4 = 3;
         public static readonly int PARTY_INDEX5 = 4;
         public static readonly int PARTY_INDEX6 = 5;
+
+        public static readonly int PARTY_NUMBER_MIN = 1;
+        public static readonly int PARTY_NUMBER_MAX = 6;
     }
 }

@@ -7,6 +7,7 @@ using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System.Threading.Tasks;
 using PokemonUtility.Models.WaitState;
+using PokemonUtility.Const;
 
 namespace PokemonUtility.ViewModels
 {
@@ -156,22 +157,20 @@ namespace PokemonUtility.ViewModels
         // 分析
         private async void AnalysisCommandExecute()
         {
-            for (int i = 0; i < 6; i++)
+            for (int i = 2; i <= 2; i++)
             {
-                
+                _myPartyWaitStateModel.Start(i);
+
+                int result = await Task.Run(() => DoWork(1000));
+                //_myPartyManegementModel.PokemonId1 = result;
+
+                _myPartyWaitStateModel.End(i);
             }
-
-            _myPartyWaitStateModel.Start();
-
-            int result = await Task.Run(() => DoWork(1000));
-            //_myPartyManegementModel.PokemonId1 = result;
-
-            _myPartyWaitStateModel.End();
         }
 
         private int DoWork(int n)
         {
-            System.Threading.Thread.Sleep(8000);
+            System.Threading.Thread.Sleep(1500);
 
             // このメソッドからの戻り値
             return 1;

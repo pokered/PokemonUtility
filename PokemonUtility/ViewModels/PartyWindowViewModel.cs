@@ -6,6 +6,7 @@ using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System.Windows.Media.Imaging;
 using PokemonUtility.Models.WaitState;
+using PokemonUtility.Const;
 
 namespace PokemonUtility.ViewModels
 {
@@ -128,11 +129,51 @@ namespace PokemonUtility.ViewModels
             set { SetProperty(ref _frameImage6, value); }
         }
 
-        private BitmapImage _waitImage1;
+        // 待機イメージ
+        private BitmapImage[] _waitImageList = new BitmapImage[]
+        {
+            new BitmapImage(),
+            new BitmapImage(),
+            new BitmapImage(),
+            new BitmapImage(),
+            new BitmapImage(),
+            new BitmapImage()
+        };
+
         public BitmapImage WaitImage1
         {
-            get { return _waitImage1; }
-            set { SetProperty(ref _waitImage1, value); }
+            get { return _waitImageList[PartyConst.PARTY_INDEX1]; }
+            set { SetProperty(ref _waitImageList[PartyConst.PARTY_INDEX1], value); }
+        }
+
+        public BitmapImage WaitImage2
+        {
+            get { return _waitImageList[PartyConst.PARTY_INDEX2]; }
+            set { SetProperty(ref _waitImageList[PartyConst.PARTY_INDEX2], value); }
+        }
+
+        public BitmapImage WaitImage3
+        {
+            get { return _waitImageList[PartyConst.PARTY_INDEX3]; }
+            set { SetProperty(ref _waitImageList[PartyConst.PARTY_INDEX3], value); }
+        }
+
+        public BitmapImage WaitImage4
+        {
+            get { return _waitImageList[PartyConst.PARTY_INDEX4]; }
+            set { SetProperty(ref _waitImageList[PartyConst.PARTY_INDEX4], value); }
+        }
+
+        public BitmapImage WaitImage5
+        {
+            get { return _waitImageList[PartyConst.PARTY_INDEX5]; }
+            set { SetProperty(ref _waitImageList[PartyConst.PARTY_INDEX5], value); }
+        }
+
+        public BitmapImage WaitImage6
+        {
+            get { return _waitImageList[PartyConst.PARTY_INDEX6]; }
+            set { SetProperty(ref _waitImageList[PartyConst.PARTY_INDEX6], value); }
         }
 
         // モデル
@@ -145,8 +186,8 @@ namespace PokemonUtility.ViewModels
         
         public PartyWindowViewModel(
             PartyWindowModel partyWindowModel,
-            PartyWaiStatetModel partyWaitStateModel,
-            PartyManegementModel partyManegementModel
+            PartyManegementModel partyManegementModel,
+            PartyWaiStatetModel partyWaitStateModel
             )
         {
             // モデル設定
@@ -163,9 +204,11 @@ namespace PokemonUtility.ViewModels
 
             // 待機状態紐づけ
             WaitState1 = _partyWaitStateModel.ObserveProperty(m => m.WaitState1).ToReactiveProperty();
-
-
-            WaitState1.Subscribe(waiteState => WaitImage1 = ImageFactoryModel.CreateProgressImage(waiteState));
+            WaitState2 = _partyWaitStateModel.ObserveProperty(m => m.WaitState2).ToReactiveProperty();
+            WaitState3 = _partyWaitStateModel.ObserveProperty(m => m.WaitState3).ToReactiveProperty();
+            WaitState4 = _partyWaitStateModel.ObserveProperty(m => m.WaitState4).ToReactiveProperty();
+            WaitState5 = _partyWaitStateModel.ObserveProperty(m => m.WaitState5).ToReactiveProperty();
+            WaitState6 = _partyWaitStateModel.ObserveProperty(m => m.WaitState6).ToReactiveProperty();
 
             // ポケモンIDプロパティ紐づけ
             PokemonId1 = _partyManegementModel.ObserveProperty(m => m.PokemonId1).ToReactiveProperty();
@@ -198,6 +241,14 @@ namespace PokemonUtility.ViewModels
             PokemonOrder4.Subscribe(order => FrameImage4 = ImageFactoryModel.CreateFrameImage(PokemonId4.Value, order));
             PokemonOrder5.Subscribe(order => FrameImage5 = ImageFactoryModel.CreateFrameImage(PokemonId5.Value, order));
             PokemonOrder6.Subscribe(order => FrameImage6 = ImageFactoryModel.CreateFrameImage(PokemonId6.Value, order));
+
+            // 待機状態変更時の処理登録
+            WaitState1.Subscribe(waiteState => WaitImage1 = ImageFactoryModel.CreateProgressImage(waiteState));
+            WaitState2.Subscribe(waiteState => WaitImage2 = ImageFactoryModel.CreateProgressImage(waiteState));
+            WaitState3.Subscribe(waiteState => WaitImage3 = ImageFactoryModel.CreateProgressImage(waiteState));
+            WaitState4.Subscribe(waiteState => WaitImage4 = ImageFactoryModel.CreateProgressImage(waiteState));
+            WaitState5.Subscribe(waiteState => WaitImage5 = ImageFactoryModel.CreateProgressImage(waiteState));
+            WaitState6.Subscribe(waiteState => WaitImage6 = ImageFactoryModel.CreateProgressImage(waiteState));
         }
     }
 }

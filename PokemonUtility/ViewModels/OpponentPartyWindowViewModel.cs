@@ -5,7 +5,7 @@ namespace PokemonUtility.ViewModels
 {
     class OpponentPartyWindowViewModel : PartyWindowViewModel
     {
-        public OpponentPartyWindowViewModel() : base(OpponentPartyWindowModel.GetInstance(), OpponentPartyWaitStateModel.GetInstance(), OpponentPartyManegementModel.GetInstance())
+        public OpponentPartyWindowViewModel() : base(OpponentPartyWindowModel.GetInstance(), OpponentPartyManegementModel.GetInstance(), OpponentPartyWaitStateModel.GetInstance())
         {
         }
     }

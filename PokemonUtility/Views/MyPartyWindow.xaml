@@ -16,18 +16,23 @@
         
         <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage2}"/>
         <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,10,0,0" Width="80" Height="80" Source="{Binding FrameImage2}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,10,0,0" Width="80" Height="80" Source="{Binding WaitImage2}"/>
 
         <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage3}"/>
         <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,10,0,0" Width="80" Height="80" Source="{Binding FrameImage3}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,10,0,0" Width="80" Height="80" Source="{Binding WaitImage3}"/>
 
         <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="280,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage4}"/>
         <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="280,10,0,0" Width="80" Height="80" Source="{Binding FrameImage4}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="280,10,0,0" Width="80" Height="80" Source="{Binding WaitImage4}"/>
 
         <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="370,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage5}"/>
         <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="370,10,0,0" Width="80" Height="80" Source="{Binding FrameImage5}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="370,10,0,0" Width="80" Height="80" Source="{Binding WaitImage5}"/>
 
         <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="460,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage6}"/>
         <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="460,10,0,0" Width="80" Height="80" Source="{Binding FrameImage6}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="460,10,0,0" Width="80" Height="80" Source="{Binding WaitImage6}"/>
     </Grid>
 
     <i:Interaction.Triggers>
