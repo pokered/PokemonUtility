@@ -8,6 +8,7 @@ using Reactive.Bindings.Extensions;
 using System.Threading.Tasks;
 using PokemonUtility.Models.WaitState;
 using PokemonUtility.Const;
+using PokemonUtility.Models.Image;
 
 namespace PokemonUtility.ViewModels
 {
@@ -158,16 +159,20 @@ namespace PokemonUtility.ViewModels
         // 分析
         private async void AnalysisCommandExecute()
         {
-            for (int i = PartyConst.PARTY_INDEX_FIRST; i <= PartyConst.PARTY_INDEX_SIXTH; i++)
-            {
-                _myPartyWaitStateModel.Start(i);
+            PokemonIconCutModel test = new PokemonIconCutModel();
 
-                int result = await Task.Run(() => DoWork(1000));
+            test.CreateImages(0, 0, 640, 360);
 
-                _myPartyManegementModel.ChangePokemonId(i, i);
+            //for (int i = PartyConst.PARTY_INDEX_FIRST; i <= PartyConst.PARTY_INDEX_SIXTH; i++)
+            //{
+            //    _myPartyWaitStateModel.Start(i);
 
-                _myPartyWaitStateModel.End(i);
-            }
+            //    int result = await Task.Run(() => DoWork(1000));
+
+            //    _myPartyManegementModel.ChangePokemonId(i, i);
+
+            //    _myPartyWaitStateModel.End(i);
+            //}
         }
 
         private int DoWork(int n)

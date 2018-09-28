@@ -88,6 +88,7 @@
     <Compile Include="Models\Window\CaptureWindowModel.cs" />
     <Compile Include="Models\Image\ImageFactoryModel.cs" />
     <Compile Include="Models\Manegement\MyPartyManegementModel.cs" />
+    <Compile Include="Models\Window\MainWindowModel.cs" />
     <Compile Include="Models\Window\MyPartyWindowModel.cs" />
     <Compile Include="Models\Manegement\OpponentPartyManegementModel.cs" />
     <Compile Include="Models\Window\OpponentPartyWindowModel.cs" />
