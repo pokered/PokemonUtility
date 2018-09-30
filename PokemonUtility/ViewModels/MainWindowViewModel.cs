@@ -8,7 +8,9 @@ using Reactive.Bindings.Extensions;
 using System.Threading.Tasks;
 using PokemonUtility.Models.WaitState;
 using PokemonUtility.Const;
-using PokemonUtility.Models.Image;
+using System.Windows.Media.Imaging;
+using PokemonUtility.Models.Window;
+using PokemonUtility.Models.Manegement;
 
 namespace PokemonUtility.ViewModels
 {
@@ -17,13 +19,21 @@ namespace PokemonUtility.ViewModels
         // プロパティ
         public ReactiveProperty<bool> IsShowMyPartyWindow { get; }
         public ReactiveProperty<bool> IsShowOpponentPartyWindow { get; }
-        
+        public ReactiveProperty<BitmapImage> CaptureImage { get; }
+
         // モデル
+        private MainWindowModel _mainWindowModel = MainWindowModel.GetInstance();
+
         private CaptureWindowModel _captureWindowModel = CaptureWindowModel.GetInstance();
+        private CaptureImageManegementModel _captureManegementModel = CaptureImageManegementModel.GetInstance();
+
         private MyPartyWindowModel _myPartyWindowModel = MyPartyWindowModel.GetInstance();
         private MyPartyManegementModel _myPartyManegementModel = MyPartyManegementModel.GetInstance();
         private MyPartyWaitStateModel _myPartyWaitStateModel = MyPartyWaitStateModel.GetInstance();
+
         private OpponentPartyWindowModel _opponentPartyWindowModel = OpponentPartyWindowModel.GetInstance();
+        private OpponentPartyManegementModel _opponentPartyManegementModel = OpponentPartyManegementModel.GetInstance();
+        private OpponentPartyWaitStateModel _opponentPartyWaitStateModel = OpponentPartyWaitStateModel.GetInstance();
 
         // リクエスト
         public InteractionRequest<INotification> ShowCaptureWindowRequest { get; } = new InteractionRequest<INotification>();
@@ -39,6 +49,9 @@ namespace PokemonUtility.ViewModels
 
         public MainWindowViewModel()
         {
+            // キャプチャイメージ
+            CaptureImage = _captureManegementModel.ObserveProperty(m => m.CaptureImage).ToReactiveProperty();
+
             // 添付プロパティ設定
             SettingProperty();
 
@@ -54,6 +67,7 @@ namespace PokemonUtility.ViewModels
             softGenerationList.Add(new SoftGeneration() { ID = 4, Name = "黒白" });
             softGenerationList.Add(new SoftGeneration() { ID = 5, Name = "ＸＹ" });
             softGenerationList.Add(new SoftGeneration() { ID = 6, Name = "ＳＭ" });
+
             // 先にselecteditemに値を設定しないとダメ
             SelectedSoftGeneration = softGenerationList[0];
             SoftGenerations = softGenerationList;
@@ -159,20 +173,30 @@ namespace PokemonUtility.ViewModels
         // 分析
         private async void AnalysisCommandExecute()
         {
-            PokemonIconCutModel test = new PokemonIconCutModel();
+            // キャプチャイメージ作成
+            _captureManegementModel.CreateCaptureImage();
+            
+            for (int i = PartyConst.PARTY_INDEX_FIRST; i <= PartyConst.PARTY_INDEX_SIXTH; i++)
+            {
+                _myPartyWaitStateModel.Start(i);
 
-            test.CreateImages(0, 0, 640, 360);
+                int result = await Task.Run(() => DoWork(1000));
 
-            //for (int i = PartyConst.PARTY_INDEX_FIRST; i <= PartyConst.PARTY_INDEX_SIXTH; i++)
-            //{
-            //    _myPartyWaitStateModel.Start(i);
+                _myPartyManegementModel.ChangePokemonId(i, i);
 
-            //    int result = await Task.Run(() => DoWork(1000));
+                _myPartyWaitStateModel.End(i);
+            }
 
-            //    _myPartyManegementModel.ChangePokemonId(i, i);
+            for (int i = PartyConst.PARTY_INDEX_FIRST; i <= PartyConst.PARTY_INDEX_SIXTH; i++)
+            {
+                _opponentPartyWaitStateModel.Start(i);
 
-            //    _myPartyWaitStateModel.End(i);
-            //}
+                int result = await Task.Run(() => DoWork(1000));
+
+                _opponentPartyManegementModel.ChangePokemonId(i, i);
+
+                _opponentPartyWaitStateModel.End(i);
+            }
         }
 
         private int DoWork(int n)

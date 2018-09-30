@@ -16,8 +16,11 @@ namespace PokemonUtility.Models.WaitState
         public ReactiveProperty<bool> IsAnalyzing4 { get; private set; } = new ReactiveProperty<bool>();
         public ReactiveProperty<bool> IsAnalyzing5 { get; private set; } = new ReactiveProperty<bool>();
 
-        private int[] _waitStateList = new int[] {-1, -1, -1, -1, -1, -1 };
-        public int WaitState0 {
+        // 待機状態
+        private int[] _waitStateList = new int[] { -1, -1, -1, -1, -1, -1 };
+
+        public int WaitState0
+        {
             get { return _waitStateList[PartyConst.PARTY_INDEX_FIRST]; }
             set { SetProperty(ref _waitStateList[PartyConst.PARTY_INDEX_FIRST], value); }
         }

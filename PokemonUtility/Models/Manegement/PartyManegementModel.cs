@@ -2,7 +2,7 @@
 using Prism.Mvvm;
 using System.Collections.Generic;
 
-namespace PokemonUtility.Models
+namespace PokemonUtility.Models.Manegement
 {
     class PartyManegementModel : BindableBase
     {
@@ -108,7 +108,7 @@ namespace PokemonUtility.Models
             get { return _pokemonOrderList[PartyConst.PARTY_INDEX_SIXTH]; }
             set { SetProperty(ref _pokemonOrderList[PartyConst.PARTY_INDEX_SIXTH], value); }
         }
-        
+
         // 選出順を取得
         private int GetOrder(int pokemonIndex)
         {
@@ -154,7 +154,7 @@ namespace PokemonUtility.Models
             PokemonOrder5 = GetOrder(PartyConst.PARTY_INDEX_SIXTH);
         }
 
-        // 
+        // aa
         public void ChangePokemonId(int partyIndex, int pokemonId)
         {
             // プロパティ情報取得
@@ -167,5 +167,8 @@ namespace PokemonUtility.Models
             property.SetValue(this, pokemonId);
         }
 
+        // オーダー変更
+        public void ChangeOrder()
+        { }
     }
 }

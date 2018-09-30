@@ -1,4 +1,4 @@
-﻿namespace PokemonUtility.Models
+﻿namespace PokemonUtility.Models.Manegement
 {
     class OpponentPartyManegementModel : PartyManegementModel
     {

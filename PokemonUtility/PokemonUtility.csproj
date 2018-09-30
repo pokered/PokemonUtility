@@ -75,11 +75,12 @@
     <Compile Include="Behaviors\CloseWindowBehavior.cs" />
     <Compile Include="Behaviors\FitWithinScreenBehavior.cs" />
     <Compile Include="Behaviors\HideCloseButtonOnWindowBehavior.cs" />
-    <Compile Include="Behaviors\MainWIndowBehavior.cs" />
+    <Compile Include="Behaviors\PartyWindowBehavior.cs" />
     <Compile Include="Behaviors\WindowMoveBehavior.cs" />
     <Compile Include="Const\PartyConst.cs" />
     <Compile Include="Const\WaitStateConst.cs" />
-    <Compile Include="Models\Image\PokemonIconCutModel.cs" />
+    <Compile Include="Models\Image\BitmapConverter.cs" />
+    <Compile Include="Models\Manegement\CaptureImageManegementModel.cs" />
     <Compile Include="Models\Image\ScreenCaptureModel.cs" />
     <Compile Include="Models\WaitState\MyPartyWaitStateModel.cs" />
     <Compile Include="Models\WaitState\OpponentPartyWaitStateModel.cs" />

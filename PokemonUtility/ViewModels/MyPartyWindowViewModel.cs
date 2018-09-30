@@ -1,4 +1,5 @@
 ﻿using PokemonUtility.Models;
+using PokemonUtility.Models.Manegement;
 using PokemonUtility.Models.WaitState;
 
 namespace PokemonUtility.ViewModels

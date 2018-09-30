@@ -10,31 +10,29 @@
              Left="{Binding X.Value, Mode=TwoWay}" Top="{Binding Y.Value, Mode=TwoWay}"
              Height="131" Width="558">
     <Grid>
-        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage1}">
-            <Image.InputBindings>
-                <MouseBinding Command="{Binding SampleCommand}" Gesture="LeftClick"/>
-            </Image.InputBindings>
-        </Image>
-        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Width="80" Height="80" Source="{Binding FrameImage1}">
-            <Image.InputBindings>
-                <MouseBinding Command="{Binding SampleCommand}" Gesture="LeftClick"/>
-            </Image.InputBindings>
-        </Image>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage0.Value}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Width="80" Height="80" Source="{Binding FrameImage0.Value}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Width="80" Height="80" Source="{Binding WaitImage0.Value}"/>
 
-        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage2}"/>
-        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,10,0,0" Width="80" Height="80" Source="{Binding FrameImage2}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage1.Value}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,10,0,0" Width="80" Height="80" Source="{Binding FrameImage1.Value}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,10,0,0" Width="80" Height="80" Source="{Binding WaitImage1.Value}"/>
 
-        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage3}"/>
-        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,10,0,0" Width="80" Height="80" Source="{Binding FrameImage3}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage2.Value}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,10,0,0" Width="80" Height="80" Source="{Binding FrameImage2.Value}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,10,0,0" Width="80" Height="80" Source="{Binding WaitImage2.Value}"/>
 
-        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="280,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage4}"/>
-        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="280,10,0,0" Width="80" Height="80" Source="{Binding FrameImage4}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="280,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage3.Value}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="280,10,0,0" Width="80" Height="80" Source="{Binding FrameImage3.Value}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="280,10,0,0" Width="80" Height="80" Source="{Binding WaitImage3.Value}"/>
 
-        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="370,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage5}"/>
-        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="370,10,0,0" Width="80" Height="80" Source="{Binding FrameImage5}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="370,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage4.Value}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="370,10,0,0" Width="80" Height="80" Source="{Binding FrameImage4.Value}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="370,10,0,0" Width="80" Height="80" Source="{Binding WaitImage4.Value}"/>
 
-        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="460,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage6}"/>
-        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="460,10,0,0" Width="80" Height="80" Source="{Binding FrameImage6}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="460,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage5.Value}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="460,10,0,0" Width="80" Height="80" Source="{Binding FrameImage5.Value}"/>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="460,10,0,0" Width="80" Height="80" Source="{Binding WaitImage5.Value}"/>
     </Grid>
 
     <i:Interaction.Triggers>

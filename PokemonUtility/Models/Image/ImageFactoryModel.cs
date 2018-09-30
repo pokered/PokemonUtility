@@ -58,7 +58,7 @@ namespace PokemonUtility.Models
             return false;
         }
 
-        public static BitmapImage CreateFrameImage(int pokemonId, int order)
+        public static BitmapImage CreateFrameImage(int order)
         {
             string frameName = "not_selected";
 
