@@ -143,17 +143,6 @@ namespace PokemonUtility.Models.Manegement
             UpdateOrder();
         }
 
-        // 選出リスト更新
-        private void UpdateOrder()
-        {
-            PokemonOrder0 = GetOrder(PartyConst.PARTY_INDEX_FIRST);
-            PokemonOrder1 = GetOrder(PartyConst.PARTY_INDEX_SECOND);
-            PokemonOrder2 = GetOrder(PartyConst.PARTY_INDEX_THIRD);
-            PokemonOrder3 = GetOrder(PartyConst.PARTY_INDEX_FOUR);
-            PokemonOrder4 = GetOrder(PartyConst.PARTY_INDEX_FIFTH);
-            PokemonOrder5 = GetOrder(PartyConst.PARTY_INDEX_SIXTH);
-        }
-
         // aa
         public void ChangePokemonId(int partyIndex, int pokemonId)
         {
@@ -168,7 +157,47 @@ namespace PokemonUtility.Models.Manegement
         }
 
         // オーダー変更
-        public void ChangeOrder()
-        { }
+        public void ChangeOrder(int pokemonIndex)
+        {
+            // 存在しないポケモンの場合は変更なし
+            int pokemonId = _pokemonIdList[pokemonIndex];
+            if (!ImageFactoryModel.ExistPokemonImage(pokemonId)) return;
+
+            // 選出されている場合
+            if (_selectedOrder.Contains(pokemonIndex))
+            {
+                // 選出リストから削除
+                _selectedOrder.Remove(pokemonIndex);
+
+                // 非選出リストに追加
+                _notSelectedOrder.Add(pokemonIndex);
+
+                // 選出変更を反映
+                UpdateOrder();
+
+                return;
+            }
+
+            // 非選出の場合
+            // 既に3匹選出されている場合は変更なし
+            if (_selectedOrder.Count >= 3) return;
+
+            // 3匹選出されていなければ追加
+            _selectedOrder.Add(pokemonIndex);
+
+            // 選出変更を反映
+            UpdateOrder();
+        }
+
+        // 選出リスト更新
+        private void UpdateOrder()
+        {
+            PokemonOrder0 = GetOrder(PartyConst.PARTY_INDEX_FIRST);
+            PokemonOrder1 = GetOrder(PartyConst.PARTY_INDEX_SECOND);
+            PokemonOrder2 = GetOrder(PartyConst.PARTY_INDEX_THIRD);
+            PokemonOrder3 = GetOrder(PartyConst.PARTY_INDEX_FOUR);
+            PokemonOrder4 = GetOrder(PartyConst.PARTY_INDEX_FIFTH);
+            PokemonOrder5 = GetOrder(PartyConst.PARTY_INDEX_SIXTH);
+        }
     }
 }

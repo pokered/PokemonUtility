@@ -13,7 +13,7 @@
         <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage0.Value}"/>
         <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Width="80" Height="80" Source="{Binding FrameImage0.Value}">
             <i:Interaction.Behaviors>
-                <b:PartyWindowBehavior/>
+                <b:PartyImageBehavior/>
             </i:Interaction.Behaviors>
         </Image>
         <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Width="80" Height="80" Source="{Binding WaitImage0.Value}"/>

@@ -6,9 +6,14 @@ using System.Windows.Interactivity;
 
 namespace PokemonUtility.Behaviors
 {
-    class PartyWindowBehavior : Behavior<Image>
+    class PartyImageBehavior : Behavior<Image>
     {
         PartyManegementModel _partyManegementModel;
+
+        public PartyImageBehavior(PartyManegementModel partyManegementModel)
+        {
+            _partyManegementModel = partyManegementModel;
+        }
 
         protected override void OnAttached()
         {
@@ -24,13 +29,10 @@ namespace PokemonUtility.Behaviors
             base.OnAttached();
         }
 
-        public PartyManegementModel()
-        { }
-
         // 選出順変更
         private void ChangeOrder(object sender, EventArgs e)
         {
-            MyPartyManegementModel aaa = MyPartyManegementModel.GetInstance();
+            //_partyManegementModel.ChangeOrder(0);
         }
     }
 }
