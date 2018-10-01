@@ -6,11 +6,11 @@ using System.Windows.Interactivity;
 
 namespace PokemonUtility.Behaviors
 {
-    class MyPartyImageBehavior : Behavior<Image>
+    class OpponentPartyImageBehavior : Behavior<Image>
     {
         // 依存関係プロパティの登録
         public static readonly DependencyProperty pokemonIndexProperty =
-            DependencyProperty.Register("PartyIndex", typeof(int), typeof(MyPartyImageBehavior),
+            DependencyProperty.Register("PartyIndex", typeof(int), typeof(OpponentPartyImageBehavior),
                                         new UIPropertyMetadata(null));
 
         // 登録される依存関係プロパティ
@@ -37,7 +37,7 @@ namespace PokemonUtility.Behaviors
         // 選出順変更
         private void ChangeOrder(object sender, EventArgs e)
         {
-            MyPartyManegementModel partyManegementModel = MyPartyManegementModel.GetInstance();
+            OpponentPartyManegementModel partyManegementModel = OpponentPartyManegementModel.GetInstance();
             partyManegementModel.ChangeOrder(PartyIndex);
         }
     }

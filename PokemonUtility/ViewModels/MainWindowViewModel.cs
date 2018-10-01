@@ -6,11 +6,12 @@ using Prism.Interactivity.InteractionRequest;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System.Threading.Tasks;
-using PokemonUtility.Models.WaitState;
 using PokemonUtility.Const;
 using System.Windows.Media.Imaging;
-using PokemonUtility.Models.Window;
-using PokemonUtility.Models.Manegement;
+using PokemonUtility.Models.Capture;
+using PokemonUtility.Models.Party;
+using PokemonUtility.Models.Main;
+using System.Reactive.Linq;
 
 namespace PokemonUtility.ViewModels
 {
@@ -20,6 +21,18 @@ namespace PokemonUtility.ViewModels
         public ReactiveProperty<bool> IsShowMyPartyWindow { get; }
         public ReactiveProperty<bool> IsShowOpponentPartyWindow { get; }
         public ReactiveProperty<BitmapImage> CaptureImage { get; }
+        public ReactiveProperty<bool> IsEnabled { get; }
+        public ReactiveProperty<bool> RadioWin { get; }
+        public ReactiveProperty<bool> RadioLose { get; }
+        public ReactiveProperty<bool> RadioDraw { get; }
+
+        private bool _groupBoxEnabled = true;
+        public bool GroupBoxEnabled
+        {
+            get { return _groupBoxEnabled; }
+            set { SetProperty(ref _groupBoxEnabled, value); }
+        }
+
 
         // モデル
         private MainWindowModel _mainWindowModel = MainWindowModel.GetInstance();
@@ -49,15 +62,28 @@ namespace PokemonUtility.ViewModels
 
         public MainWindowViewModel()
         {
-            // キャプチャイメージ
-            CaptureImage = _captureManegementModel.ObserveProperty(m => m.CaptureImage).ToReactiveProperty();
-
             // 添付プロパティ設定
             SettingProperty();
 
+            // 分析中フラグ紐づけ
+            IsEnabled = _mainWindowModel.ObserveProperty(m => m.IsAnalyzing).Select(x => !x).ToReactiveProperty();
+
+            // ラジオボタン紐づけ
+            //RadioWin = _mainWindowModel.ObserveProperty(m => m.RadioWin).ToReactiveProperty();
+            //RadioLose = _mainWindowModel.ObserveProperty(m => m.RadioLose).ToReactiveProperty();
+            //RadioDraw = _mainWindowModel.ObserveProperty(m => m.RadioDraw).ToReactiveProperty();
+
+            RadioWin = _mainWindowModel.ObserveProperty(m => m.Battle_result).Select(x => x == BattleResultConst.WIN).ToReactiveProperty();
+            RadioLose = _mainWindowModel.ObserveProperty(m => m.Battle_result).Select(x => x == BattleResultConst.LOSE).ToReactiveProperty();
+            RadioDraw = _mainWindowModel.ObserveProperty(m => m.Battle_result).Select(x => x == BattleResultConst.DRAW).ToReactiveProperty();
+
+            // キャプチャイメージ紐づけ
+            CaptureImage = _captureManegementModel.ObserveProperty(m => m.CaptureImage).ToReactiveProperty();
+
+            // サブウィンドウ紐づけ
             IsShowMyPartyWindow = _myPartyWindowModel.ToReactivePropertyAsSynchronized(m => m.IsShowWindow);
             IsShowOpponentPartyWindow = _opponentPartyWindowModel.ToReactivePropertyAsSynchronized(m => m.IsShowWindow);
-            
+
             // 世代コンボボックスのアイテム設定
             var softGenerationList = new List<SoftGeneration>();
             softGenerationList.Add(new SoftGeneration() { ID = 0, Name = "赤緑" });
@@ -108,30 +134,6 @@ namespace PokemonUtility.ViewModels
             set { _softGenerations = value; }
         }
 
-        // ラジオボタン　勝
-        private bool _radioWin = true;
-        public bool RadioWin
-        {
-            get { return _radioWin; }
-            set { SetProperty(ref _radioWin, value); }
-        }
-
-        // ラジオボタン　負
-        private bool _radioLose = false;
-        public bool RadioLose
-        {
-            get { return _radioLose; }
-            set { SetProperty(ref _radioLose, value); }
-        }
-
-        // ラジオボタン　引
-        private bool _radioDraw = false;
-        public bool RadioDraw
-        {
-            get { return _radioDraw; }
-            set { SetProperty(ref _radioDraw, value); }
-        }
-        
         // 閉じる際に添付プロパティ保存
         private void CloseWindowCommandExecute()
         {
@@ -173,6 +175,13 @@ namespace PokemonUtility.ViewModels
         // 分析
         private async void AnalysisCommandExecute()
         {
+            // メインウィンドウの一部を非アクティブにする
+            _mainWindowModel.IsAnalyzing = true;
+
+            // パーティーウィンドウを非アクティブにする
+            _myPartyWindowModel.WindowEnabled = false;
+            _opponentPartyWindowModel.WindowEnabled = false;
+
             // キャプチャイメージ作成
             _captureManegementModel.CreateCaptureImage();
             
@@ -197,6 +206,13 @@ namespace PokemonUtility.ViewModels
 
                 _opponentPartyWaitStateModel.End(i);
             }
+
+            // パーティーウィンドウをアクティブにする
+            _myPartyWindowModel.WindowEnabled = true;
+            _opponentPartyWindowModel.WindowEnabled = true;
+
+            // メインウィンドウの一部をアクティブにする
+            _mainWindowModel.IsAnalyzing = false;
         }
 
         private int DoWork(int n)

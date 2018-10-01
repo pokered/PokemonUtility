@@ -1,4 +1,4 @@
-﻿using PokemonUtility.Models;
+﻿using PokemonUtility.Models.Capture;
 using Prism.Commands;
 using Prism.Mvvm;
 using Reactive.Bindings;

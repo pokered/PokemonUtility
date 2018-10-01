@@ -5,10 +5,11 @@ using Reactive.Bindings;
 using System.Threading.Tasks;
 using System.Reactive.Linq;
 
-namespace PokemonUtility.Models.WaitState
+namespace PokemonUtility.Models.Party
 {
     class PartyWaiStatetModel : BindableBase
     {
+        // プロパティ
         public ReactiveProperty<bool> IsAnalyzing0 { get; private set; } = new ReactiveProperty<bool>();
         public ReactiveProperty<bool> IsAnalyzing1 { get; private set; } = new ReactiveProperty<bool>();
         public ReactiveProperty<bool> IsAnalyzing2 { get; private set; } = new ReactiveProperty<bool>();
@@ -115,5 +116,35 @@ namespace PokemonUtility.Models.WaitState
             // プロパティの値を取得
             return (ReactiveProperty<bool>)property.GetValue(this);
         }
+    }
+
+    class MyPartyWaitStateModel : PartyWaiStatetModel
+    {
+        #region Singleton
+
+        static MyPartyWaitStateModel Instance;
+        public static MyPartyWaitStateModel GetInstance()
+        {
+            if (Instance == null)
+                Instance = new MyPartyWaitStateModel();
+            return Instance;
+        }
+
+        #endregion
+    }
+
+    class OpponentPartyWaitStateModel : PartyWaiStatetModel
+    {
+        #region Singleton
+
+        static OpponentPartyWaitStateModel Instance;
+        public static OpponentPartyWaitStateModel GetInstance()
+        {
+            if (Instance == null)
+                Instance = new OpponentPartyWaitStateModel();
+            return Instance;
+        }
+
+        #endregion
     }
 }

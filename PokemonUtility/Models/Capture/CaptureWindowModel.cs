@@ -1,4 +1,6 @@
-﻿namespace PokemonUtility.Models
+﻿using PokemonUtility.Models.Abstract;
+
+namespace PokemonUtility.Models.Capture
 {
     class CaptureWindowModel : WindowModel
     {

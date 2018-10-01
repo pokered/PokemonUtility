@@ -2,7 +2,7 @@
 using Prism.Mvvm;
 using System.Collections.Generic;
 
-namespace PokemonUtility.Models.Manegement
+namespace PokemonUtility.Models.Party
 {
     class PartyManegementModel : BindableBase
     {
@@ -199,5 +199,35 @@ namespace PokemonUtility.Models.Manegement
             PokemonOrder4 = GetOrder(PartyConst.PARTY_INDEX_FIFTH);
             PokemonOrder5 = GetOrder(PartyConst.PARTY_INDEX_SIXTH);
         }
+    }
+
+    class MyPartyManegementModel : PartyManegementModel
+    {
+        #region Singleton
+
+        static MyPartyManegementModel Instance;
+        public static MyPartyManegementModel GetInstance()
+        {
+            if (Instance == null)
+                Instance = new MyPartyManegementModel();
+            return Instance;
+        }
+
+        #endregion
+    }
+
+    class OpponentPartyManegementModel : PartyManegementModel
+    {
+        #region Singleton
+
+        static OpponentPartyManegementModel Instance;
+        public static OpponentPartyManegementModel GetInstance()
+        {
+            if (Instance == null)
+                Instance = new OpponentPartyManegementModel();
+            return Instance;
+        }
+
+        #endregion
     }
 }

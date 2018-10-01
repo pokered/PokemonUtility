@@ -4,9 +4,8 @@ using Prism.Mvvm;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System.Windows.Media.Imaging;
-using PokemonUtility.Models.WaitState;
 using System.Reactive.Linq;
-using PokemonUtility.Models.Manegement;
+using PokemonUtility.Models.Party;
 
 namespace PokemonUtility.ViewModels
 {
@@ -18,6 +17,9 @@ namespace PokemonUtility.ViewModels
 
         // ウィンドウ表示フラグ
         public ReactiveProperty<bool> IsShowPartyWindow { get; private set; }
+
+        // ウィンドウアクティブ
+        public ReactiveProperty<bool> WindowEnabled { get; private set; }
 
         // ポケモンイメージ
         public ReactiveProperty<BitmapImage> PokemonImage0 { get; private set; }
@@ -64,7 +66,10 @@ namespace PokemonUtility.ViewModels
             
             // ウィンドウ表示フラグ紐づけ
             IsShowPartyWindow = _partyWindowModel.ObserveProperty(m => m.IsShowWindow).ToReactiveProperty();
-            
+
+            // ウィンドウアクティブ紐づけ
+            WindowEnabled = _partyWindowModel.ObserveProperty(m => m.WindowEnabled).ToReactiveProperty();
+
             // ウィンドウ位置紐づけ
             X = _partyWindowModel.ToReactivePropertyAsSynchronized(m => m.X);
             Y = _partyWindowModel.ToReactivePropertyAsSynchronized(m => m.Y);
@@ -99,6 +104,20 @@ namespace PokemonUtility.ViewModels
         private void sample()
         {
             int aa = 0;
+        }
+    }
+
+    class MyPartyWindowViewModel : PartyWindowViewModel
+    {
+        public MyPartyWindowViewModel() : base(MyPartyWindowModel.GetInstance(), MyPartyManegementModel.GetInstance(), MyPartyWaitStateModel.GetInstance())
+        {
+        }
+    }
+
+    class OpponentPartyWindowViewModel : PartyWindowViewModel
+    {
+        public OpponentPartyWindowViewModel() : base(OpponentPartyWindowModel.GetInstance(), OpponentPartyManegementModel.GetInstance(), OpponentPartyWaitStateModel.GetInstance())
+        {
         }
     }
 }

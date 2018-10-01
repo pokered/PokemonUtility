@@ -6,7 +6,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Media.Imaging;
 
-namespace PokemonUtility.Models.Manegement
+namespace PokemonUtility.Models.Capture
 {
     struct RelativeRectangle
     {
@@ -125,7 +125,7 @@ namespace PokemonUtility.Models.Manegement
                 }
             }
 
-            CaptureImage = BitmapConverter.ToBitmapImage(screenBmp);
+            CaptureImage = BitmapConverterModel.ToBitmapImage(screenBmp);
         }
 
         public void CutIconImages()

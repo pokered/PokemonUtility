@@ -1,8 +1,8 @@
 ﻿using Prism.Mvvm;
 
-namespace PokemonUtility.Models
+namespace PokemonUtility.Models.Abstract
 {
-    class WindowModel : BindableBase
+    abstract class WindowModel : BindableBase
     {
         private int _x = 0;
         public int X

@@ -12,7 +12,7 @@ using Microsoft.Win32.SafeHandles;
 
 namespace PokemonUtility.Models.Image
 {
-    public static class BitmapConverter
+    public static class BitmapConverterModel
     {
         public static BitmapSource ToBitmapSource(this Bitmap source)
         {
