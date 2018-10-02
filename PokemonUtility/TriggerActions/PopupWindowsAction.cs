@@ -51,4 +51,36 @@ namespace PokemonUtility.TriggerActions
         {
         }
     }
+
+    class TodayBattleRecordWindowAction : PopupWindowActionBase
+    {
+        protected override Window CreateWindow(INotification notification)
+        {
+            // モーダル表示
+            IsModal = false;
+
+            // 画面生成
+            return new TodayBattleRecordWindow() { };
+        }
+
+        protected override void ApplyNotificationToWindow(Window window, INotification notification)
+        {
+        }
+    }
+
+    class BattleHistoryWindowAction : PopupWindowActionBase
+    {
+        protected override Window CreateWindow(INotification notification)
+        {
+            // モーダル表示
+            IsModal = false;
+
+            // 画面生成
+            return new BattleHistoryWindow() { };
+        }
+
+        protected override void ApplyNotificationToWindow(Window window, INotification notification)
+        {
+        }
+    }
 }

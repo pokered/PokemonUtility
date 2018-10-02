@@ -1,21 +1,11 @@
 ﻿using PokemonUtility.Models.TodayBattleRecord;
-using Prism.Mvvm;
-using Reactive.Bindings;
-using Reactive.Bindings.Extensions;
+using PokemonUtility.ViewModels.Abstract;
 
 namespace PokemonUtility.ViewModels
 {
-    public class TodayBattleRecordWindowViewModel : BindableBase
+    class TodayBattleRecordWindowViewModel : SubWindowViewModel
     {
-        // ウィンドウ表示フラグ
-        public ReactiveProperty<bool> IsShowWindow { get; private set; }
-
-        // モデル
-        private TodayBattleRecordWindowModel _todayBattleRecordWindowModel = TodayBattleRecordWindowModel.GetInstance();
-
-        public TodayBattleRecordWindowViewModel()
-        {
-            IsShowWindow = _todayBattleRecordWindowModel.ObserveProperty(m => m.IsShowWindow).ToReactiveProperty();
-        }
+        public TodayBattleRecordWindowViewModel() : base(TodayBattleRecordWindowModel.GetInstance())
+        { }
     }
 }

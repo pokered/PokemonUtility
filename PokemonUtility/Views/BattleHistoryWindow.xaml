@@ -1,4 +1,4 @@
-﻿<Window x:Class="PokemonUtility.Views.TodayBattleRecordWindow"
+﻿<Window x:Class="PokemonUtility.Views.BattleHistoryWindow"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
              xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
@@ -11,12 +11,8 @@
              Top="{Binding Y.Value, Mode=TwoWay}"
              Width="654.106"     
              Height="434.594">
-    <Grid Margin="0,0,105,72">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="141*"/>
-            <ColumnDefinition Width="49*"/>
-        </Grid.ColumnDefinitions>
-
+    <Grid>
+            
     </Grid>
 
     <i:Interaction.Triggers>

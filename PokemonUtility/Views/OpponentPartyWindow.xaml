@@ -63,7 +63,7 @@
     </Grid>
 
     <i:Interaction.Triggers>
-        <ei:PropertyChangedTrigger Binding="{Binding IsShowPartyWindow.Value}" >
+        <ei:PropertyChangedTrigger Binding="{Binding IsShowWindow.Value}" >
             <actions:CloseWindowAction />
         </ei:PropertyChangedTrigger>
     </i:Interaction.Triggers>

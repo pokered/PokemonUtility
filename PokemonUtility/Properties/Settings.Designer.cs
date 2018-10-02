@@ -25,6 +25,30 @@ namespace PokemonUtility.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int MainWindowX {
+            get {
+                return ((int)(this["MainWindowX"]));
+            }
+            set {
+                this["MainWindowX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int MainWindowY {
+            get {
+                return ((int)(this["MainWindowY"]));
+            }
+            set {
+                this["MainWindowY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("-1")]
         public int CaptureX {
             get {
@@ -116,6 +140,54 @@ namespace PokemonUtility.Properties {
             }
             set {
                 this["OpponentPartyWindowY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int TodayBattleRecordWindowX {
+            get {
+                return ((int)(this["TodayBattleRecordWindowX"]));
+            }
+            set {
+                this["TodayBattleRecordWindowX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int TodayBattleRecordWindowY {
+            get {
+                return ((int)(this["TodayBattleRecordWindowY"]));
+            }
+            set {
+                this["TodayBattleRecordWindowY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int BattleHistoryWindowX {
+            get {
+                return ((int)(this["BattleHistoryWindowX"]));
+            }
+            set {
+                this["BattleHistoryWindowX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int BattleHistoryWindowY {
+            get {
+                return ((int)(this["BattleHistoryWindowY"]));
+            }
+            set {
+                this["BattleHistoryWindowY"] = value;
             }
         }
     }

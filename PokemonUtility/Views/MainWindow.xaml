@@ -6,7 +6,11 @@
         xmlns:actions="clr-namespace:PokemonUtility.TriggerActions"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        Title="{Binding Title}" Height="333" Width="716">
+        Title="{Binding Title}"
+        Left="{Binding X.Value, Mode=TwoWay}"
+        Top="{Binding Y.Value, Mode=TwoWay}"
+        Width="716"
+        Height="333">
 
     <Grid Margin="0,0,0,0">
         <Grid.RowDefinitions>
@@ -26,7 +30,7 @@
         </GroupBox>
         
         <!-- 戦績保存 -->
-        <GroupBox x:Name="groupBox2_Copy" Header="保存" Grid.ColumnSpan="2" Margin="10,10,0,10" Grid.Row="2" HorizontalAlignment="Left" Width="236" IsEnabled="{Binding IsEnabled.Value}">
+        <GroupBox x:Name="groupBox2_Copy" Header="保存" Grid.ColumnSpan="2" Margin="10,10,0,10" Grid.Row="2" HorizontalAlignment="Left" Width="236" IsEnabled="{Binding IsControlEnabled.Value}">
             <WrapPanel HorizontalAlignment="Left" Height="25" Margin="0,0,-2,0" VerticalAlignment="Top" Width="230">
                 <RadioButton GroupName="battle_result" x:Name="rdo_win"  Content="勝" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,5,2,3" Height="17" IsChecked="{Binding RadioWin.Value, Mode=TwoWay}"  />
                 <RadioButton GroupName="battle_result" x:Name="rdo_lose" Content="負" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,5,2,3" Height="17" RenderTransformOrigin="4.321,0.893" IsChecked="{Binding RadioLose.Value, Mode=TwoWay}" />
@@ -36,16 +40,17 @@
             </WrapPanel>
         </GroupBox>
         
+        <!-- 各種サブウィンドウ -->
         <GroupBox x:Name="groupBox2" Header="各種ウィンドウ" Grid.Row="3" Margin="10,10,0,0" HorizontalAlignment="Left" Width="114" Height="85" VerticalAlignment="Top">
             <StackPanel HorizontalAlignment="Left" Width="98
                         ">
                 <CheckBox x:Name="chk_my_party" Content="自分のパーティー" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding IsShowMyPartyWindow.Value, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Command="{Binding ShowMyPartyWindowCommand}" />
                 <CheckBox x:Name="chk_your_party" Content="相手のパーティー" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding IsShowOpponentPartyWindow.Value, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Command="{Binding ShowOpponentPartyWindowCommand}"/>
-                <CheckBox x:Name="chk_my_data" Content="自分の成績" Margin="0,0,10,0"/>
-                <CheckBox x:Name="chk_history" Content="履歴"/>
+                <CheckBox x:Name="chk_my_data" Content="自分の成績" Margin="0,0,10,0" IsChecked="{Binding IsShowTodayBattleRecordWindow.Value, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Command="{Binding ShowTodayBattleRecordWindowCommand}"/>
+                <CheckBox x:Name="chk_history" Content="履歴" IsChecked="{Binding IsShowBattleHistoryWindow.Value, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Command="{Binding ShowBattleHistoryWindowCommand}"/>
             </StackPanel>
         </GroupBox>
-        <GroupBox x:Name="groupBox3" Grid.Column="1" Header="キャプチャ設定" Margin="10,10,0,0" Grid.Row="3" HorizontalAlignment="Left" Width="102" Height="85" VerticalAlignment="Top" IsEnabled="{Binding IsEnabled.Value}">
+        <GroupBox x:Name="groupBox3" Grid.Column="1" Header="キャプチャ設定" Margin="10,10,0,0" Grid.Row="3" HorizontalAlignment="Left" Width="102" Height="85" VerticalAlignment="Top" IsEnabled="{Binding IsControlEnabled.Value}">
             <StackPanel Height="53" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="90">
                 <Button x:Name="button" Content="範囲設定" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3,3,0,3" Width="84" Command="{Binding ShowCaptureWindowCommand}" />
                 <Button x:Name="btn_analysis" Content="分析" VerticalAlignment="Top" Margin="3" Width="84" HorizontalAlignment="Left" Command="{Binding AnalysisCommand}"/>
@@ -68,6 +73,14 @@
 
         <prism:InteractionRequestTrigger SourceObject="{Binding ShowOpponentPartyWindowRequest, Mode=OneWay}">
             <actions:OpponentPartyWindowAction />
+        </prism:InteractionRequestTrigger>
+
+        <prism:InteractionRequestTrigger SourceObject="{Binding ShowTodayBattleRecordWindowRequest, Mode=OneWay}">
+            <actions:TodayBattleRecordWindowAction />
+        </prism:InteractionRequestTrigger>
+
+        <prism:InteractionRequestTrigger SourceObject="{Binding ShowBattleHistoryWindowRequest, Mode=OneWay}">
+            <actions:BattleHistoryWindowAction />
         </prism:InteractionRequestTrigger>
     </i:Interaction.Triggers>
 </Window>

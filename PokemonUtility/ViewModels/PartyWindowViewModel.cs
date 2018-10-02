@@ -1,23 +1,16 @@
 ﻿using PokemonUtility.Models;
 using Prism.Commands;
-using Prism.Mvvm;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System.Windows.Media.Imaging;
 using System.Reactive.Linq;
 using PokemonUtility.Models.Party;
+using PokemonUtility.ViewModels.Abstract;
 
 namespace PokemonUtility.ViewModels
 {
-    class PartyWindowViewModel : BindableBase
+    class PartyWindowViewModel : SubWindowViewModel
     {
-        // 位置
-        public ReactiveProperty<int> X { get; private set; }
-        public ReactiveProperty<int> Y { get; private set; }
-
-        // ウィンドウ表示フラグ
-        public ReactiveProperty<bool> IsShowWindow { get; private set; }
-
         // ウィンドウアクティブ
         public ReactiveProperty<bool> WindowEnabled { get; private set; }
 
@@ -57,22 +50,15 @@ namespace PokemonUtility.ViewModels
             PartyWindowModel partyWindowModel,
             PartyManegementModel partyManegementModel,
             PartyWaiStatetModel partyWaitStateModel
-            )
+            ) : base(partyWindowModel)
         {
             // モデル設定
             _partyWindowModel = partyWindowModel;
             _partyWaitStateModel = partyWaitStateModel;
             _partyManegementModel = partyManegementModel;
             
-            // ウィンドウ表示フラグ紐づけ
-            IsShowWindow = _partyWindowModel.ObserveProperty(m => m.IsShowWindow).ToReactiveProperty();
-
             // ウィンドウアクティブ紐づけ
-            WindowEnabled = _partyWindowModel.ObserveProperty(m => m.IsShowWindow).ToReactiveProperty();
-
-            // ウィンドウ位置紐づけ
-            X = _partyWindowModel.ToReactivePropertyAsSynchronized(m => m.X);
-            Y = _partyWindowModel.ToReactivePropertyAsSynchronized(m => m.Y);
+            WindowEnabled = _partyWindowModel.ObserveProperty(m => m.IsAnalyzing).Select(x => !x).ToReactiveProperty();
 
             // ポケモンイメージ紐づけ
             PokemonImage0 = _partyManegementModel.ObserveProperty(m => m.PokemonId0).Select(x => ImageFactoryModel.CreatePokemonImage(x)).ToReactiveProperty();
@@ -97,13 +83,6 @@ namespace PokemonUtility.ViewModels
             WaitImage3 = _partyWaitStateModel.ObserveProperty(m => m.WaitState3).Select(x => ImageFactoryModel.CreateProgressImage(x)).ToReactiveProperty();
             WaitImage4 = _partyWaitStateModel.ObserveProperty(m => m.WaitState4).Select(x => ImageFactoryModel.CreateProgressImage(x)).ToReactiveProperty();
             WaitImage5 = _partyWaitStateModel.ObserveProperty(m => m.WaitState5).Select(x => ImageFactoryModel.CreateProgressImage(x)).ToReactiveProperty();
-
-            sanpleCommand = new DelegateCommand(sample);
-        }
-
-        private void sample()
-        {
-            int aa = 0;
         }
     }
 
