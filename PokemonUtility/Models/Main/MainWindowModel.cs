@@ -17,16 +17,6 @@ namespace PokemonUtility.Models.Main
 
         #endregion
 
-        // 分析中
-        private bool _isAnalyzing = false;
-        public bool IsAnalyzing
-        {
-            get { return _isAnalyzing; }
-            set { SetProperty(ref _isAnalyzing, value); }
-        }
-
-
-
         // 対戦結果
         private int _battle_result = BattleResultConst.WIN;
         public int Battle_result

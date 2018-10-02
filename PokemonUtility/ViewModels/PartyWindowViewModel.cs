@@ -16,7 +16,7 @@ namespace PokemonUtility.ViewModels
         public ReactiveProperty<int> Y { get; private set; }
 
         // ウィンドウ表示フラグ
-        public ReactiveProperty<bool> IsShowPartyWindow { get; private set; }
+        public ReactiveProperty<bool> IsShowWindow { get; private set; }
 
         // ウィンドウアクティブ
         public ReactiveProperty<bool> WindowEnabled { get; private set; }
@@ -65,10 +65,10 @@ namespace PokemonUtility.ViewModels
             _partyManegementModel = partyManegementModel;
             
             // ウィンドウ表示フラグ紐づけ
-            IsShowPartyWindow = _partyWindowModel.ObserveProperty(m => m.IsShowWindow).ToReactiveProperty();
+            IsShowWindow = _partyWindowModel.ObserveProperty(m => m.IsShowWindow).ToReactiveProperty();
 
             // ウィンドウアクティブ紐づけ
-            WindowEnabled = _partyWindowModel.ObserveProperty(m => m.WindowEnabled).ToReactiveProperty();
+            WindowEnabled = _partyWindowModel.ObserveProperty(m => m.IsShowWindow).ToReactiveProperty();
 
             // ウィンドウ位置紐づけ
             X = _partyWindowModel.ToReactivePropertyAsSynchronized(m => m.X);

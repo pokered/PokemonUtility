@@ -2,22 +2,8 @@
 
 namespace PokemonUtility.Models.Party
 {
-    class PartyWindowModel : WindowModel
-    {
-        private bool _isShowWindow = false;
-        public bool IsShowWindow
-        {
-            get { return _isShowWindow; }
-            set { SetProperty(ref _isShowWindow, value); }
-        }
-
-        private bool _windowEnabled = true;
-        public bool WindowEnabled
-        {
-            get { return _windowEnabled; }
-            set { SetProperty(ref _windowEnabled, value); }
-        }
-    }
+    class PartyWindowModel : SubWindowModel
+    { }
 
     class MyPartyWindowModel : PartyWindowModel
     {

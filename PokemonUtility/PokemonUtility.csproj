@@ -80,7 +80,9 @@
     <Compile Include="Behaviors\WindowMoveBehavior.cs" />
     <Compile Include="Const\BattleResultConst.cs" />
     <Compile Include="Const\PartyConst.cs" />
+    <Compile Include="Const\SoftGenerationConst.cs" />
     <Compile Include="Const\WaitStateConst.cs" />
+    <Compile Include="Models\Abstract\SubWindowModel.cs" />
     <Compile Include="Models\Image\BitmapConverterModel.cs" />
     <Compile Include="Models\Capture\CaptureImageManegementModel.cs" />
     <Compile Include="Models\Image\ScreenCaptureModel.cs" />
@@ -91,15 +93,15 @@
     <Compile Include="Models\Party\PartyManegementModel.cs" />
     <Compile Include="Models\Party\PartyWindowModel.cs" />
     <Compile Include="Models\Abstract\WindowModel.cs" />
+    <Compile Include="Models\TodayBattleRecord\TodayBattleRecordWindowModel.cs" />
     <Compile Include="PokemonAnalysis.cs" />
     <Compile Include="PythonProcess.cs" />
-    <Compile Include="TriggerActions\CaptureWindowAction.cs" />
     <Compile Include="TriggerActions\CloseWindowAction.cs" />
-    <Compile Include="TriggerActions\MyPartyWindowAction.cs" />
-    <Compile Include="TriggerActions\OpponentPartyWindowAction.cs" />
-    <Compile Include="TriggerActions\PopupWindowActionBase.cs" />
+    <Compile Include="TriggerActions\Abstract\PopupWindowActionBase.cs" />
+    <Compile Include="TriggerActions\PopupWindowsAction.cs" />
     <Compile Include="ViewModels\CaptureWindowViewModel.cs" />
     <Compile Include="ViewModels\PartyWindowViewModel.cs" />
+    <Compile Include="ViewModels\TodayBattleRecordWindowViewModel.cs" />
     <Compile Include="Views\CaptureWindow.xaml.cs">
       <DependentUpon>CaptureWindow.xaml</DependentUpon>
     </Compile>
@@ -108,6 +110,9 @@
     </Compile>
     <Compile Include="Views\OpponentPartyWindow.xaml.cs">
       <DependentUpon>OpponentPartyWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TodayBattleRecordWindow.xaml.cs">
+      <DependentUpon>TodayBattleRecordWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\CaptureWindow.xaml">
       <SubType>Designer</SubType>
@@ -122,7 +127,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Models\SoftGeneration.cs" />
+    <Compile Include="Models\Common\SoftGeneration.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -133,6 +138,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\OpponentPartyWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TodayBattleRecordWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

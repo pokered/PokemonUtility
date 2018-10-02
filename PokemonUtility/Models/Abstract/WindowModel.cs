@@ -4,6 +4,7 @@ namespace PokemonUtility.Models.Abstract
 {
     abstract class WindowModel : BindableBase
     {
+        // 座標X
         private int _x = 0;
         public int X
         {
@@ -11,6 +12,7 @@ namespace PokemonUtility.Models.Abstract
             set { SetProperty(ref _x, value); }
         }
 
+        // 座標Y
         private int _y = 0;
         public int Y
         {
@@ -18,18 +20,12 @@ namespace PokemonUtility.Models.Abstract
             set { SetProperty(ref _y, value); }
         }
 
-        private int _width = 1;
-        public int Width
+        // 分析中か否か
+        private bool _isAnalyzing = false;
+        public bool IsAnalyzing
         {
-            get { return _width; }
-            set { SetProperty(ref _width, value); }
-        }
-
-        private int _height = 1;
-        public int Height
-        {
-            get { return _height; }
-            set { SetProperty(ref _height, value); }
+            get { return _isAnalyzing; }
+            set { SetProperty(ref _isAnalyzing, value); }
         }
     }
 }

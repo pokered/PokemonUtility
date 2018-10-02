@@ -17,7 +17,7 @@
     <Grid>
         <Border BorderBrush="Black" BorderThickness="1" Cursor="Arrow" Opacity="0.8" >
             <Border BorderBrush="Black" BorderThickness="1" Margin="9" Cursor="Arrow" Opacity="0.8">
-                <TextBox x:Name="textBox" TextWrapping="Wrap" Text="キャプチャ範囲指定&#xD;&#xA;（右クリックで閉じる）" AcceptsReturn="True" FontSize="22" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderThickness="0,0,0,0" Margin="9" IsReadOnly="True" Cursor="Arrow" SelectionOpacity="1" IsEnabled="False"/>
+                <TextBox x:Name="textBox" TextWrapping="Wrap" Text="キャプチャ範囲指定&#xD;&#xA;（ダブルクリックで閉じる）" AcceptsReturn="True" FontSize="22" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderThickness="0,0,0,0" Margin="9" IsReadOnly="True" Cursor="Arrow" SelectionOpacity="1" IsEnabled="False"/>
             </Border>
         </Border>
     </Grid>

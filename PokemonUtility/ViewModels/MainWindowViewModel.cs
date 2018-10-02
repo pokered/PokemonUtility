@@ -1,7 +1,5 @@
 ﻿using Prism.Mvvm;
 using Prism.Commands;
-using PokemonUtility.Models;
-using System.Collections.Generic;
 using Prism.Interactivity.InteractionRequest;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
@@ -12,6 +10,9 @@ using PokemonUtility.Models.Capture;
 using PokemonUtility.Models.Party;
 using PokemonUtility.Models.Main;
 using System.Reactive.Linq;
+using System.Collections.ObjectModel;
+using PokemonUtility.Models.Common;
+using System.Linq;
 
 namespace PokemonUtility.ViewModels
 {
@@ -26,13 +27,11 @@ namespace PokemonUtility.ViewModels
         public ReactiveProperty<bool> RadioLose { get; }
         public ReactiveProperty<bool> RadioDraw { get; }
 
-        private bool _groupBoxEnabled = true;
-        public bool GroupBoxEnabled
-        {
-            get { return _groupBoxEnabled; }
-            set { SetProperty(ref _groupBoxEnabled, value); }
-        }
+        // ソフト世代
+        public ObservableCollection<SoftGeneration> CmbSoftGenerations { get; } = new ObservableCollection<SoftGeneration>();
 
+        // 選択されているソフト世代
+        public ReactiveProperty<SoftGeneration> SelectedSoftGeneration { get; } = new ReactiveProperty<SoftGeneration>();
 
         // モデル
         private MainWindowModel _mainWindowModel = MainWindowModel.GetInstance();
@@ -69,10 +68,6 @@ namespace PokemonUtility.ViewModels
             IsEnabled = _mainWindowModel.ObserveProperty(m => m.IsAnalyzing).Select(x => !x).ToReactiveProperty();
 
             // ラジオボタン紐づけ
-            //RadioWin = _mainWindowModel.ObserveProperty(m => m.RadioWin).ToReactiveProperty();
-            //RadioLose = _mainWindowModel.ObserveProperty(m => m.RadioLose).ToReactiveProperty();
-            //RadioDraw = _mainWindowModel.ObserveProperty(m => m.RadioDraw).ToReactiveProperty();
-
             RadioWin = _mainWindowModel.ObserveProperty(m => m.Battle_result).Select(x => x == BattleResultConst.WIN).ToReactiveProperty();
             RadioLose = _mainWindowModel.ObserveProperty(m => m.Battle_result).Select(x => x == BattleResultConst.LOSE).ToReactiveProperty();
             RadioDraw = _mainWindowModel.ObserveProperty(m => m.Battle_result).Select(x => x == BattleResultConst.DRAW).ToReactiveProperty();
@@ -85,18 +80,9 @@ namespace PokemonUtility.ViewModels
             IsShowOpponentPartyWindow = _opponentPartyWindowModel.ToReactivePropertyAsSynchronized(m => m.IsShowWindow);
 
             // 世代コンボボックスのアイテム設定
-            var softGenerationList = new List<SoftGeneration>();
-            softGenerationList.Add(new SoftGeneration() { ID = 0, Name = "赤緑" });
-            softGenerationList.Add(new SoftGeneration() { ID = 1, Name = "金銀" });
-            softGenerationList.Add(new SoftGeneration() { ID = 2, Name = "ＲＳ" });
-            softGenerationList.Add(new SoftGeneration() { ID = 3, Name = "ＤＰ" });
-            softGenerationList.Add(new SoftGeneration() { ID = 4, Name = "黒白" });
-            softGenerationList.Add(new SoftGeneration() { ID = 5, Name = "ＸＹ" });
-            softGenerationList.Add(new SoftGeneration() { ID = 6, Name = "ＳＭ" });
-
-            // 先にselecteditemに値を設定しないとダメ
-            SelectedSoftGeneration = softGenerationList[0];
-            SoftGenerations = softGenerationList;
+            SoftGenerations softGenerations = new SoftGenerations();
+            softGenerations.GetSoftGenerations().ToList().ForEach(e => CmbSoftGenerations.Add(e));
+            SelectedSoftGeneration.Value = CmbSoftGenerations[SoftGenerationConst.SUN_MOON];
 
             // コマンド
             CloseWindowCommand = new DelegateCommand(CloseWindowCommandExecute);
@@ -122,16 +108,6 @@ namespace PokemonUtility.ViewModels
             // 相手のパーティー位置
             _opponentPartyWindowModel.X = Properties.Settings.Default.OpponentPartyWindowX;
             _opponentPartyWindowModel.Y = Properties.Settings.Default.OpponentPartyWindowY;
-        }
-
-        // ソフトの世代
-        public SoftGeneration SelectedSoftGeneration { get; set; }	// 変更通知
-        private List<SoftGeneration> _softGenerations;
-        public List<SoftGeneration> SoftGenerations
-        {
-            get { return _softGenerations; }
-            // privateにする
-            set { _softGenerations = value; }
         }
 
         // 閉じる際に添付プロパティ保存

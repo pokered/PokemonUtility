@@ -9,7 +9,7 @@ namespace PokemonUtility.TriggerActions
     /// <summary>
     /// 独自のView(Window)をInteractionRequestで表示するためのPopupWindowActionを汎用化したもの
     /// </summary>
-    class PopupWindowActionBase : TriggerAction<FrameworkElement>
+    abstract class PopupWindowActionBase : TriggerAction<FrameworkElement>
     {
         #region WindowType
         public Type WindowType
