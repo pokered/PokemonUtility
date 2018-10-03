@@ -98,6 +98,7 @@
     <Compile Include="Models\TodayBattleRecord\TodayBattleRecordWindowModel.cs" />
     <Compile Include="PythonProcess.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="Client.cs" />
     <Compile Include="TriggerActions\CloseWindowAction.cs" />
     <Compile Include="TriggerActions\Abstract\PopupWindowActionBase.cs" />
     <Compile Include="TriggerActions\PopupWindowsAction.cs" />

@@ -19,6 +19,7 @@ using PokemonUtility.ViewModels.Abstract;
 using PokemonUtility.Models.Database;
 using System.Data;
 using System;
+using System.Collections.Generic;
 
 namespace PokemonUtility.ViewModels
 {
@@ -227,16 +228,26 @@ namespace PokemonUtility.ViewModels
         // 分析
         private async void AnalysisCommandExecute()
         {
-            // DB接続
-            DatabaseConnectModel test = new DatabaseConnectModel();
+            //// DB接続
+            //DatabaseConnectModel test = new DatabaseConnectModel();
 
-            DataTable db = test.db();
-            var list = db.AsEnumerable().ToDictionary(
-                row => Convert.ToString(row["pokemon_id"]),
-                row => Convert.ToString(row["name_ja"])
-                );
+            //DataTable db = test.db();
+            //var list = db.AsEnumerable().ToDictionary(
+            //    row => Convert.ToString(row["pokemon_id"]),
+            //    row => Convert.ToString(row["name_ja"])
+            //    );
 
-            var aa = list["0"];
+            //var aa = list["0"];
+
+            //return;
+
+            //List<int> aaa = new List<int>();
+
+            //PythonProcess pythonProcess = new PythonProcess();
+            //int bb = pythonProcess.test2();
+
+            Client client = new Client();
+            client.Start();
 
             return;
 
