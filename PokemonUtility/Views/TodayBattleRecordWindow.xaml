@@ -12,11 +12,6 @@
              Width="654.106"     
              Height="434.594">
     <Grid Margin="0,0,105,72">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="141*"/>
-            <ColumnDefinition Width="49*"/>
-        </Grid.ColumnDefinitions>
-
     </Grid>
 
     <i:Interaction.Triggers>

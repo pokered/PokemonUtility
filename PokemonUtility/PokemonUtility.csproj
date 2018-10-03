@@ -84,6 +84,7 @@
     <Compile Include="Const\WaitStateConst.cs" />
     <Compile Include="Models\Abstract\SubWindowModel.cs" />
     <Compile Include="Models\BattleHistory\BattleHistoryWindowModel.cs" />
+    <Compile Include="Models\Database\DatabaseConnectModel.cs" />
     <Compile Include="Models\Image\BitmapConverterModel.cs" />
     <Compile Include="Models\Capture\CaptureImageManegementModel.cs" />
     <Compile Include="Models\Image\ScreenCaptureModel.cs" />
@@ -95,7 +96,6 @@
     <Compile Include="Models\Party\PartyWindowModel.cs" />
     <Compile Include="Models\Abstract\WindowModel.cs" />
     <Compile Include="Models\TodayBattleRecord\TodayBattleRecordWindowModel.cs" />
-    <Compile Include="PokemonAnalysis.cs" />
     <Compile Include="PythonProcess.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="TriggerActions\CloseWindowAction.cs" />

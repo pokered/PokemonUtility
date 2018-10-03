@@ -16,6 +16,9 @@ using System.Linq;
 using PokemonUtility.Models.TodayBattleRecord;
 using PokemonUtility.Models.BattleHistory;
 using PokemonUtility.ViewModels.Abstract;
+using PokemonUtility.Models.Database;
+using System.Data;
+using System;
 
 namespace PokemonUtility.ViewModels
 {
@@ -224,6 +227,19 @@ namespace PokemonUtility.ViewModels
         // 分析
         private async void AnalysisCommandExecute()
         {
+            // DB接続
+            DatabaseConnectModel test = new DatabaseConnectModel();
+
+            DataTable db = test.db();
+            var list = db.AsEnumerable().ToDictionary(
+                row => Convert.ToString(row["pokemon_id"]),
+                row => Convert.ToString(row["name_ja"])
+                );
+
+            var aa = list["0"];
+
+            return;
+
             // メインウィンドウの一部を非アクティブにする
             _mainWindowModel.IsAnalyzing = true;
 
