@@ -1,5 +1,4 @@
-﻿using Prism.Mvvm;
-using Prism.Commands;
+﻿using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
@@ -19,7 +18,6 @@ using PokemonUtility.ViewModels.Abstract;
 using PokemonUtility.Models.Database;
 using System.Data;
 using System;
-using System.Collections.Generic;
 
 namespace PokemonUtility.ViewModels
 {
@@ -43,11 +41,11 @@ namespace PokemonUtility.ViewModels
         public ReactiveProperty<bool> RadioDraw { get; }
 
         // ソフト世代
-        public ObservableCollection<SoftGeneration> CmbSoftGenerations { get; } = new ObservableCollection<SoftGeneration>();
+        public ObservableCollection<SoftGenerationModel> CmbSoftGenerations { get; } = new ObservableCollection<SoftGenerationModel>();
 
         // 選択されているソフト世代
-        public ReactiveProperty<SoftGeneration> SelectedSoftGeneration { get; } = new ReactiveProperty<SoftGeneration>();
-
+        public ReactiveProperty<SoftGenerationModel> SelectedSoftGeneration { get; } = new ReactiveProperty<SoftGenerationModel>();
+        
         // メインモデル
         private MainWindowModel _mainWindowModel = MainWindowModel.GetInstance();
 
@@ -80,7 +78,10 @@ namespace PokemonUtility.ViewModels
 
         // ウィンドウクローズコマンド
         public DelegateCommand CloseWindowCommand { get; }
-        
+
+        // 戦績保存コマンド
+        public DelegateCommand SaveBattleRecordCommand { get; }
+
         // 分析コマンド
         public DelegateCommand AnalysisCommand { get; }
 
@@ -109,17 +110,28 @@ namespace PokemonUtility.ViewModels
             IsShowBattleHistoryWindow = _battleHistoryWindowModel.ToReactivePropertyAsSynchronized(m => m.IsShowWindow);
 
             // ラジオボタン紐づけ
-            RadioWin = _mainWindowModel.ObserveProperty(m => m.Battle_result).Select(x => x == BattleResultConst.WIN).ToReactiveProperty();
-            RadioLose = _mainWindowModel.ObserveProperty(m => m.Battle_result).Select(x => x == BattleResultConst.LOSE).ToReactiveProperty();
-            RadioDraw = _mainWindowModel.ObserveProperty(m => m.Battle_result).Select(x => x == BattleResultConst.DRAW).ToReactiveProperty();
+            //RadioWin = _mainWindowModel.ObserveProperty(m => m.BattleResult).Select(x => x == BattleResultConst.WIN).ToReactiveProperty();
+            RadioWin.Subscribe(_ => { if (_ == true) _mainWindowModel.BattleResult = BattleResultConst.WIN; } );
+
+            //RadioLose = _mainWindowModel.ObserveProperty(m => m.BattleResult).Select(x => x == BattleResultConst.LOSE).ToReactiveProperty();
+            //RadioDraw = _mainWindowModel.ObserveProperty(m => m.BattleResult).Select(x => x == BattleResultConst.DRAW).ToReactiveProperty();
+
 
             // 世代コンボボックスのアイテム設定
             SoftGenerations softGenerations = new SoftGenerations();
             softGenerations.GetSoftGenerations().ToList().ForEach(e => CmbSoftGenerations.Add(e));
+
+            // コンボボックス初期選択
             SelectedSoftGeneration.Value = CmbSoftGenerations[SoftGenerationConst.SUN_MOON];
 
+            // コンボボックスの値をモデルに格納
+            SelectedSoftGeneration.Subscribe(_ => _mainWindowModel.SoftGenerationId = _.Id);
+            
             // ウィンドウクローズコマンド
             CloseWindowCommand = new DelegateCommand(SaveProperty);
+
+            // 戦績保存コマンド
+            SaveBattleRecordCommand = new DelegateCommand(SaveBattleRecord);
 
             // 分析コマンド
             AnalysisCommand = new DelegateCommand(AnalysisCommandExecute);
@@ -163,8 +175,7 @@ namespace PokemonUtility.ViewModels
         }
 
         // 閉じる際に添付プロパティ保存
-        private void SaveProperty
-            ()
+        private void SaveProperty()
         {
             // メイン画面
             Properties.Settings.Default.MainWindowX = _mainWindowModel.X;
@@ -193,6 +204,15 @@ namespace PokemonUtility.ViewModels
             Properties.Settings.Default.BattleHistoryWindowY = _battleHistoryWindowModel.Y;
 
             Properties.Settings.Default.Save();
+        }
+
+        // 戦績保存
+        private void SaveBattleRecord()
+        {
+            SoftGenerationModel aou = SelectedSoftGeneration.Value;
+            int aa = _mainWindowModel.SoftGenerationId;
+            int bb = _mainWindowModel.BattleResult;
+            int aaa = 1;
         }
 
         // キャプチャ画面を表示
@@ -228,14 +248,14 @@ namespace PokemonUtility.ViewModels
         // 分析
         private async void AnalysisCommandExecute()
         {
-            //// DB接続
-            //DatabaseConnectModel test = new DatabaseConnectModel();
+            // DB接続
+            DatabaseConnectModel test = new DatabaseConnectModel();
 
-            //DataTable db = test.db();
-            //var list = db.AsEnumerable().ToDictionary(
-            //    row => Convert.ToString(row["pokemon_id"]),
-            //    row => Convert.ToString(row["name_ja"])
-            //    );
+            DataTable db = test.db();
+            var list = db.AsEnumerable().ToDictionary(
+                row => Convert.ToString(row["pokemon_id"]),
+                row => Convert.ToString(row["name_ja"])
+                );
 
             //var aa = list["0"];
 

@@ -84,6 +84,7 @@
     <Compile Include="Const\WaitStateConst.cs" />
     <Compile Include="Models\Abstract\SubWindowModel.cs" />
     <Compile Include="Models\BattleHistory\BattleHistoryWindowModel.cs" />
+    <Compile Include="Models\Main\BattleRecordSaveModel.cs" />
     <Compile Include="Models\Database\DatabaseConnectModel.cs" />
     <Compile Include="Models\Image\BitmapConverterModel.cs" />
     <Compile Include="Models\Capture\CaptureImageManegementModel.cs" />
@@ -140,7 +141,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Models\Common\SoftGeneration.cs" />
+    <Compile Include="Models\Common\SoftGenerationModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

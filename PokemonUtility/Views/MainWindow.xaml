@@ -35,8 +35,8 @@
                 <RadioButton GroupName="battle_result" x:Name="rdo_win"  Content="勝" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,5,2,3" Height="17" IsChecked="{Binding RadioWin.Value, Mode=TwoWay}"  />
                 <RadioButton GroupName="battle_result" x:Name="rdo_lose" Content="負" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,5,2,3" Height="17" RenderTransformOrigin="4.321,0.893" IsChecked="{Binding RadioLose.Value, Mode=TwoWay}" />
                 <RadioButton GroupName="battle_result" x:Name="rdo_draw" Content="分" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,5,2,3" IsChecked="{Binding RadioDraw.Value, Mode=TwoWay}" />
-                <ComboBox x:Name="comboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" Margin="3,1,3,0" ItemsSource="{Binding CmbSoftGenerations}" SelectedItem="{Binding SelectedSoftGeneration.Value}" DisplayMemberPath="Name" SelectedValuePath="Id" />
-                <Button x:Name="button1" Content="保存" HorizontalAlignment="Left" VerticalAlignment="Top" Width="45" Margin="3"/>
+                <ComboBox x:Name="comboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" Margin="3,1,3,0" ItemsSource="{Binding CmbSoftGenerations}" SelectedItem="{Binding SelectedSoftGeneration.Value}" DisplayMemberPath="Name"/>
+                <Button x:Name="button1" Content="保存" HorizontalAlignment="Left" VerticalAlignment="Top" Width="45" Margin="3" Command="{Binding SaveBattleRecordCommand}"/>
             </WrapPanel>
         </GroupBox>
         

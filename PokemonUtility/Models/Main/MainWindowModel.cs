@@ -18,11 +18,19 @@ namespace PokemonUtility.Models.Main
         #endregion
 
         // 対戦結果
-        private int _battle_result = BattleResultConst.WIN;
-        public int Battle_result
+        private int _battleResult = BattleResultConst.WIN;
+        public int BattleResult
         {
-            get { return _battle_result; }
-            set { SetProperty(ref _battle_result, value); }
+            get { return _battleResult; }
+            set { SetProperty(ref _battleResult, value); }
+        }
+
+        // 世代
+        private int _softGenerationId = 0;
+        public int SoftGenerationId
+        {
+            get { return _softGenerationId; }
+            set { SetProperty(ref _softGenerationId, value); }
         }
     }
 }
