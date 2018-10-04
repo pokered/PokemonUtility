@@ -18,6 +18,8 @@ using PokemonUtility.ViewModels.Abstract;
 using PokemonUtility.Models.Database;
 using System.Data;
 using System;
+using System.Drawing;
+using PokemonUtility.Models.Analysis;
 
 namespace PokemonUtility.ViewModels
 {
@@ -35,10 +37,11 @@ namespace PokemonUtility.ViewModels
         // コントロールの可不可
         public ReactiveProperty<bool> IsControlEnabled { get; }
 
+        // ラジオボタンのリスト
+        public enum BattleResultEnum { Win, Lose, Draw }
+
         // ラジオボタン制御
-        public ReactiveProperty<bool> RadioWin { get; }
-        public ReactiveProperty<bool> RadioLose { get; }
-        public ReactiveProperty<bool> RadioDraw { get; }
+        public ReactiveProperty<BattleResultEnum> RdoBattleResult { get; set; } = new ReactiveProperty<BattleResultEnum>();
 
         // ソフト世代
         public ObservableCollection<SoftGenerationModel> CmbSoftGenerations { get; } = new ObservableCollection<SoftGenerationModel>();
@@ -46,6 +49,7 @@ namespace PokemonUtility.ViewModels
         // 選択されているソフト世代
         public ReactiveProperty<SoftGenerationModel> SelectedSoftGeneration { get; } = new ReactiveProperty<SoftGenerationModel>();
         
+
         // メインモデル
         private MainWindowModel _mainWindowModel = MainWindowModel.GetInstance();
 
@@ -110,12 +114,8 @@ namespace PokemonUtility.ViewModels
             IsShowBattleHistoryWindow = _battleHistoryWindowModel.ToReactivePropertyAsSynchronized(m => m.IsShowWindow);
 
             // ラジオボタン紐づけ
-            //RadioWin = _mainWindowModel.ObserveProperty(m => m.BattleResult).Select(x => x == BattleResultConst.WIN).ToReactiveProperty();
-            RadioWin.Subscribe(_ => { if (_ == true) _mainWindowModel.BattleResult = BattleResultConst.WIN; } );
-
-            //RadioLose = _mainWindowModel.ObserveProperty(m => m.BattleResult).Select(x => x == BattleResultConst.LOSE).ToReactiveProperty();
-            //RadioDraw = _mainWindowModel.ObserveProperty(m => m.BattleResult).Select(x => x == BattleResultConst.DRAW).ToReactiveProperty();
-
+            RdoBattleResult.Value = BattleResultEnum.Win;
+            RdoBattleResult.Subscribe(x => _mainWindowModel.BattleResult = ToBattleResultId(x));
 
             // 世代コンボボックスのアイテム設定
             SoftGenerations softGenerations = new SoftGenerations();
@@ -134,6 +134,7 @@ namespace PokemonUtility.ViewModels
             SaveBattleRecordCommand = new DelegateCommand(SaveBattleRecord);
 
             // 分析コマンド
+            //AnalysisCommand = new DelegateCommand(AnalysisCommandExecute);
             AnalysisCommand = new DelegateCommand(AnalysisCommandExecute);
 
             // 各種サブウィンドウ表示制御コマンド
@@ -143,7 +144,7 @@ namespace PokemonUtility.ViewModels
             ShowTodayBattleRecordWindowCommand = new DelegateCommand(ShowTodayBattleRecordWindowCommandExecute);
             ShowBattleHistoryWindowCommand = new DelegateCommand(ShowBattleHistoryWindowCommandExecute);
         }
-
+        
         // 添付プロパティ設定
         private void LoadProperty()
         {
@@ -210,6 +211,7 @@ namespace PokemonUtility.ViewModels
         private void SaveBattleRecord()
         {
             SoftGenerationModel aou = SelectedSoftGeneration.Value;
+            int ccc = _mainWindowModel.BattleResult;
             int aa = _mainWindowModel.SoftGenerationId;
             int bb = _mainWindowModel.BattleResult;
             int aaa = 1;
@@ -246,16 +248,16 @@ namespace PokemonUtility.ViewModels
         }
 
         // 分析
-        private async void AnalysisCommandExecute()
+        private void AnalysisCommandExecute()
         {
-            // DB接続
-            DatabaseConnectModel test = new DatabaseConnectModel();
+            //// DB接続
+            //DatabaseConnectModel test = new DatabaseConnectModel();
 
-            DataTable db = test.db();
-            var list = db.AsEnumerable().ToDictionary(
-                row => Convert.ToString(row["pokemon_id"]),
-                row => Convert.ToString(row["name_ja"])
-                );
+            //DataTable db = test.db();
+            //var list = db.AsEnumerable().ToDictionary(
+            //    row => Convert.ToString(row["pokemon_id"]),
+            //    row => Convert.ToString(row["name_ja"])
+            //    );
 
             //var aa = list["0"];
 
@@ -263,52 +265,10 @@ namespace PokemonUtility.ViewModels
 
             //List<int> aaa = new List<int>();
 
-            //PythonProcess pythonProcess = new PythonProcess();
-            //int bb = pythonProcess.test2();
-
-            Client client = new Client();
-            client.Start();
+            AnalysisImage analysisImage = new AnalysisImage();
+            Task<bool> resultaa = analysisImage.RunAsync();
 
             return;
-
-            // メインウィンドウの一部を非アクティブにする
-            _mainWindowModel.IsAnalyzing = true;
-
-            // パーティーウィンドウを非アクティブにする
-            _myPartyWindowModel.IsAnalyzing = true;
-            _opponentPartyWindowModel.IsAnalyzing = true;
-
-            // キャプチャイメージ作成
-            _captureManegementModel.CreateCaptureImage();
-            
-            for (int i = PartyConst.PARTY_INDEX_FIRST; i <= PartyConst.PARTY_INDEX_SIXTH; i++)
-            {
-                _myPartyWaitStateModel.Start(i);
-
-                int result = await Task.Run(() => DoWork(1000));
-
-                _myPartyManegementModel.ChangePokemonId(i, i);
-
-                _myPartyWaitStateModel.End(i);
-            }
-
-            for (int i = PartyConst.PARTY_INDEX_FIRST; i <= PartyConst.PARTY_INDEX_SIXTH; i++)
-            {
-                _opponentPartyWaitStateModel.Start(i);
-
-                int result = await Task.Run(() => DoWork(1000));
-
-                _opponentPartyManegementModel.ChangePokemonId(i, i);
-
-                _opponentPartyWaitStateModel.End(i);
-            }
-
-            // パーティーウィンドウをアクティブにする
-            _myPartyWindowModel.IsAnalyzing = false;
-            _opponentPartyWindowModel.IsAnalyzing = false;
-
-            // メインウィンドウの一部をアクティブにする
-            _mainWindowModel.IsAnalyzing = false;
         }
 
         private int DoWork(int n)
@@ -317,6 +277,14 @@ namespace PokemonUtility.ViewModels
 
             // このメソッドからの戻り値
             return 1;
+        }
+        
+        // 対戦結果のEnumをidに変換
+        private int ToBattleResultId(BattleResultEnum battleResultEnum)
+        {
+            if (battleResultEnum == BattleResultEnum.Win) return BattleResultConst.WIN;
+            if (battleResultEnum == BattleResultEnum.Lose) return BattleResultConst.LOSE;
+            return BattleResultConst.DRAW;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Windows.Media.Imaging;
 
@@ -115,6 +116,20 @@ namespace PokemonUtility.Models
             progressImage.EndInit();
 
             return progressImage;
+        }
+
+        public static Bitmap ResizeBitmap(Bitmap bitmap, int resizeWidth, int resizeHeight)
+        {
+            Bitmap resizeBitmap = new Bitmap(resizeWidth, resizeHeight);
+
+            using (Graphics g = Graphics.FromImage(resizeBitmap))
+            {
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                //g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                g.DrawImage(bitmap, 0, 0, resizeWidth, resizeHeight);
+            }
+
+            return resizeBitmap;
         }
     }
 }

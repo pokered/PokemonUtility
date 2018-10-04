@@ -128,6 +128,40 @@ namespace PokemonUtility.Models.Capture
             CaptureImage = BitmapConverterModel.ToBitmapImage(screenBmp);
         }
 
+        public Bitmap MyPartyPokemonImage(int pokemonIndex)
+        {
+            return CutImage(_myPartyList[pokemonIndex]);
+        }
+
+        public Bitmap OpponentPartyPokemonImage(int pokemonIndex)
+        {
+            return CutImage(_opponentPartyList[pokemonIndex]);
+        }
+
+        private Bitmap CutImage(RelativeRectangle relativeRectangle)
+        {
+            // キャプチャ範囲
+            int x = _captureWindowModel.X;
+            int y = _captureWindowModel.Y;
+            int width = _captureWindowModel.Width;
+            int height = _captureWindowModel.Height;
+
+            // 画像キャプチャ
+            Bitmap captureBitmap = ScreenCaptureModel.ScreenCapture(x, y, width, height);
+
+            // 切り抜く範囲
+            Rectangle cutRect = new Rectangle(
+                (int)(x * relativeRectangle.X),
+                (int)(y * relativeRectangle.Y),
+                (int)(width * relativeRectangle.Width),
+                (int)(height * relativeRectangle.Height)
+                );
+
+            Bitmap cutBitmap = captureBitmap.Clone(cutRect, captureBitmap.PixelFormat);
+
+            return cutBitmap;
+        }
+
         public void CutIconImages()
         {
             CutPartyIconImages(_myPartyList, "myPokemon");
