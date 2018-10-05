@@ -15,10 +15,8 @@ using System.Linq;
 using PokemonUtility.Models.TodayBattleRecord;
 using PokemonUtility.Models.BattleHistory;
 using PokemonUtility.ViewModels.Abstract;
-using PokemonUtility.Models.Database;
 using System.Data;
 using System;
-using System.Drawing;
 using PokemonUtility.Models.Analysis;
 
 namespace PokemonUtility.ViewModels
@@ -105,7 +103,7 @@ namespace PokemonUtility.ViewModels
             IsControlEnabled = _mainWindowModel.ObserveProperty(m => m.IsAnalyzing).Select(x => !x).ToReactiveProperty();
 
             // キャプチャイメージ紐づけ
-            CaptureImage = _captureManegementModel.ObserveProperty(m => m.CaptureImage).ToReactiveProperty();
+            CaptureImage = _captureManegementModel.ObserveProperty(m => m.PokemonMarkedCaptureImage).ToReactiveProperty();
 
             // サブウィンドウ紐づけ
             IsShowMyPartyWindow = _myPartyWindowModel.ToReactivePropertyAsSynchronized(m => m.IsShowWindow);
@@ -157,7 +155,7 @@ namespace PokemonUtility.ViewModels
             _captureWindowModel.Y = Properties.Settings.Default.CaptureY;
             _captureWindowModel.Width = Properties.Settings.Default.CaptureWidth;
             _captureWindowModel.Height = Properties.Settings.Default.CaptureHeight;
-
+            
             // 自分のパーティー座標
             _myPartyWindowModel.X = Properties.Settings.Default.MyPartyWindowX;
             _myPartyWindowModel.Y = Properties.Settings.Default.MyPartyWindowY;
@@ -250,33 +248,8 @@ namespace PokemonUtility.ViewModels
         // 分析
         private void AnalysisCommandExecute()
         {
-            //// DB接続
-            //DatabaseConnectModel test = new DatabaseConnectModel();
-
-            //DataTable db = test.db();
-            //var list = db.AsEnumerable().ToDictionary(
-            //    row => Convert.ToString(row["pokemon_id"]),
-            //    row => Convert.ToString(row["name_ja"])
-            //    );
-
-            //var aa = list["0"];
-
-            //return;
-
-            //List<int> aaa = new List<int>();
-
             AnalysisImage analysisImage = new AnalysisImage();
             Task<bool> resultaa = analysisImage.RunAsync();
-
-            return;
-        }
-
-        private int DoWork(int n)
-        {
-            System.Threading.Thread.Sleep(1500);
-
-            // このメソッドからの戻り値
-            return 1;
         }
         
         // 対戦結果のEnumをidに変換

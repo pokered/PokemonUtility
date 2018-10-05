@@ -4,7 +4,6 @@ using PokemonUtility.Models.Database;
 using PokemonUtility.Models.Main;
 using PokemonUtility.Models.Party;
 using System;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -35,21 +34,9 @@ namespace PokemonUtility.Models.Analysis
 
         public async Task<bool> RunAsync()
         {
-            DatabaseConnectModel databaseConnectModel = new DatabaseConnectModel();
+            // キャプチャ全体画面を表示
+            _captureManegementModel.CreatePokemonMarkedCaptureImage();
 
-            int predictVersion = 560;
-
-            string query = @"
-            SELECT
-                original_pokemon_icon_id
-            FROM
-                pokemon_icon_id_convert_new_to_original
-            WHERE
-                version = '{0}' AND
-                new_pokemon_icon_id = '{1}'
-            ;
-            ";
-            
             // 各ウィンドウを分析中にする
             _mainWindowModel.IsAnalyzing = true;
             _myPartyWindowModel.IsAnalyzing = true;
@@ -68,13 +55,8 @@ namespace PokemonUtility.Models.Analysis
                 int pokemonId = Analysis(myBitmap);
 
                 // ポケモンIDをオリジナルに変換
-                query = string.Format(query, predictVersion, pokemonId);
-                DataTable data = databaseConnectModel.Select(query);
-
-                int originalPokemonId = -1;
-
-                if (data.Rows.Count > 0) originalPokemonId = Int32.Parse(data.Rows[0][0].ToString());
-
+                int originalPokemonId = PokemonIdConverterModel.ToOriginalPokemonId(pokemonId);
+                
                 // 待機演出終了
                 //_myPartyWaitStateModel.End(i);
 
@@ -84,20 +66,30 @@ namespace PokemonUtility.Models.Analysis
                 _myPartyManegementModel.ChangePokemonId(i, originalPokemonId);
             }
 
-            //// 相手のパーティー
-            //for (int i = PartyConst.PARTY_INDEX_FIRST; i <= PartyConst.PARTY_INDEX_SIXTH; i++)
-            //{
-            //    _opponentPartyWaitStateModel.Start(i);
+            // 相手のパーティー
+            for (int i = PartyConst.PARTY_INDEX_FIRST; i <= PartyConst.PARTY_INDEX_SIXTH; i++)
+            {
+                //_opponentPartyWaitStateModel.Start(i);
 
-            //    // 画像切り取り
-            //    Bitmap opponentBitmap = _captureManegementModel.MyPartyPokemonImage(i);
+                // 画像切り取り
+                Bitmap opponentBitmap = _captureManegementModel.OpponentPartyPokemonImage(i);
 
-            //    int pokemonId = Analysis(opponentBitmap);
+                // 画像分析
+                int pokemonId = Analysis(opponentBitmap);
 
-            //    _opponentPartyManegementModel.ChangePokemonId(i, pokemonId);
+                // ポケモンIDをオリジナルに変換
+                int originalPokemonId = PokemonIdConverterModel.ToOriginalPokemonId(pokemonId);
 
-            //    _opponentPartyWaitStateModel.End(i);
-            //}
+                // 待機演出終了
+                //_myPartyWaitStateModel.End(i);
+
+                Console.WriteLine("OriginalPokemonID = " + originalPokemonId.ToString());
+
+                // 分析結果からポケモンイメージを表示
+                _opponentPartyManegementModel.ChangePokemonId(i, originalPokemonId);
+
+                //_opponentPartyWaitStateModel.End(i);
+            }
 
             // 各ウィンドウの分析終了
             _mainWindowModel.IsAnalyzing = false;
@@ -107,7 +99,7 @@ namespace PokemonUtility.Models.Analysis
             return true;
         }
 
-        private int Analysis(Bitmap bitmap)
+        public int Analysis(Bitmap bitmap)
         {
             try
             {
@@ -148,7 +140,7 @@ namespace PokemonUtility.Models.Analysis
                 MemoryStream ms = new MemoryStream();
 
                 // 受信サイズ
-                byte[] resBytes = new byte[5000];
+                byte[] resBytes = new byte[16384];
                 int resSize = 0;
 
                 do

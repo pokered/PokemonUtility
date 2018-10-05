@@ -109,6 +109,11 @@ namespace PokemonUtility.Models.Party
             set { SetProperty(ref _pokemonOrderList[PartyConst.PARTY_INDEX_SIXTH], value); }
         }
 
+        public int GetPokemonId(int pokemonIndex)
+        {
+            return _pokemonIdList[pokemonIndex];
+        }
+
         // 選出順を取得
         private int GetOrder(int pokemonIndex)
         {
