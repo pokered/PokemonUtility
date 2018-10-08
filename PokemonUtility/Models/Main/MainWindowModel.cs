@@ -1,5 +1,6 @@
 ﻿using PokemonUtility.Const;
 using PokemonUtility.Models.Abstract;
+using System;
 
 namespace PokemonUtility.Models.Main
 {
@@ -31,6 +32,25 @@ namespace PokemonUtility.Models.Main
         {
             get { return _softGenerationId; }
             set { SetProperty(ref _softGenerationId, value); }
+        }
+
+        // ログ
+        private string _log = "";
+        public string Log
+        {
+            get { return _log; }
+            set { SetProperty(ref _log, value); }
+        }
+
+        public void AddLog(string message)
+        {
+            // メッセージに時間を付加
+            message += " " + DateTime.Now.ToString("HH:mm");
+
+            // メッセージを繋げる
+            string log = message + "\n" + Log;
+
+            Log = log.Trim();
         }
     }
 }

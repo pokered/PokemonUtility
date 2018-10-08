@@ -109,43 +109,20 @@ namespace PokemonUtility.Models.Party
             set { SetProperty(ref _pokemonOrderList[PartyConst.PARTY_INDEX_SIXTH], value); }
         }
 
+        // ポケモンIDを取得
         public int GetPokemonId(int pokemonIndex)
         {
             return _pokemonIdList[pokemonIndex];
         }
 
         // 選出順を取得
-        private int GetOrder(int pokemonIndex)
+        public int GetOrder(int pokemonIndex)
         {
             if (_selectedOrder.Contains(pokemonIndex)) return _selectedOrder.IndexOf(pokemonIndex);
 
             if (_notSelectedOrder.Contains(pokemonIndex)) return _notSelectedOrder.IndexOf(pokemonIndex) + 3;
 
             return -1;
-        }
-
-        // ポケモンID変更に伴い選出も修正する
-        private void CorrectOrder(int pokemonIndex)
-        {
-            int pokemonId = _pokemonIdList[pokemonIndex];
-
-            // not exist
-            if (!ImageFactoryModel.ExistPokemonImage(pokemonId))
-            {
-                // 選出・非選出からも削除
-                _selectedOrder.Remove(pokemonIndex);
-                _notSelectedOrder.Remove(pokemonIndex);
-                return;
-            }
-
-            // 存在するのに選出・非選出のどちらにもidがない場合
-            if (!_selectedOrder.Contains(pokemonIndex) & !_notSelectedOrder.Contains(pokemonIndex))
-            {
-                _notSelectedOrder.Add(pokemonIndex);
-            }
-
-            // 更新
-            UpdateOrder();
         }
 
         // aa
@@ -191,6 +168,30 @@ namespace PokemonUtility.Models.Party
             _selectedOrder.Add(pokemonIndex);
 
             // 選出変更を反映
+            UpdateOrder();
+        }
+
+        // ポケモンID変更に伴い選出も修正する
+        private void CorrectOrder(int pokemonIndex)
+        {
+            int pokemonId = _pokemonIdList[pokemonIndex];
+
+            // not exist
+            if (!ImageFactoryModel.ExistPokemonImage(pokemonId))
+            {
+                // 選出・非選出からも削除
+                _selectedOrder.Remove(pokemonIndex);
+                _notSelectedOrder.Remove(pokemonIndex);
+                return;
+            }
+
+            // 存在するのに選出・非選出のどちらにもidがない場合
+            if (!_selectedOrder.Contains(pokemonIndex) & !_notSelectedOrder.Contains(pokemonIndex))
+            {
+                _notSelectedOrder.Add(pokemonIndex);
+            }
+
+            // 更新
             UpdateOrder();
         }
 

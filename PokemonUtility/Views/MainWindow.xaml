@@ -15,7 +15,7 @@
     <Window.Resources>
         <local:RadioButtonConverter x:Key="EnumConverter" />
     </Window.Resources>
-    
+
     <Grid Margin="0,0,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="0" />
@@ -28,11 +28,13 @@
             <ColumnDefinition Width="122"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <GroupBox x:Name="groupBox" Header="ログ" HorizontalAlignment="Left" Width="236" Grid.ColumnSpan="2" Margin="10,10,0,10" Grid.RowSpan="2"/>
+        <GroupBox x:Name="groupBox" Header="ログ" HorizontalAlignment="Left" Width="236" Grid.ColumnSpan="2" Margin="10,10,0,10" Grid.RowSpan="2">
+            <TextBox x:Name="textBox" TextWrapping="Wrap" RenderTransformOrigin="0.446,0.523" Text="{Binding Log.Value}" IsReadOnly="True" HorizontalAlignment="Right" Width="224" Height="84" VerticalAlignment="Bottom"/>
+        </GroupBox>
         <GroupBox x:Name="groupBox1" Grid.Column="2" Header="キャプチャイメージ" Grid.RowSpan="4" HorizontalAlignment="Right" Width="432" Height="282" VerticalAlignment="Bottom" Margin="0,0,10,10">
             <Image x:Name="image" Margin="0,0,10,10" HorizontalAlignment="Right" Width="400" Height="240" VerticalAlignment="Bottom" Source="{Binding CaptureImage.Value}" Stretch="Fill" />
         </GroupBox>
-        
+
         <!-- 戦績保存 -->
 
         <GroupBox x:Name="groupBox2_Copy" Header="保存" Grid.ColumnSpan="2" Margin="10,10,0,10" Grid.Row="2" HorizontalAlignment="Left" Width="236" IsEnabled="{Binding IsControlEnabled.Value}">
@@ -44,7 +46,7 @@
                 <Button x:Name="button1" Content="保存" HorizontalAlignment="Left" VerticalAlignment="Top" Width="45" Margin="3" Command="{Binding SaveBattleRecordCommand}"/>
             </WrapPanel>
         </GroupBox>
-        
+
         <!-- 各種サブウィンドウ -->
         <GroupBox x:Name="groupBox2" Header="各種ウィンドウ" Grid.Row="3" Margin="10,10,0,0" HorizontalAlignment="Left" Width="114" Height="85" VerticalAlignment="Top">
             <StackPanel HorizontalAlignment="Left" Width="98

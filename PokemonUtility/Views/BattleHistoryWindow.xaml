@@ -9,11 +9,8 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              Left="{Binding X.Value, Mode=TwoWay}"
              Top="{Binding Y.Value, Mode=TwoWay}"
-             Width="654.106"     
-             Height="434.594">
-    <Grid>
-            
-    </Grid>
+             Width="609.891"     
+             Height="343.126">
 
     <i:Interaction.Triggers>
         <ei:PropertyChangedTrigger Binding="{Binding IsShowWindow.Value}" >
@@ -24,4 +21,45 @@
     <i:Interaction.Behaviors>
         <b:HideCloseButtonOnWindowBehavior />
     </i:Interaction.Behaviors>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0" />
+            <RowDefinition Height="62"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <GroupBox x:Name="groupBox" Header="検索条件" HorizontalAlignment="Left" Height="164" Margin="10,10,0,0" Grid.RowSpan="3" VerticalAlignment="Top" Width="380">
+            <Grid Margin="0,0,20,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label x:Name="label" Content="トレーナー" HorizontalAlignment="Left" Height="26" VerticalAlignment="Top" Width="52" Margin="0,10,0,0" Grid.RowSpan="2"/>
+                <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="52,10,0,0" Width="64" Height="26" VerticalAlignment="Top" Grid.RowSpan="2"/>
+                <Label x:Name="label1" Content="勝敗" HorizontalAlignment="Left" Height="26" Margin="126,10,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="1.053,0.533" Grid.RowSpan="2"/>
+                <ComboBox x:Name="comboBox_Copy" HorizontalAlignment="Left" Margin="164,10,0,0" Width="64" Height="26" VerticalAlignment="Top" Grid.RowSpan="2"/>
+                <Label x:Name="label1_Copy" Content="件数" HorizontalAlignment="Left" Height="26" Margin="233,10,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="1.053,0.533" Grid.RowSpan="2"/>
+                <ComboBox x:Name="comboBox_Copy1" Margin="274,10,0,0" Height="26" VerticalAlignment="Top" Grid.RowSpan="2" HorizontalAlignment="Left" Width="64"/>
+                <Label x:Name="label_Copy" Content="自分" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="34" Grid.Row="1" Margin="5,10,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                <Image x:Name="image" HorizontalAlignment="Left" Height="40" Margin="39,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40"/>
+                <Image x:Name="image_Copy" HorizontalAlignment="Left" Height="40" Margin="79,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40"/>
+                <Image x:Name="image_Copy1" HorizontalAlignment="Left" Height="40" Margin="119,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40"/>
+                <Image x:Name="image_Copy2" HorizontalAlignment="Left" Height="40" Margin="159,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40"/>
+                <Image x:Name="image_Copy3" HorizontalAlignment="Left" Height="40" Margin="199,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40"/>
+                <Image x:Name="image_Copy4" HorizontalAlignment="Left" Height="40" Margin="239,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40"/>
+                <Button x:Name="button" Content="検索" HorizontalAlignment="Left" Height="40" Margin="284,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="54" RenderTransformOrigin="0.643,0.568"/>
+                <Label x:Name="label_Copy1" Content="自分" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="34" Grid.Row="1" Margin="5,55,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                <Image x:Name="image_Copy5" HorizontalAlignment="Left" Height="40" Margin="39,55,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40"/>
+                <Image x:Name="image_Copy6" HorizontalAlignment="Left" Height="40" Margin="79,55,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40"/>
+                <Image x:Name="image_Copy7" HorizontalAlignment="Left" Height="40" Margin="119,55,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40"/>
+                <Image x:Name="image_Copy8" HorizontalAlignment="Left" Height="40" Margin="159,55,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40"/>
+                <Image x:Name="image_Copy9" HorizontalAlignment="Left" Height="40" Margin="199,55,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40"/>
+                <Image x:Name="image_Copy10" HorizontalAlignment="Left" Height="40" Margin="239,55,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40"/>
+                <Button x:Name="button_Copy" Content="リセット" HorizontalAlignment="Left" Height="40" Margin="284,55,0,0" Grid.Row="1" VerticalAlignment="Top" Width="54" RenderTransformOrigin="0.643,0.568"/>
+            </Grid>
+        </GroupBox>
+    </Grid>
 </Window>

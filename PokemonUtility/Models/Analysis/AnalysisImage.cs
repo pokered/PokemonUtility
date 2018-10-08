@@ -99,13 +99,10 @@ namespace PokemonUtility.Models.Analysis
             return true;
         }
 
-        public int Analysis(Bitmap bitmap)
+        private int Analysis(Bitmap bitmap)
         {
             try
             {
-                // Bitmapを転送できるサイズにリサイズする
-                bitmap = ImageFactoryModel.ResizeBitmap(bitmap, 40, 40);
-
                 // bitmapからbyte[]に変換
                 MemoryStream img_ms = new MemoryStream();
                 bitmap.Save(img_ms, ImageFormat.Png);

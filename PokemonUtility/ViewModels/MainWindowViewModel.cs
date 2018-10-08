@@ -29,6 +29,9 @@ namespace PokemonUtility.ViewModels
         public ReactiveProperty<bool> IsShowTodayBattleRecordWindow { get; }
         public ReactiveProperty<bool> IsShowBattleHistoryWindow { get; }
 
+        // ログ
+        public ReactiveProperty<string> Log { get; }
+
         // キャプチャイメージ
         public ReactiveProperty<BitmapImage> CaptureImage { get; }
 
@@ -102,6 +105,9 @@ namespace PokemonUtility.ViewModels
             // 分析中フラグ紐づけ
             IsControlEnabled = _mainWindowModel.ObserveProperty(m => m.IsAnalyzing).Select(x => !x).ToReactiveProperty();
 
+            // ログ紐づけ
+            Log = _mainWindowModel.ObserveProperty(m => m.Log).ToReactiveProperty();
+
             // キャプチャイメージ紐づけ
             CaptureImage = _captureManegementModel.ObserveProperty(m => m.PokemonMarkedCaptureImage).ToReactiveProperty();
 
@@ -120,7 +126,7 @@ namespace PokemonUtility.ViewModels
             softGenerations.GetSoftGenerations().ToList().ForEach(e => CmbSoftGenerations.Add(e));
 
             // コンボボックス初期選択
-            SelectedSoftGeneration.Value = CmbSoftGenerations[SoftGenerationConst.SUN_MOON];
+            SelectedSoftGeneration.Value = CmbSoftGenerations[0];
 
             // コンボボックスの値をモデルに格納
             SelectedSoftGeneration.Subscribe(_ => _mainWindowModel.SoftGenerationId = _.Id);
@@ -208,11 +214,8 @@ namespace PokemonUtility.ViewModels
         // 戦績保存
         private void SaveBattleRecord()
         {
-            SoftGenerationModel aou = SelectedSoftGeneration.Value;
-            int ccc = _mainWindowModel.BattleResult;
-            int aa = _mainWindowModel.SoftGenerationId;
-            int bb = _mainWindowModel.BattleResult;
-            int aaa = 1;
+            BattleRecordSaveModel battleRecordSaveModel = new BattleRecordSaveModel();
+            battleRecordSaveModel.Save();
         }
 
         // キャプチャ画面を表示

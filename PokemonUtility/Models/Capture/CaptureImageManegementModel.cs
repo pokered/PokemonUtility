@@ -55,21 +55,21 @@ namespace PokemonUtility.Models.Capture
         {
             // 自分のパーティーの相対的位置
             _myPartyMarkedList = new List<RelativeRectangle>();
-            _myPartyMarkedList.Add(new RelativeRectangle(0.178, 0.16, 0.065, 0.125));
-            _myPartyMarkedList.Add(new RelativeRectangle(0.32, 0.16, 0.065, 0.125));
-            _myPartyMarkedList.Add(new RelativeRectangle(0.178, 0.37, 0.065, 0.125));
-            _myPartyMarkedList.Add(new RelativeRectangle(0.32, 0.37, 0.065, 0.125));
-            _myPartyMarkedList.Add(new RelativeRectangle(0.178, 0.58, 0.065, 0.125));
-            _myPartyMarkedList.Add(new RelativeRectangle(0.32, 0.58, 0.065, 0.125));
+            _myPartyMarkedList.Add(new RelativeRectangle(0.165, 0.16, 0.075, 0.125));
+            _myPartyMarkedList.Add(new RelativeRectangle(0.305, 0.16, 0.075, 0.125));
+            _myPartyMarkedList.Add(new RelativeRectangle(0.165, 0.38, 0.075, 0.125));
+            _myPartyMarkedList.Add(new RelativeRectangle(0.305, 0.38, 0.075, 0.125));
+            _myPartyMarkedList.Add(new RelativeRectangle(0.165, 0.59, 0.075, 0.125));
+            _myPartyMarkedList.Add(new RelativeRectangle(0.305, 0.59, 0.075, 0.125));
 
             // 相手のパーティーの相対的位置
             _opponentPartyMarkedList = new List<RelativeRectangle>();
-            _opponentPartyMarkedList.Add(new RelativeRectangle(0.61, 0.15, 0.08, 0.13));
-            _opponentPartyMarkedList.Add(new RelativeRectangle(0.755, 0.15, 0.08, 0.13));
-            _opponentPartyMarkedList.Add(new RelativeRectangle(0.61, 0.37, 0.08, 0.13));
-            _opponentPartyMarkedList.Add(new RelativeRectangle(0.755, 0.37, 0.08, 0.13));
-            _opponentPartyMarkedList.Add(new RelativeRectangle(0.61, 0.58, 0.08, 0.13));
-            _opponentPartyMarkedList.Add(new RelativeRectangle(0.755, 0.58, 0.08, 0.13));
+            _opponentPartyMarkedList.Add(new RelativeRectangle(0.61, 0.15, 0.075, 0.125));
+            _opponentPartyMarkedList.Add(new RelativeRectangle(0.755, 0.15, 0.075, 0.125));
+            _opponentPartyMarkedList.Add(new RelativeRectangle(0.61, 0.37, 0.075, 0.125));
+            _opponentPartyMarkedList.Add(new RelativeRectangle(0.755, 0.37, 0.075, 0.125));
+            _opponentPartyMarkedList.Add(new RelativeRectangle(0.61, 0.58, 0.075, 0.125));
+            _opponentPartyMarkedList.Add(new RelativeRectangle(0.755, 0.58, 0.075, 0.125));
         }
 
         // アイコン部分に目印を付けたキャプチャが画面
@@ -125,18 +125,20 @@ namespace PokemonUtility.Models.Capture
             PokemonMarkedCaptureImage = BitmapConverterModel.ToBitmapImage(screenBmp);
         }
 
-        public Bitmap MyPartyPokemonImage(int pokemonIndex)
+        public Bitmap MyPartyPokemonImage(int pokemonIndex, int differenceX = 0, int differenceY = 0)
         {
-            return CutImage(_myPartyMarkedList[pokemonIndex]);
+            return CutImage(_myPartyMarkedList[pokemonIndex], differenceX, differenceY);
         }
 
-        public Bitmap OpponentPartyPokemonImage(int pokemonIndex)
+        public Bitmap OpponentPartyPokemonImage(int pokemonIndex, int differenceX = 0, int differenceY = 0)
         {
-            return CutImage(_opponentPartyMarkedList[pokemonIndex]);
+            return CutImage(_opponentPartyMarkedList[pokemonIndex], differenceX, differenceY);
         }
 
-        private Bitmap CutImage(RelativeRectangle relativeRectangle)
+        private Bitmap CutImage(RelativeRectangle relativeRectangle, int differenceX = 0, int differenceY = 0)
         {
+            // TODO 差分でキャプチャいめえーじからはみ出すとエラー
+
             // キャプチャ範囲
             int x = _captureWindowModel.X;
             int y = _captureWindowModel.Y;
