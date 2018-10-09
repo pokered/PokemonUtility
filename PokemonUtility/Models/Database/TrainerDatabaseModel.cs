@@ -1,12 +1,12 @@
-﻿using MySql.Data.MySqlClient;
-using PokemonUtility.Models.Database.Container;
+﻿using PokemonUtility.Struct;
 using System.Collections.Generic;
+using System.Data;
 
 namespace PokemonUtility.Models.Database
 {
     class TrainerDatabaseModel : DatabaseConnectModel
     {
-        public List<TrainerInfoModel> Select(int trainerId=-1)
+        public List<TrainerInfo> GetTrainers(int trainerId=-1)
         {
             string query = @"
             SELECT *
@@ -19,25 +19,18 @@ namespace PokemonUtility.Models.Database
                 string.Format(query, trainerId);
             }
 
-            List<TrainerInfoModel> TrainerInfoList = new List<TrainerInfoModel>();
+            List<TrainerInfo> TrainerInfoList = new List<TrainerInfo>();
 
-            using (var con = new MySqlConnection(_connectionString))
+            DataTable dt = Select(query);
+
+            foreach(DataRow dataRow in dt.Rows)
             {
-                // コマンド
-                var command = new MySqlCommand(query, con);
+                TrainerInfo trainerInfo = new TrainerInfo();
 
-                // SQLを実行します。
-                using (var executeReader = command.ExecuteReader())
-                {
-                    while (executeReader.Read())
-                    {
-                        TrainerInfoModel trainerInfoModel = new TrainerInfoModel();
-                        trainerInfoModel.TrainerId = (int)executeReader["trainerId"];
-                        trainerInfoModel.name = (string)executeReader["name"];
+                trainerInfo.TrainerId = ObjectConverter.ToInt(dataRow[0]);
+                trainerInfo.Name = ObjectConverter.ToString(dataRow[1]);
 
-                        TrainerInfoList.Add(trainerInfoModel);
-                    }
-                }
+                TrainerInfoList.Add(trainerInfo);
             }
 
             return TrainerInfoList;

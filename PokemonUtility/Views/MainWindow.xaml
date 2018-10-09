@@ -49,8 +49,7 @@
 
         <!-- 各種サブウィンドウ -->
         <GroupBox x:Name="groupBox2" Header="各種ウィンドウ" Grid.Row="3" Margin="10,10,0,0" HorizontalAlignment="Left" Width="114" Height="85" VerticalAlignment="Top">
-            <StackPanel HorizontalAlignment="Left" Width="98
-                        ">
+            <StackPanel HorizontalAlignment="Left" Width="98">
                 <CheckBox x:Name="chk_my_party"     Content="自分のパーティー" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding IsShowMyPartyWindow.Value, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Command="{Binding ShowMyPartyWindowCommand}" />
                 <CheckBox x:Name="chk_your_party"   Content="相手のパーティー" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding IsShowOpponentPartyWindow.Value, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Command="{Binding ShowOpponentPartyWindowCommand}"/>
                 <CheckBox x:Name="chk_my_data"      Content="自分の成績" Margin="0,0,10,0" IsChecked="{Binding IsShowTodayBattleRecordWindow.Value, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Command="{Binding ShowTodayBattleRecordWindowCommand}"/>

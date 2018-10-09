@@ -5,19 +5,16 @@ using Reactive.Bindings.Extensions;
 using System.Threading.Tasks;
 using PokemonUtility.Const;
 using System.Windows.Media.Imaging;
-using PokemonUtility.Models.Capture;
-using PokemonUtility.Models.Party;
 using PokemonUtility.Models.Main;
 using System.Reactive.Linq;
 using System.Collections.ObjectModel;
 using PokemonUtility.Models.Common;
 using System.Linq;
-using PokemonUtility.Models.TodayBattleRecord;
-using PokemonUtility.Models.BattleHistory;
 using PokemonUtility.ViewModels.Abstract;
 using System.Data;
 using System;
 using PokemonUtility.Models.Analysis;
+using PokemonUtility.Models;
 
 namespace PokemonUtility.ViewModels
 {
@@ -50,30 +47,6 @@ namespace PokemonUtility.ViewModels
         // 選択されているソフト世代
         public ReactiveProperty<SoftGenerationModel> SelectedSoftGeneration { get; } = new ReactiveProperty<SoftGenerationModel>();
         
-
-        // メインモデル
-        private MainWindowModel _mainWindowModel = MainWindowModel.GetInstance();
-
-        // キャプチャモデル
-        private CaptureWindowModel _captureWindowModel = CaptureWindowModel.GetInstance();
-        private CaptureImageManegementModel _captureManegementModel = CaptureImageManegementModel.GetInstance();
-
-        // 自分のパーティー関連のモデル
-        private MyPartyWindowModel _myPartyWindowModel = MyPartyWindowModel.GetInstance();
-        private MyPartyManegementModel _myPartyManegementModel = MyPartyManegementModel.GetInstance();
-        private MyPartyWaitStateModel _myPartyWaitStateModel = MyPartyWaitStateModel.GetInstance();
-
-        // 相手のパーティー関連のモデル
-        private OpponentPartyWindowModel _opponentPartyWindowModel = OpponentPartyWindowModel.GetInstance();
-        private OpponentPartyManegementModel _opponentPartyManegementModel = OpponentPartyManegementModel.GetInstance();
-        private OpponentPartyWaitStateModel _opponentPartyWaitStateModel = OpponentPartyWaitStateModel.GetInstance();
-
-        // 本日の戦績モデル
-        private TodayBattleRecordWindowModel _todayBattleRecordWindowModel = TodayBattleRecordWindowModel.GetInstance();
-
-        // 戦績履歴モデル
-        private BattleHistoryWindowModel _battleHistoryWindowModel = BattleHistoryWindowModel.GetInstance();
-
         // サブウィンドウ表示リクエスト
         public InteractionRequest<INotification> ShowCaptureWindowRequest { get; } = new InteractionRequest<INotification>();
         public InteractionRequest<INotification> ShowMyPartyWindowRequest { get; } = new InteractionRequest<INotification>();
@@ -103,23 +76,35 @@ namespace PokemonUtility.ViewModels
             LoadProperty();
 
             // 分析中フラグ紐づけ
-            IsControlEnabled = _mainWindowModel.ObserveProperty(m => m.IsAnalyzing).Select(x => !x).ToReactiveProperty();
+            IsControlEnabled = ModelConnector.MainWindow
+                .ObserveProperty(m => m.IsAnalyzing)
+                .Select(x => !x)
+                .ToReactiveProperty();
 
             // ログ紐づけ
-            Log = _mainWindowModel.ObserveProperty(m => m.Log).ToReactiveProperty();
+            Log = ModelConnector.MainWindow.ObserveProperty(m => m.Log).ToReactiveProperty();
 
             // キャプチャイメージ紐づけ
-            CaptureImage = _captureManegementModel.ObserveProperty(m => m.PokemonMarkedCaptureImage).ToReactiveProperty();
+            CaptureImage = ModelConnector.CaptureImageManegement
+                .ObserveProperty(m => m.PokemonMarkedCaptureImage)
+                .ToReactiveProperty();
 
             // サブウィンドウ紐づけ
-            IsShowMyPartyWindow = _myPartyWindowModel.ToReactivePropertyAsSynchronized(m => m.IsShowWindow);
-            IsShowOpponentPartyWindow = _opponentPartyWindowModel.ToReactivePropertyAsSynchronized(m => m.IsShowWindow);
-            IsShowTodayBattleRecordWindow = _todayBattleRecordWindowModel.ToReactivePropertyAsSynchronized(m => m.IsShowWindow);
-            IsShowBattleHistoryWindow = _battleHistoryWindowModel.ToReactivePropertyAsSynchronized(m => m.IsShowWindow);
+            IsShowMyPartyWindow = ModelConnector.MyPartyWindow
+                .ToReactivePropertyAsSynchronized(m => m.IsShowWindow);
+
+            IsShowOpponentPartyWindow = ModelConnector.OpponentPartyWindow
+                .ToReactivePropertyAsSynchronized(m => m.IsShowWindow);
+
+            IsShowTodayBattleRecordWindow = ModelConnector.TodayBattleRecordWindow
+                .ToReactivePropertyAsSynchronized(m => m.IsShowWindow);
+
+            IsShowBattleHistoryWindow = ModelConnector.BattleHistoryWindow
+                .ToReactivePropertyAsSynchronized(m => m.IsShowWindow);
 
             // ラジオボタン紐づけ
             RdoBattleResult.Value = BattleResultEnum.Win;
-            RdoBattleResult.Subscribe(x => _mainWindowModel.BattleResult = ToBattleResultId(x));
+            RdoBattleResult.Subscribe(x => ModelConnector.MainWindow.BattleResult = ToBattleResultId(x));
 
             // 世代コンボボックスのアイテム設定
             SoftGenerations softGenerations = new SoftGenerations();
@@ -129,7 +114,7 @@ namespace PokemonUtility.ViewModels
             SelectedSoftGeneration.Value = CmbSoftGenerations[0];
 
             // コンボボックスの値をモデルに格納
-            SelectedSoftGeneration.Subscribe(_ => _mainWindowModel.SoftGenerationId = _.Id);
+            SelectedSoftGeneration.Subscribe(_ => ModelConnector.MainWindow.SoftGenerationId = _.Id);
             
             // ウィンドウクローズコマンド
             CloseWindowCommand = new DelegateCommand(SaveProperty);
@@ -138,7 +123,6 @@ namespace PokemonUtility.ViewModels
             SaveBattleRecordCommand = new DelegateCommand(SaveBattleRecord);
 
             // 分析コマンド
-            //AnalysisCommand = new DelegateCommand(AnalysisCommandExecute);
             AnalysisCommand = new DelegateCommand(AnalysisCommandExecute);
 
             // 各種サブウィンドウ表示制御コマンド
@@ -153,60 +137,60 @@ namespace PokemonUtility.ViewModels
         private void LoadProperty()
         {
             // メイン画面
-            _mainWindowModel.X = Properties.Settings.Default.MainWindowX;
-            _mainWindowModel.Y = Properties.Settings.Default.MainWindowY;
+            ModelConnector.MainWindow.X = Properties.Settings.Default.MainWindowX;
+            ModelConnector.MainWindow.Y = Properties.Settings.Default.MainWindowY;
 
             // キャプチャ画面の範囲
-            _captureWindowModel.X = Properties.Settings.Default.CaptureX;
-            _captureWindowModel.Y = Properties.Settings.Default.CaptureY;
-            _captureWindowModel.Width = Properties.Settings.Default.CaptureWidth;
-            _captureWindowModel.Height = Properties.Settings.Default.CaptureHeight;
+            ModelConnector.CaptureWindow.X = Properties.Settings.Default.CaptureX;
+            ModelConnector.CaptureWindow.Y = Properties.Settings.Default.CaptureY;
+            ModelConnector.CaptureWindow.Width = Properties.Settings.Default.CaptureWidth;
+            ModelConnector.CaptureWindow.Height = Properties.Settings.Default.CaptureHeight;
             
             // 自分のパーティー座標
-            _myPartyWindowModel.X = Properties.Settings.Default.MyPartyWindowX;
-            _myPartyWindowModel.Y = Properties.Settings.Default.MyPartyWindowY;
+            ModelConnector.MyPartyWindow.X = Properties.Settings.Default.MyPartyWindowX;
+            ModelConnector.MyPartyWindow.Y = Properties.Settings.Default.MyPartyWindowY;
 
             // 相手のパーティー座標
-            _opponentPartyWindowModel.X = Properties.Settings.Default.OpponentPartyWindowX;
-            _opponentPartyWindowModel.Y = Properties.Settings.Default.OpponentPartyWindowY;
+            ModelConnector.OpponentPartyWindow.X = Properties.Settings.Default.OpponentPartyWindowX;
+            ModelConnector.OpponentPartyWindow.Y = Properties.Settings.Default.OpponentPartyWindowY;
 
             // 本日の戦績画面
-            _todayBattleRecordWindowModel.X = Properties.Settings.Default.TodayBattleRecordWindowX;
-            _todayBattleRecordWindowModel.Y = Properties.Settings.Default.TodayBattleRecordWindowY;
+            ModelConnector.TodayBattleRecordWindow.X = Properties.Settings.Default.TodayBattleRecordWindowX;
+            ModelConnector.TodayBattleRecordWindow.Y = Properties.Settings.Default.TodayBattleRecordWindowY;
 
             // 戦績履歴画面
-            _battleHistoryWindowModel.X = Properties.Settings.Default.BattleHistoryWindowX;
-            _battleHistoryWindowModel.Y = Properties.Settings.Default.BattleHistoryWindowY;
+            ModelConnector.BattleHistoryWindow.X = Properties.Settings.Default.BattleHistoryWindowX;
+            ModelConnector.BattleHistoryWindow.Y = Properties.Settings.Default.BattleHistoryWindowY;
         }
 
         // 閉じる際に添付プロパティ保存
         private void SaveProperty()
         {
             // メイン画面
-            Properties.Settings.Default.MainWindowX = _mainWindowModel.X;
-            Properties.Settings.Default.MainWindowY = _mainWindowModel.Y;
+            Properties.Settings.Default.MainWindowX = ModelConnector.MainWindow.X;
+            Properties.Settings.Default.MainWindowY = ModelConnector.MainWindow.Y;
 
             // キャプチャ矩形情報
-            Properties.Settings.Default.CaptureX = _captureWindowModel.X;
-            Properties.Settings.Default.CaptureY = _captureWindowModel.Y;
-            Properties.Settings.Default.CaptureWidth = _captureWindowModel.Width;
-            Properties.Settings.Default.CaptureHeight = _captureWindowModel.Height;
+            Properties.Settings.Default.CaptureX = ModelConnector.CaptureWindow.X;
+            Properties.Settings.Default.CaptureY = ModelConnector.CaptureWindow.Y;
+            Properties.Settings.Default.CaptureWidth = ModelConnector.CaptureWindow.Width;
+            Properties.Settings.Default.CaptureHeight = ModelConnector.CaptureWindow.Height;
 
             // 自分のパーティー
-            Properties.Settings.Default.MyPartyWindowX = _myPartyWindowModel.X;
-            Properties.Settings.Default.MyPartyWindowY = _myPartyWindowModel.Y;
+            Properties.Settings.Default.MyPartyWindowX = ModelConnector.MyPartyWindow.X;
+            Properties.Settings.Default.MyPartyWindowY = ModelConnector.MyPartyWindow.Y;
 
             // 相手のパーティー
-            Properties.Settings.Default.OpponentPartyWindowX = _opponentPartyWindowModel.X;
-            Properties.Settings.Default.OpponentPartyWindowY = _opponentPartyWindowModel.Y;
+            Properties.Settings.Default.OpponentPartyWindowX = ModelConnector.OpponentPartyWindow.X;
+            Properties.Settings.Default.OpponentPartyWindowY = ModelConnector.OpponentPartyWindow.Y;
 
             // 本日の戦績画面
-            Properties.Settings.Default.TodayBattleRecordWindowX = _todayBattleRecordWindowModel.X;
-            Properties.Settings.Default.TodayBattleRecordWindowY = _todayBattleRecordWindowModel.Y;
+            Properties.Settings.Default.TodayBattleRecordWindowX = ModelConnector.TodayBattleRecordWindow.X;
+            Properties.Settings.Default.TodayBattleRecordWindowY = ModelConnector.TodayBattleRecordWindow.Y;
 
             // 戦績履歴画面
-            Properties.Settings.Default.BattleHistoryWindowX = _battleHistoryWindowModel.X;
-            Properties.Settings.Default.BattleHistoryWindowY = _battleHistoryWindowModel.Y;
+            Properties.Settings.Default.BattleHistoryWindowX = ModelConnector.BattleHistoryWindow.X;
+            Properties.Settings.Default.BattleHistoryWindowY = ModelConnector.BattleHistoryWindow.Y;
 
             Properties.Settings.Default.Save();
         }

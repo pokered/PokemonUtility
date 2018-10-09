@@ -1,6 +1,6 @@
 ﻿using PokemonUtility.Models.Abstract;
 using PokemonUtility.Models.Database;
-using PokemonUtility.Models.Database.Container;
+using PokemonUtility.Struct;
 using System.Collections.Generic;
 
 namespace PokemonUtility.Models.BattleHistory
@@ -19,14 +19,14 @@ namespace PokemonUtility.Models.BattleHistory
 
         #endregion
 
-        public List<TrainerInfoModel> Trainers { get; set; }
+        public List<TrainerInfo> Trainers { get; set; }
 
         public BattleHistoryWindowModel()
         {
             // データベースから一覧を取得
             TrainerDatabaseModel trainerDatabaseModel = new TrainerDatabaseModel();
 
-            Trainers = trainerDatabaseModel.Select();
+            Trainers = trainerDatabaseModel.GetTrainers();
         }
     }
 }

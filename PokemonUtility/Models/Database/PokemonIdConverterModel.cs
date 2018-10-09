@@ -1,17 +1,16 @@
-﻿using PokemonUtility.Const;
+﻿using MySql.Data.MySqlClient;
+using PokemonUtility.Const;
 using System;
 using System.Data;
 
 namespace PokemonUtility.Models.Database
 {
-    class PokemonIdConverterModel
+    class PokemonIdConverterModel : DatabaseConnectModel
     {
-        private static int PREDICT_VERSION = 560;
+        private int PREDICT_VERSION = 560;
 
-        public static int ToOriginalPokemonId(int new_pokemon_id)
+        public int ToOriginalPokemonId(int new_pokemon_id)
         {
-            DatabaseConnectModel databaseConnectModel = new DatabaseConnectModel();
-
             string query = @"
             SELECT
                 original_pokemon_icon_id
@@ -25,11 +24,21 @@ namespace PokemonUtility.Models.Database
 
             // ポケモンIDをオリジナルに変換
             query = string.Format(query, PREDICT_VERSION, new_pokemon_id);
-            DataTable data = databaseConnectModel.Select(query);
+            using (var con = new MySqlConnection(_connectionString))
+            {
+                // コマンド
+                var command = new MySqlCommand(query, con);
 
-            // 1件目のidを返す
-            if (data.Rows.Count > 0) return Int32.Parse(data.Rows[0][0].ToString());
-
+                // SQLを実行します。
+                using (var executeReader = command.ExecuteReader())
+                {
+                    while (executeReader.Read())
+                    {
+                        return (int)executeReader["original_pokemon_icon_id"];
+                    }
+                }
+            }
+            
             return PokemonConst.POKEMON_ID_NO;
         }
     }

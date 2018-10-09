@@ -4,8 +4,6 @@ namespace PokemonUtility.Models.Database
 {
     class BattleRecordDatabaseModel : DatabaseConnectModel
     {
-        private DatabaseConnectModel _databaseConnectModel;
-
         public int InsertBattleRecord(int generation)
         {
             string query = @"

@@ -89,7 +89,8 @@
     <Compile Include="Models\Abstract\SubWindowModel.cs" />
     <Compile Include="Models\BattleHistory\BattleHistoryWindowModel.cs" />
     <Compile Include="Models\Database\BattleRecordDatabaseModel.cs" />
-    <Compile Include="Models\Database\Container\TrainerInfoModel.cs" />
+    <Compile Include="Models\ModelConnector.cs" />
+    <Compile Include="Struct\TrainerInfo.cs" />
     <Compile Include="Models\Database\PokemonIdConverterModel.cs" />
     <Compile Include="Models\Database\TrainerDatabaseModel.cs" />
     <Compile Include="Models\Main\BattleRecordSaveModel.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Models\Party\PartyWindowModel.cs" />
     <Compile Include="Models\Abstract\WindowModel.cs" />
     <Compile Include="Models\TodayBattleRecord\TodayBattleRecordWindowModel.cs" />
+    <Compile Include="ObjectConverter.cs" />
     <Compile Include="RadioButtonConverter.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Models\Analysis\AnalysisImage.cs" />
@@ -1220,6 +1222,8 @@
     <Resource Include="Images\Progress\progress2.png" />
     <Resource Include="Images\Progress\progress3.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Models\Database\Container\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

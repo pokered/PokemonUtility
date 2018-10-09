@@ -18,20 +18,20 @@ namespace PokemonUtility.Models.Database
             _connectionString = string.Format("Server={0};Database={1};Uid={2};Pwd={3}", server, database, user, pass);
         }
 
-        //protected DataTable Select(string query)
-        //{
-        //    // MySQL の場合
-        //    using (var con = new MySqlConnection(_connectionString))
-        //    {
+        protected DataTable Select(string query)
+        {
+            // MySQL の場合
+            using (var con = new MySqlConnection(_connectionString))
+            {
 
-        //        var command = new MySqlCommand(query, con);
-        //        var adapter = new MySqlDataAdapter(command);
-        //        DataTable dataTable = new DataTable();
-        //        adapter.Fill(dataTable);       // テーブルレコードの取得
+                var command = new MySqlCommand(query, con);
+                var adapter = new MySqlDataAdapter(command);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);       // テーブルレコードの取得
 
-        //        return dataTable;
-        //    }
-        //}
+                return dataTable;
+            }
+        }
 
         protected int Insert(string query)
         {

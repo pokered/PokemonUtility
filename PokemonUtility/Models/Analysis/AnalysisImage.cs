@@ -42,6 +42,8 @@ namespace PokemonUtility.Models.Analysis
             _myPartyWindowModel.IsAnalyzing = true;
             _opponentPartyWindowModel.IsAnalyzing = true;
 
+            PokemonIdConverterModel pokemonIdConverterModel = new PokemonIdConverterModel();
+
             // 自分のパーティー
             for (int i = PartyConst.PARTY_INDEX_FIRST; i <= PartyConst.PARTY_INDEX_SIXTH; i++)
             {
@@ -55,7 +57,7 @@ namespace PokemonUtility.Models.Analysis
                 int pokemonId = Analysis(myBitmap);
 
                 // ポケモンIDをオリジナルに変換
-                int originalPokemonId = PokemonIdConverterModel.ToOriginalPokemonId(pokemonId);
+                int originalPokemonId = pokemonIdConverterModel.ToOriginalPokemonId(pokemonId);
                 
                 // 待機演出終了
                 //_myPartyWaitStateModel.End(i);
@@ -78,7 +80,7 @@ namespace PokemonUtility.Models.Analysis
                 int pokemonId = Analysis(opponentBitmap);
 
                 // ポケモンIDをオリジナルに変換
-                int originalPokemonId = PokemonIdConverterModel.ToOriginalPokemonId(pokemonId);
+                int originalPokemonId = pokemonIdConverterModel.ToOriginalPokemonId(pokemonId);
 
                 // 待機演出終了
                 //_myPartyWaitStateModel.End(i);
