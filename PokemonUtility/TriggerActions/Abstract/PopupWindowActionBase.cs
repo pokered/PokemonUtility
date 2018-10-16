@@ -99,6 +99,7 @@ namespace PokemonUtility.TriggerActions
             if (this.IsModal) this.Window.ShowDialog();
             else this.Window.Show();
         }
+
         /// <summary>
         /// Windowを生成して返す
         /// </summary>
@@ -124,6 +125,7 @@ namespace PokemonUtility.TriggerActions
             else window = this.WindowType.GetConstructor(Type.EmptyTypes).Invoke(null) as Window;
             return window;
         }
+
         /// <summary>
         /// Windowのオーナーをセットする
         /// </summary>

@@ -45,7 +45,7 @@ namespace PokemonUtility.Models.Analysis
             PokemonIdConverterModel pokemonIdConverterModel = new PokemonIdConverterModel();
 
             // 自分のパーティー
-            for (int i = PartyConst.PARTY_INDEX_FIRST; i <= PartyConst.PARTY_INDEX_SIXTH; i++)
+            for (int i = PartyConst.FIRST; i <= PartyConst.SIXTH; i++)
             {
                 // 待機演出開始
                 //_myPartyWaitStateModel.Start(i);
@@ -69,7 +69,7 @@ namespace PokemonUtility.Models.Analysis
             }
 
             // 相手のパーティー
-            for (int i = PartyConst.PARTY_INDEX_FIRST; i <= PartyConst.PARTY_INDEX_SIXTH; i++)
+            for (int i = PartyConst.FIRST; i <= PartyConst.SIXTH; i++)
             {
                 //_opponentPartyWaitStateModel.Start(i);
 

@@ -84,17 +84,21 @@
     <Compile Include="Const\PartyConst.cs" />
     <Compile Include="Const\PokemonConst.cs" />
     <Compile Include="Const\SoftGenerationConst.cs" />
-    <Compile Include="Const\TrainerConst.cs" />
     <Compile Include="Const\WaitStateConst.cs" />
     <Compile Include="Models\Abstract\SubWindowModel.cs" />
     <Compile Include="Models\BattleHistory\BattleHistoryWindowModel.cs" />
+    <Compile Include="Models\BattleHistory\BattleHistroyRow.cs" />
     <Compile Include="Models\Database\BattleRecordDatabaseModel.cs" />
     <Compile Include="Models\ModelConnector.cs" />
-    <Compile Include="Struct\TrainerInfo.cs" />
+    <Compile Include="Models\Notifications\WindowNotification.cs" />
+    <Compile Include="Struct\BattleAggregate.cs" />
+    <Compile Include="Struct\BattleResult.cs" />
+    <Compile Include="Struct\SoftGeneration.cs" />
+    <Compile Include="Struct\Trainer.cs" />
     <Compile Include="Models\Database\PokemonIdConverterModel.cs" />
     <Compile Include="Models\Database\TrainerDatabaseModel.cs" />
     <Compile Include="Models\Main\BattleRecordSaveModel.cs" />
-    <Compile Include="Models\Database\DatabaseConnectModel.cs" />
+    <Compile Include="Models\Database\Abstract\DatabaseConnectModel.cs" />
     <Compile Include="Models\Image\BitmapConverterModel.cs" />
     <Compile Include="Models\Capture\CaptureImageManegementModel.cs" />
     <Compile Include="Models\Image\ScreenCaptureModel.cs" />
@@ -110,7 +114,8 @@
     <Compile Include="RadioButtonConverter.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Models\Analysis\AnalysisImage.cs" />
-    <Compile Include="Struct\BattleRecordContainer.cs" />
+    <Compile Include="Struct\BattleRecord.cs" />
+    <Compile Include="TriggerActions\Abstract\PopupWindowActionBaseOriginal.cs" />
     <Compile Include="TriggerActions\CloseWindowAction.cs" />
     <Compile Include="TriggerActions\Abstract\PopupWindowActionBase.cs" />
     <Compile Include="TriggerActions\PopupWindowsAction.cs" />
@@ -152,7 +157,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Models\Common\SoftGenerationModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -1222,8 +1226,6 @@
     <Resource Include="Images\Progress\progress2.png" />
     <Resource Include="Images\Progress\progress3.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\Database\Container\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

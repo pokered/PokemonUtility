@@ -9,8 +9,8 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              Left="{Binding X.Value, Mode=TwoWay}"
              Top="{Binding Y.Value, Mode=TwoWay}"
-             Width="609.891"     
-             Height="343.126">
+             Width="800"     
+             Height="450">
 
     <i:Interaction.Triggers>
         <ei:PropertyChangedTrigger Binding="{Binding IsShowWindow.Value}" >
@@ -24,42 +24,288 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="0" />
-            <RowDefinition Height="62"/>
+            <RowDefinition Height="171"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="357"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <GroupBox x:Name="groupBox" Header="検索条件" HorizontalAlignment="Left" Height="164" Margin="10,10,0,0" Grid.RowSpan="3" VerticalAlignment="Top" Width="380">
-            <Grid Margin="0,0,20,0">
+        <GroupBox x:Name="groupBox" Header="検索条件" HorizontalAlignment="Left" Height="162" Margin="10,10,0,0" Grid.RowSpan="3" VerticalAlignment="Top" Width="349" Grid.ColumnSpan="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="171*"/>
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="35"/>
-                    <RowDefinition/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="73"/>
                 </Grid.RowDefinitions>
-                <Label x:Name="label" Content="トレーナー" HorizontalAlignment="Left" Height="26" VerticalAlignment="Top" Width="52" Margin="0,10,0,0" Grid.RowSpan="2"/>
-                <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="52,10,0,0" Width="64" Height="26" VerticalAlignment="Top" Grid.RowSpan="2"  ItemsSource="{Binding CmbTrainers}" SelectedItem="{Binding SelectedTrainer.Value}" DisplayMemberPath="Name"/>
-                <Label x:Name="label1" Content="勝敗" HorizontalAlignment="Left" Height="26" Margin="126,10,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="1.053,0.533" Grid.RowSpan="2"/>
-                <ComboBox x:Name="comboBox_Copy" HorizontalAlignment="Left" Margin="164,10,0,0" Width="64" Height="26" VerticalAlignment="Top" Grid.RowSpan="2"/>
-                <Label x:Name="label1_Copy" Content="件数" HorizontalAlignment="Left" Height="26" Margin="233,10,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="1.053,0.533" Grid.RowSpan="2"/>
-                <ComboBox x:Name="comboBox_Copy1" Margin="274,10,0,0" Height="26" VerticalAlignment="Top" Grid.RowSpan="2" HorizontalAlignment="Left" Width="64"/>
-                <Label x:Name="label_Copy" Content="自分" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="34" Grid.Row="1" Margin="5,10,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                <Image x:Name="image" HorizontalAlignment="Left" Height="40" Margin="39,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40"/>
-                <Image x:Name="image_Copy" HorizontalAlignment="Left" Height="40" Margin="79,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40"/>
-                <Image x:Name="image_Copy1" HorizontalAlignment="Left" Height="40" Margin="119,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40"/>
-                <Image x:Name="image_Copy2" HorizontalAlignment="Left" Height="40" Margin="159,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40"/>
-                <Image x:Name="image_Copy3" HorizontalAlignment="Left" Height="40" Margin="199,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40"/>
-                <Image x:Name="image_Copy4" HorizontalAlignment="Left" Height="40" Margin="239,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40"/>
-                <Button x:Name="button" Content="検索" HorizontalAlignment="Left" Height="40" Margin="284,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="54" RenderTransformOrigin="0.643,0.568"/>
-                <Label x:Name="label_Copy1" Content="自分" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="34" Grid.Row="1" Margin="5,55,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                <Image x:Name="image_Copy5" HorizontalAlignment="Left" Height="40" Margin="39,55,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40"/>
-                <Image x:Name="image_Copy6" HorizontalAlignment="Left" Height="40" Margin="79,55,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40"/>
-                <Image x:Name="image_Copy7" HorizontalAlignment="Left" Height="40" Margin="119,55,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40"/>
-                <Image x:Name="image_Copy8" HorizontalAlignment="Left" Height="40" Margin="159,55,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40"/>
-                <Image x:Name="image_Copy9" HorizontalAlignment="Left" Height="40" Margin="199,55,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40"/>
-                <Image x:Name="image_Copy10" HorizontalAlignment="Left" Height="40" Margin="239,55,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40"/>
-                <Button x:Name="button_Copy" Content="リセット" HorizontalAlignment="Left" Height="40" Margin="284,55,0,0" Grid.Row="1" VerticalAlignment="Top" Width="54" RenderTransformOrigin="0.643,0.568"/>
+                <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="23,9,0,0" Width="113" Height="26" VerticalAlignment="Top" ItemsSource="{Binding CmbTrainer}" SelectedItem="{Binding SelectedTrainer.Value}" DisplayMemberPath="Name" IsEnabled="{Binding IsChkTrainerChecked.Value, Mode=TwoWay}"/>
+                <ComboBox x:Name="comboBox_Copy" HorizontalAlignment="Left" Margin="178,9,0,0" Width="50" Height="26" VerticalAlignment="Top" RenderTransformOrigin="0.031,0.577" ItemsSource="{Binding CmbBattleResult}" SelectedItem="{Binding SelectedBattleResult.Value}" DisplayMemberPath="Name" IsEnabled="{Binding IsChkBattleResultChecked.Value, Mode=TwoWay}"/>
+                <Label x:Name="label1_Copy" Content="件数" Height="26" Margin="244,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.053,0.533" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Width="38" Grid.RowSpan="2"/>
+                <ComboBox x:Name="comboBox_Copy1" Margin="282,9,0,0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="53" ItemsSource="{Binding CmbBattleRecordNumber}" SelectedItem="{Binding SelectedBattleRecordNumber.Value}"/>
+                <Label x:Name="label_Copy" Content="自分" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="34" Grid.Row="1" Margin="1,10,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                <Image x:Name="image" HorizontalAlignment="Left" Height="40" Margin="35,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40" Source="{Binding MyPokemonImage0.Value}"/>
+                <Image x:Name="image_Copy" HorizontalAlignment="Left" Height="40" Margin="75,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40" Source="{Binding MyPokemonImage1.Value}"/>
+                <Image x:Name="image_Copy1" HorizontalAlignment="Left" Height="40" Margin="117,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40" Source="{Binding MyPokemonImage2.Value}"/>
+                <Image x:Name="image_Copy2" HorizontalAlignment="Left" Height="40" Margin="157,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40" Source="{Binding MyPokemonImage3.Value}"/>
+                <Image x:Name="image_Copy3" HorizontalAlignment="Left" Height="40" Margin="197,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40" Source="{Binding MyPokemonImage4.Value}"/>
+                <Image x:Name="image_Copy4" Height="40" Margin="237,10,0,0" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="40" Source="{Binding MyPokemonImage5.Value}"/>
+                <Button x:Name="button" Content="検索" Height="40" Margin="282,10,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="0.643,0.568" HorizontalAlignment="Left" Width="53" Command="{Binding SearchCommand}"/>
+                <Label x:Name="label_Copy1" Content="相手" HorizontalAlignment="Left" Width="34" Grid.Row="2" Margin="1,10,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Height="40" VerticalAlignment="Top"/>
+                <Image x:Name="image_Copy5" HorizontalAlignment="Left" Margin="35,10,0,0" Grid.Row="2" Width="40" Height="40" VerticalAlignment="Top" Source="{Binding OpponentPokemonImage0.Value}"/>
+                <Image x:Name="image_Copy6" HorizontalAlignment="Left" Height="40" Margin="75,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="40" Source="{Binding OpponentPokemonImage1.Value}"/>
+                <Image x:Name="image_Copy7" HorizontalAlignment="Left" Height="40" Margin="117,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="40" Source="{Binding OpponentPokemonImage2.Value}"/>
+                <Image x:Name="image_Copy8" HorizontalAlignment="Left" Height="40" Margin="157,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="40" Source="{Binding OpponentPokemonImage3.Value}"/>
+                <Image x:Name="image_Copy9" HorizontalAlignment="Left" Height="40" Margin="197,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="40" Source="{Binding OpponentPokemonImage4.Value}"/>
+                <Image x:Name="image_Copy10" HorizontalAlignment="Left" Height="40" Margin="237,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="40" Source="{Binding OpponentPokemonImage5.Value}"/>
+                <Button x:Name="button_Copy" Content="リセット" Height="40" Margin="282,10,0,0" Grid.Row="2" VerticalAlignment="Top" RenderTransformOrigin="0.643,0.568" HorizontalAlignment="Left" Width="53"/>
+                <CheckBox x:Name="checkBox" Content="" HorizontalAlignment="Left" Height="26" Margin="157,9,0,0" VerticalAlignment="Top" Width="16" RenderTransformOrigin="1.5,0.538" VerticalContentAlignment="Center" IsChecked="{Binding IsChkBattleResultChecked.Value, Mode=TwoWay}"/>
+                <CheckBox x:Name="checkBox_Copy" Content="" Height="26" Margin="2,9,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.5,0.538" VerticalContentAlignment="Center" IsChecked="{Binding IsChkTrainerChecked.Value, Mode=TwoWay}" HorizontalAlignment="Left" Width="16"/>
             </Grid>
         </GroupBox>
+        <DataGrid x:Name="dataGrid" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="228" Margin="10,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="772" IsReadOnly="True" AutoGenerateColumns="False" ItemsSource="{Binding BattleRecords}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="" Width="40" Binding="{Binding InsertDate, StringFormat=MM/dd}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="" Width="40" Binding="{Binding BattleResultString}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="FontSize" Value="14"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding BattleResultString}" Value="WIN">
+                                    <Setter Property="Foreground" Value="Blue"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding BattleResultString}" Value="LOSE">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+
+                <DataGridTemplateColumn Width="40" Header="">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding MyPokemonImage0}"></Image>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="40" Header="">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding MyPokemonImage1}"></Image>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="40" Header="">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding MyPokemonImage2}"></Image>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="40" Header="">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding MyPokemonImage3}"></Image>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="40" Header="">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding MyPokemonImage4}"></Image>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="40" Header="">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding MyPokemonImage5}"></Image>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTextColumn Header="" Width="30" Binding="{Binding VersusString}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="FontSize" Value="14" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+
+                <DataGridTemplateColumn Width="40" Header="">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding OpponentPokemonImage0}"></Image>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="40" Header="">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding OpponentPokemonImage1}"></Image>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="40" Header="">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding OpponentPokemonImage2}"></Image>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="40" Header="">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding OpponentPokemonImage3}"></Image>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="40" Header="">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding OpponentPokemonImage4}"></Image>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="40" Header="">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding OpponentPokemonImage5}"></Image>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <TabControl x:Name="tabControl" Grid.Column="1" HorizontalAlignment="Left" Height="162" Margin="10,10,0,0" Grid.RowSpan="3" VerticalAlignment="Top" Width="334">
+            <TabItem Header="自分">
+                <Grid Background="#FFE5E5E5">
+                    
+                    <!-- 自分の記録の集計データ -->
+                    <DataGrid x:Name="dataGrid1" HorizontalAlignment="Left" Height="134" VerticalAlignment="Top" Width="328" IsReadOnly="True" AutoGenerateColumns="False" ItemsSource="{Binding MyBattleAggregates}">
+                        <DataGrid.Columns>
+                            <!-- ポケモンイメージ -->
+                            <DataGridTemplateColumn Width="35" Header="">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Source="{Binding PokemonImage}"></Image>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            
+                            <!-- 被りポイント -->
+                            <DataGridTextColumn Header="KP" Width="40" Binding="{Binding OverlapNumber}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- 選出パーセンテージ -->
+                            <DataGridTextColumn Header="選出%" Width="44" Binding="{Binding ElectionPercent}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- 先頭パーセンテージ -->
+                            <DataGridTextColumn Header="先頭%" Width="44" Binding="{Binding LeadPercent}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- 勝率 -->
+                            <DataGridTextColumn Header="勝率" Width="44" Binding="{Binding WinPercent}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="相手">
+                <Grid Background="#FFE5E5E5">
+                    <!-- 相手の記録の集計データ -->
+                    <DataGrid x:Name="dataGrid2" HorizontalAlignment="Left" Height="134" VerticalAlignment="Top" Width="328" IsReadOnly="True" AutoGenerateColumns="False" ItemsSource="{Binding OpponentBattleAggregates}">
+                        <DataGrid.Columns>
+                            <!-- ポケモンイメージ -->
+                            <DataGridTemplateColumn Width="35" Header="">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Source="{Binding PokemonImage}"></Image>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <!-- 被りポイント -->
+                            <DataGridTextColumn Header="KP" Width="40" Binding="{Binding OverlapNumber}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- 選出パーセンテージ -->
+                            <DataGridTextColumn Header="選出%" Width="44" Binding="{Binding ElectionPercent}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- 先頭パーセンテージ -->
+                            <DataGridTextColumn Header="先頭%" Width="44" Binding="{Binding LeadPercent}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- 勝率 -->
+                            <DataGridTextColumn Header="勝率" Width="44" Binding="{Binding WinPercent}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

@@ -10,61 +10,61 @@ namespace PokemonUtility.Models.Party
 
         public int PokemonId0
         {
-            get { return _pokemonIdList[PartyConst.PARTY_INDEX_FIRST]; }
+            get { return _pokemonIdList[PartyConst.FIRST]; }
             set
             {
-                SetProperty(ref _pokemonIdList[PartyConst.PARTY_INDEX_FIRST], value);
-                CorrectOrder(PartyConst.PARTY_INDEX_FIRST);
+                SetProperty(ref _pokemonIdList[PartyConst.FIRST], value);
+                CorrectOrder(PartyConst.FIRST);
             }
         }
 
         public int PokemonId1
         {
-            get { return _pokemonIdList[PartyConst.PARTY_INDEX_SECOND]; }
+            get { return _pokemonIdList[PartyConst.SECOND]; }
             set
             {
-                SetProperty(ref _pokemonIdList[PartyConst.PARTY_INDEX_SECOND], value);
-                CorrectOrder(PartyConst.PARTY_INDEX_SECOND);
+                SetProperty(ref _pokemonIdList[PartyConst.SECOND], value);
+                CorrectOrder(PartyConst.SECOND);
             }
         }
 
         public int PokemonId2
         {
-            get { return _pokemonIdList[PartyConst.PARTY_INDEX_THIRD]; }
+            get { return _pokemonIdList[PartyConst.THIRD]; }
             set
             {
-                SetProperty(ref _pokemonIdList[PartyConst.PARTY_INDEX_THIRD], value);
-                CorrectOrder(PartyConst.PARTY_INDEX_THIRD);
+                SetProperty(ref _pokemonIdList[PartyConst.THIRD], value);
+                CorrectOrder(PartyConst.THIRD);
             }
         }
 
         public int PokemonId3
         {
-            get { return _pokemonIdList[PartyConst.PARTY_INDEX_FOUR]; }
+            get { return _pokemonIdList[PartyConst.FOURTH]; }
             set
             {
-                SetProperty(ref _pokemonIdList[PartyConst.PARTY_INDEX_FOUR], value);
-                CorrectOrder(PartyConst.PARTY_INDEX_FOUR);
+                SetProperty(ref _pokemonIdList[PartyConst.FOURTH], value);
+                CorrectOrder(PartyConst.FOURTH);
             }
         }
 
         public int PokemonId4
         {
-            get { return _pokemonIdList[PartyConst.PARTY_INDEX_FIFTH]; }
+            get { return _pokemonIdList[PartyConst.FIFTH]; }
             set
             {
-                SetProperty(ref _pokemonIdList[PartyConst.PARTY_INDEX_FIFTH], value);
-                CorrectOrder(PartyConst.PARTY_INDEX_FIFTH);
+                SetProperty(ref _pokemonIdList[PartyConst.FIFTH], value);
+                CorrectOrder(PartyConst.FIFTH);
             }
         }
 
         public int PokemonId5
         {
-            get { return _pokemonIdList[PartyConst.PARTY_INDEX_SIXTH]; }
+            get { return _pokemonIdList[PartyConst.SIXTH]; }
             set
             {
-                SetProperty(ref _pokemonIdList[PartyConst.PARTY_INDEX_SIXTH], value);
-                CorrectOrder(PartyConst.PARTY_INDEX_SIXTH);
+                SetProperty(ref _pokemonIdList[PartyConst.SIXTH], value);
+                CorrectOrder(PartyConst.SIXTH);
             }
         }
 
@@ -75,38 +75,38 @@ namespace PokemonUtility.Models.Party
 
         public int PokemonOrder0
         {
-            get { return _pokemonOrderList[PartyConst.PARTY_INDEX_FIRST]; }
-            set { SetProperty(ref _pokemonOrderList[PartyConst.PARTY_INDEX_FIRST], value); }
+            get { return _pokemonOrderList[PartyConst.FIRST]; }
+            set { SetProperty(ref _pokemonOrderList[PartyConst.FIRST], value); }
         }
 
         public int PokemonOrder1
         {
-            get { return _pokemonOrderList[PartyConst.PARTY_INDEX_SECOND]; }
-            set { SetProperty(ref _pokemonOrderList[PartyConst.PARTY_INDEX_SECOND], value); }
+            get { return _pokemonOrderList[PartyConst.SECOND]; }
+            set { SetProperty(ref _pokemonOrderList[PartyConst.SECOND], value); }
         }
 
         public int PokemonOrder2
         {
-            get { return _pokemonOrderList[PartyConst.PARTY_INDEX_THIRD]; }
-            set { SetProperty(ref _pokemonOrderList[PartyConst.PARTY_INDEX_THIRD], value); }
+            get { return _pokemonOrderList[PartyConst.THIRD]; }
+            set { SetProperty(ref _pokemonOrderList[PartyConst.THIRD], value); }
         }
 
         public int PokemonOrder3
         {
-            get { return _pokemonOrderList[PartyConst.PARTY_INDEX_FOUR]; }
-            set { SetProperty(ref _pokemonOrderList[PartyConst.PARTY_INDEX_FOUR], value); }
+            get { return _pokemonOrderList[PartyConst.FOURTH]; }
+            set { SetProperty(ref _pokemonOrderList[PartyConst.FOURTH], value); }
         }
 
         public int PokemonOrder4
         {
-            get { return _pokemonOrderList[PartyConst.PARTY_INDEX_FIFTH]; }
-            set { SetProperty(ref _pokemonOrderList[PartyConst.PARTY_INDEX_FIFTH], value); }
+            get { return _pokemonOrderList[PartyConst.FIFTH]; }
+            set { SetProperty(ref _pokemonOrderList[PartyConst.FIFTH], value); }
         }
 
         public int PokemonOrder5
         {
-            get { return _pokemonOrderList[PartyConst.PARTY_INDEX_SIXTH]; }
-            set { SetProperty(ref _pokemonOrderList[PartyConst.PARTY_INDEX_SIXTH], value); }
+            get { return _pokemonOrderList[PartyConst.SIXTH]; }
+            set { SetProperty(ref _pokemonOrderList[PartyConst.SIXTH], value); }
         }
 
         // ポケモンIDを取得
@@ -125,7 +125,7 @@ namespace PokemonUtility.Models.Party
             return -1;
         }
 
-        // aa
+        // ポケモンID変更
         public void ChangePokemonId(int partyIndex, int pokemonId)
         {
             // プロパティ情報取得
@@ -198,12 +198,12 @@ namespace PokemonUtility.Models.Party
         // 選出リスト更新
         private void UpdateOrder()
         {
-            PokemonOrder0 = GetOrder(PartyConst.PARTY_INDEX_FIRST);
-            PokemonOrder1 = GetOrder(PartyConst.PARTY_INDEX_SECOND);
-            PokemonOrder2 = GetOrder(PartyConst.PARTY_INDEX_THIRD);
-            PokemonOrder3 = GetOrder(PartyConst.PARTY_INDEX_FOUR);
-            PokemonOrder4 = GetOrder(PartyConst.PARTY_INDEX_FIFTH);
-            PokemonOrder5 = GetOrder(PartyConst.PARTY_INDEX_SIXTH);
+            PokemonOrder0 = GetOrder(PartyConst.FIRST);
+            PokemonOrder1 = GetOrder(PartyConst.SECOND);
+            PokemonOrder2 = GetOrder(PartyConst.THIRD);
+            PokemonOrder3 = GetOrder(PartyConst.FOURTH);
+            PokemonOrder4 = GetOrder(PartyConst.FIFTH);
+            PokemonOrder5 = GetOrder(PartyConst.SIXTH);
         }
     }
 
@@ -231,6 +231,36 @@ namespace PokemonUtility.Models.Party
         {
             if (Instance == null)
                 Instance = new OpponentPartyManegementModel();
+            return Instance;
+        }
+
+        #endregion
+    }
+
+    class BattleHistoryMyPartyModel : PartyManegementModel
+    {
+        #region Singleton
+
+        static BattleHistoryMyPartyModel Instance;
+        public static BattleHistoryMyPartyModel GetInstance()
+        {
+            if (Instance == null)
+                Instance = new BattleHistoryMyPartyModel();
+            return Instance;
+        }
+
+        #endregion
+    }
+
+    class BattleHistoryOpponentPartyModel : PartyManegementModel
+    {
+        #region Singleton
+
+        static BattleHistoryOpponentPartyModel Instance;
+        public static BattleHistoryOpponentPartyModel GetInstance()
+        {
+            if (Instance == null)
+                Instance = new BattleHistoryOpponentPartyModel();
             return Instance;
         }
 

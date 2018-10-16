@@ -22,14 +22,6 @@ namespace PokemonUtility.ViewModels
         public ReactiveProperty<BitmapImage> PokemonImage4 { get; private set; }
         public ReactiveProperty<BitmapImage> PokemonImage5 { get; private set; }
 
-        // フレームイメージ
-        public ReactiveProperty<BitmapImage> FrameImage0 { get; private set; }
-        public ReactiveProperty<BitmapImage> FrameImage1 { get; private set; }
-        public ReactiveProperty<BitmapImage> FrameImage2 { get; private set; }
-        public ReactiveProperty<BitmapImage> FrameImage3 { get; private set; }
-        public ReactiveProperty<BitmapImage> FrameImage4 { get; private set; }
-        public ReactiveProperty<BitmapImage> FrameImage5 { get; private set; }
-
         // 待機状態
         public ReactiveProperty<BitmapImage> WaitImage0 { get; private set; }
         public ReactiveProperty<BitmapImage> WaitImage1 { get; private set; }
@@ -60,21 +52,55 @@ namespace PokemonUtility.ViewModels
             // ウィンドウアクティブ紐づけ
             WindowEnabled = _partyWindowModel.ObserveProperty(m => m.IsAnalyzing).Select(x => !x).ToReactiveProperty();
 
-            // ポケモンイメージ紐づけ
-            PokemonImage0 = _partyManegementModel.ObserveProperty(m => m.PokemonId0).Select(x => ImageFactoryModel.CreatePokemonImage(x)).ToReactiveProperty();
-            PokemonImage1 = _partyManegementModel.ObserveProperty(m => m.PokemonId1).Select(x => ImageFactoryModel.CreatePokemonImage(x)).ToReactiveProperty();
-            PokemonImage2 = _partyManegementModel.ObserveProperty(m => m.PokemonId2).Select(x => ImageFactoryModel.CreatePokemonImage(x)).ToReactiveProperty();
-            PokemonImage3 = _partyManegementModel.ObserveProperty(m => m.PokemonId3).Select(x => ImageFactoryModel.CreatePokemonImage(x)).ToReactiveProperty();
-            PokemonImage4 = _partyManegementModel.ObserveProperty(m => m.PokemonId4).Select(x => ImageFactoryModel.CreatePokemonImage(x)).ToReactiveProperty();
-            PokemonImage5 = _partyManegementModel.ObserveProperty(m => m.PokemonId5).Select(x => ImageFactoryModel.CreatePokemonImage(x)).ToReactiveProperty();
+            // ポケモンIdの変更
+            PokemonImage0 = _partyManegementModel
+                .ObserveProperty(m => m.PokemonId0)
+                .Select(x => ImageFactoryModel.PokemonImageAddFrameImage(x, _partyManegementModel.PokemonOrder0)).ToReactiveProperty();
 
-            // フレームイメージ紐づけ
-            FrameImage0 = _partyManegementModel.ObserveProperty(m => m.PokemonOrder0).Select(x => ImageFactoryModel.CreateFrameImage(x)).ToReactiveProperty();
-            FrameImage1 = _partyManegementModel.ObserveProperty(m => m.PokemonOrder1).Select(x => ImageFactoryModel.CreateFrameImage(x)).ToReactiveProperty();
-            FrameImage2 = _partyManegementModel.ObserveProperty(m => m.PokemonOrder2).Select(x => ImageFactoryModel.CreateFrameImage(x)).ToReactiveProperty();
-            FrameImage3 = _partyManegementModel.ObserveProperty(m => m.PokemonOrder3).Select(x => ImageFactoryModel.CreateFrameImage(x)).ToReactiveProperty();
-            FrameImage4 = _partyManegementModel.ObserveProperty(m => m.PokemonOrder4).Select(x => ImageFactoryModel.CreateFrameImage(x)).ToReactiveProperty();
-            FrameImage5 = _partyManegementModel.ObserveProperty(m => m.PokemonOrder5).Select(x => ImageFactoryModel.CreateFrameImage(x)).ToReactiveProperty();
+            PokemonImage1 = _partyManegementModel
+                .ObserveProperty(m => m.PokemonId1)
+                .Select(x => ImageFactoryModel.PokemonImageAddFrameImage(x, _partyManegementModel.PokemonOrder1)).ToReactiveProperty();
+
+            PokemonImage2 = _partyManegementModel
+                .ObserveProperty(m => m.PokemonId2)
+                .Select(x => ImageFactoryModel.PokemonImageAddFrameImage(x, _partyManegementModel.PokemonOrder2)).ToReactiveProperty();
+
+            PokemonImage3 = _partyManegementModel
+                .ObserveProperty(m => m.PokemonId3)
+                .Select(x => ImageFactoryModel.PokemonImageAddFrameImage(x, _partyManegementModel.PokemonOrder3)).ToReactiveProperty();
+
+            PokemonImage4 = _partyManegementModel
+                .ObserveProperty(m => m.PokemonId4)
+                .Select(x => ImageFactoryModel.PokemonImageAddFrameImage(x, _partyManegementModel.PokemonOrder4)).ToReactiveProperty();
+
+            PokemonImage5 = _partyManegementModel
+                .ObserveProperty(m => m.PokemonId5)
+                .Select(x => ImageFactoryModel.PokemonImageAddFrameImage(x, _partyManegementModel.PokemonOrder5)).ToReactiveProperty();
+
+            // オーダー変更
+            PokemonImage0 = _partyManegementModel
+                .ObserveProperty(m => m.PokemonOrder0)
+                .Select(x => ImageFactoryModel.PokemonImageAddFrameImage(_partyManegementModel.PokemonId0, x)).ToReactiveProperty();
+
+            PokemonImage1 = _partyManegementModel
+                .ObserveProperty(m => m.PokemonOrder1)
+                .Select(x => ImageFactoryModel.PokemonImageAddFrameImage(_partyManegementModel.PokemonId1, x)).ToReactiveProperty();
+
+            PokemonImage2 = _partyManegementModel
+                .ObserveProperty(m => m.PokemonOrder2)
+                .Select(x => ImageFactoryModel.PokemonImageAddFrameImage(_partyManegementModel.PokemonId2, x)).ToReactiveProperty();
+
+            PokemonImage3 = _partyManegementModel
+                .ObserveProperty(m => m.PokemonOrder3)
+                .Select(x => ImageFactoryModel.PokemonImageAddFrameImage(_partyManegementModel.PokemonId3, x)).ToReactiveProperty();
+
+            PokemonImage4 = _partyManegementModel
+                .ObserveProperty(m => m.PokemonOrder4)
+                .Select(x => ImageFactoryModel.PokemonImageAddFrameImage(_partyManegementModel.PokemonId4, x)).ToReactiveProperty();
+
+            PokemonImage5 = _partyManegementModel
+                .ObserveProperty(m => m.PokemonOrder5)
+                .Select(x => ImageFactoryModel.PokemonImageAddFrameImage(_partyManegementModel.PokemonId5, x, 40)).ToReactiveProperty();
 
             // 待機イメージ紐づけ
             WaitImage0 = _partyWaitStateModel.ObserveProperty(m => m.WaitState0).Select(x => ImageFactoryModel.CreateProgressImage(x)).ToReactiveProperty();

@@ -8,13 +8,14 @@ using System.Windows.Media.Imaging;
 using PokemonUtility.Models.Main;
 using System.Reactive.Linq;
 using System.Collections.ObjectModel;
-using PokemonUtility.Models.Common;
 using System.Linq;
 using PokemonUtility.ViewModels.Abstract;
 using System.Data;
 using System;
 using PokemonUtility.Models.Analysis;
 using PokemonUtility.Models;
+using PokemonUtility.Models.Notifications;
+using PokemonUtility.Struct;
 
 namespace PokemonUtility.ViewModels
 {
@@ -25,7 +26,7 @@ namespace PokemonUtility.ViewModels
         public ReactiveProperty<bool> IsShowOpponentPartyWindow { get; }
         public ReactiveProperty<bool> IsShowTodayBattleRecordWindow { get; }
         public ReactiveProperty<bool> IsShowBattleHistoryWindow { get; }
-
+        
         // ログ
         public ReactiveProperty<string> Log { get; }
 
@@ -42,17 +43,13 @@ namespace PokemonUtility.ViewModels
         public ReactiveProperty<BattleResultEnum> RdoBattleResult { get; set; } = new ReactiveProperty<BattleResultEnum>();
 
         // ソフト世代
-        public ObservableCollection<SoftGenerationModel> CmbSoftGenerations { get; } = new ObservableCollection<SoftGenerationModel>();
+        public ObservableCollection<SoftGeneration> CmbSoftGenerations { get; } = new ObservableCollection<SoftGeneration>();
 
         // 選択されているソフト世代
-        public ReactiveProperty<SoftGenerationModel> SelectedSoftGeneration { get; } = new ReactiveProperty<SoftGenerationModel>();
+        public ReactiveProperty<SoftGeneration> SelectedSoftGeneration { get; } = new ReactiveProperty<SoftGeneration>();
         
         // サブウィンドウ表示リクエスト
-        public InteractionRequest<INotification> ShowCaptureWindowRequest { get; } = new InteractionRequest<INotification>();
-        public InteractionRequest<INotification> ShowMyPartyWindowRequest { get; } = new InteractionRequest<INotification>();
-        public InteractionRequest<INotification> ShowOpponentPartyWindowRequest { get; } = new InteractionRequest<INotification>();
-        public InteractionRequest<INotification> ShowTodayBattleRecordWindowRequest { get; } = new InteractionRequest<INotification>();
-        public InteractionRequest<INotification> ShowBattleHistoryWindowRequest { get; } = new InteractionRequest<INotification>();
+        public InteractionRequest<INotification> ShowWindowRequest { get; } = new InteractionRequest<INotification>();
 
         // ウィンドウクローズコマンド
         public DelegateCommand CloseWindowCommand { get; }
@@ -63,13 +60,9 @@ namespace PokemonUtility.ViewModels
         // 分析コマンド
         public DelegateCommand AnalysisCommand { get; }
 
-        // サブウィンドウ表示制御コマンド
+        // キャプチャ表示制御コマンド
         public DelegateCommand ShowCaptureWindowCommand { get; }
-        public DelegateCommand ShowMyPartyWindowCommand { get; }
-        public DelegateCommand ShowOpponentPartyWindowCommand { get; }
-        public DelegateCommand ShowTodayBattleRecordWindowCommand { get; }
-        public DelegateCommand ShowBattleHistoryWindowCommand { get; }
-
+        
         public MainWindowViewModel() :base(MainWindowModel.GetInstance())
         {
             // 添付プロパティ設定
@@ -102,13 +95,18 @@ namespace PokemonUtility.ViewModels
             IsShowBattleHistoryWindow = ModelConnector.BattleHistoryWindow
                 .ToReactivePropertyAsSynchronized(m => m.IsShowWindow);
 
+            // サブウィンドウ処理の登録
+            IsShowMyPartyWindow.Where(x => x).Subscribe(_ => ShowSubWindow(WindowNotification.MY_PARTY_WINDOW, false));
+            IsShowOpponentPartyWindow.Where(x => x).Subscribe(_ => ShowSubWindow(WindowNotification.OPPONENT_PARTY_WINDOW, false));
+            IsShowTodayBattleRecordWindow.Where(x => x).Subscribe(_ => ShowSubWindow(WindowNotification.TODAY_BATTLE_RECORD_WINDOW, false));
+            IsShowBattleHistoryWindow.Where(x => x).Subscribe(_ => ShowSubWindow(WindowNotification.BATTLE_HISTORY_WINDOW, false));
+
             // ラジオボタン紐づけ
             RdoBattleResult.Value = BattleResultEnum.Win;
             RdoBattleResult.Subscribe(x => ModelConnector.MainWindow.BattleResult = ToBattleResultId(x));
 
             // 世代コンボボックスのアイテム設定
-            SoftGenerations softGenerations = new SoftGenerations();
-            softGenerations.GetSoftGenerations().ToList().ForEach(e => CmbSoftGenerations.Add(e));
+            ModelConnector.MainWindow.SoftGenerationList.ForEach(e => CmbSoftGenerations.Add(e));
 
             // コンボボックス初期選択
             SelectedSoftGeneration.Value = CmbSoftGenerations[0];
@@ -125,12 +123,8 @@ namespace PokemonUtility.ViewModels
             // 分析コマンド
             AnalysisCommand = new DelegateCommand(AnalysisCommandExecute);
 
-            // 各種サブウィンドウ表示制御コマンド
-            ShowCaptureWindowCommand = new DelegateCommand(ShowCaptureWindowCommandExecute);
-            ShowMyPartyWindowCommand = new DelegateCommand(ShowMyPartyWindowCommandExecute);
-            ShowOpponentPartyWindowCommand = new DelegateCommand(ShowOpponentPartyWindowCommandExecute);
-            ShowTodayBattleRecordWindowCommand = new DelegateCommand(ShowTodayBattleRecordWindowCommandExecute);
-            ShowBattleHistoryWindowCommand = new DelegateCommand(ShowBattleHistoryWindowCommandExecute);
+            // キャプチャ画面表示コマンド
+            ShowCaptureWindowCommand = new DelegateCommand(ShowCaptureWindow);
         }
         
         // 添付プロパティ設定
@@ -203,33 +197,18 @@ namespace PokemonUtility.ViewModels
         }
 
         // キャプチャ画面を表示
-        private void ShowCaptureWindowCommandExecute()
+        private void ShowCaptureWindow()
         {
-            ShowCaptureWindowRequest.Raise(null);
+            ShowSubWindow(WindowNotification.CAPTURE_WINDOW);
         }
 
-        // 自分のパーティー画面を表示
-        private void ShowMyPartyWindowCommandExecute()
+        // サブウィンドウを表示する
+        private void ShowSubWindow(int windowId, bool isModal=true)
         {
-            if (IsShowMyPartyWindow.Value) ShowMyPartyWindowRequest.Raise(null);
-        }
-
-        // 相手のパーティー画面を表示
-        private void ShowOpponentPartyWindowCommandExecute()
-        {
-            if (IsShowOpponentPartyWindow.Value) ShowOpponentPartyWindowRequest.Raise(null);
-        }
-
-        // 本日の戦績画面を表示
-        private void ShowTodayBattleRecordWindowCommandExecute()
-        {
-            if (IsShowTodayBattleRecordWindow.Value) ShowTodayBattleRecordWindowRequest.Raise(null);
-        }
-
-        // 戦績履歴画面を表示
-        private void ShowBattleHistoryWindowCommandExecute()
-        {
-            if (IsShowBattleHistoryWindow.Value) ShowBattleHistoryWindowRequest.Raise(null);
+            WindowNotification windowNotification = new WindowNotification();
+            windowNotification.WindowId = windowId;
+            windowNotification.IsModal = isModal;
+            ShowWindowRequest.Raise(windowNotification);
         }
 
         // 分析

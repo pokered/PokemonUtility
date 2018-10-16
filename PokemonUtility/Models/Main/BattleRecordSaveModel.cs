@@ -1,6 +1,7 @@
 ﻿using PokemonUtility.Const;
 using PokemonUtility.Models.Database;
 using PokemonUtility.Models.Party;
+using PokemonUtility.Struct;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,6 +9,9 @@ namespace PokemonUtility.Models.Main
 {
     class BattleRecordSaveModel
     {
+        private static readonly int TRAINER_UNKNOWN = -1;
+        private static readonly int TRAINER_MYSELF = 0;
+
         // メインモデル
         private MainWindowModel _mainWindowModel = MainWindowModel.GetInstance();
 
@@ -68,20 +72,10 @@ namespace PokemonUtility.Models.Main
             if (battleRecordId == DatabaseConst.INSERT_FAIL) return false;
 
             // 自分のパーティー保存
-            if (!SaveBattleParty(battleRecordId, battleResult, TrainerConst.TRAINER_MYSELF, _myPartyManegementModel)) return false;
-
-            // 相手の勝敗
-            if (battleResult == BattleResultConst.WIN)
-            {
-                battleResult = BattleResultConst.LOSE;
-            }
-            else if(battleResult == BattleResultConst.LOSE)
-            {
-                battleResult = BattleResultConst.WIN;
-            }
+            if (!SaveBattleParty(battleRecordId, battleResult, TRAINER_MYSELF, _myPartyManegementModel)) return false;
 
             // 相手のパーティー保存
-            if (!SaveBattleParty(battleRecordId, battleResult, TrainerConst.TRAINER_UNKNOWN, _opponentPartyManegementModel)) return false;
+            if (!SaveBattleParty(battleRecordId, BattleResult.FlipBattleResult(battleResult), TRAINER_UNKNOWN, _opponentPartyManegementModel)) return false;
 
             return true;
         }
@@ -92,7 +86,7 @@ namespace PokemonUtility.Models.Main
             int battlePartyId = _battleRecordDatabaseModel.InsertBattleParty(battleRecordId, battleResult, trainerId);
 
             // ポケモン保存
-            for (int i = PartyConst.PARTY_INDEX_FIRST; i <= PartyConst.PARTY_INDEX_SIXTH; i++)
+            for (int i = PartyConst.FIRST; i <= PartyConst.SIXTH; i++)
             {
                 int insertId = _battleRecordDatabaseModel.InsertBattlePokemon(battlePartyId, party.GetOrder(i), party.GetPokemonId(i));
             }

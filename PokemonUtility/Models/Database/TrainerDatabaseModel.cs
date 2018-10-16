@@ -6,7 +6,7 @@ namespace PokemonUtility.Models.Database
 {
     class TrainerDatabaseModel : DatabaseConnectModel
     {
-        public List<TrainerInfo> GetTrainers(int trainerId=-1)
+        public List<Trainer> GetTrainers(int trainerId=-1)
         {
             string query = @"
             SELECT *
@@ -19,18 +19,18 @@ namespace PokemonUtility.Models.Database
                 string.Format(query, trainerId);
             }
 
-            List<TrainerInfo> TrainerInfoList = new List<TrainerInfo>();
+            List<Trainer> TrainerInfoList = new List<Trainer>();
 
             DataTable dt = Select(query);
 
             foreach(DataRow dataRow in dt.Rows)
             {
-                TrainerInfo trainerInfo = new TrainerInfo();
+                Trainer trainer = new Trainer();
 
-                trainerInfo.TrainerId = ObjectConverter.ToInt(dataRow[0]);
-                trainerInfo.Name = ObjectConverter.ToString(dataRow[1]);
+                trainer.TrainerId = ObjectConverter.ToInt(dataRow[0]);
+                trainer.Name = ObjectConverter.ToString(dataRow[1]);
 
-                TrainerInfoList.Add(trainerInfo);
+                TrainerInfoList.Add(trainer);
             }
 
             return TrainerInfoList;

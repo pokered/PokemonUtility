@@ -22,48 +22,48 @@ namespace PokemonUtility.Models.Party
 
         public int WaitState0
         {
-            get { return _waitStateList[PartyConst.PARTY_INDEX_FIRST]; }
-            set { SetProperty(ref _waitStateList[PartyConst.PARTY_INDEX_FIRST], value); }
+            get { return _waitStateList[PartyConst.FIRST]; }
+            set { SetProperty(ref _waitStateList[PartyConst.FIRST], value); }
         }
 
         public int WaitState1
         {
-            get { return _waitStateList[PartyConst.PARTY_INDEX_SECOND]; }
-            set { SetProperty(ref _waitStateList[PartyConst.PARTY_INDEX_SECOND], value); }
+            get { return _waitStateList[PartyConst.SECOND]; }
+            set { SetProperty(ref _waitStateList[PartyConst.SECOND], value); }
         }
 
         public int WaitState2
         {
-            get { return _waitStateList[PartyConst.PARTY_INDEX_THIRD]; }
-            set { SetProperty(ref _waitStateList[PartyConst.PARTY_INDEX_THIRD], value); }
+            get { return _waitStateList[PartyConst.THIRD]; }
+            set { SetProperty(ref _waitStateList[PartyConst.THIRD], value); }
         }
 
         public int WaitState3
         {
-            get { return _waitStateList[PartyConst.PARTY_INDEX_FOUR]; }
-            set { SetProperty(ref _waitStateList[PartyConst.PARTY_INDEX_FOUR], value); }
+            get { return _waitStateList[PartyConst.FOURTH]; }
+            set { SetProperty(ref _waitStateList[PartyConst.FOURTH], value); }
         }
 
         public int WaitState4
         {
-            get { return _waitStateList[PartyConst.PARTY_INDEX_FIFTH]; }
-            set { SetProperty(ref _waitStateList[PartyConst.PARTY_INDEX_FIFTH], value); }
+            get { return _waitStateList[PartyConst.FIFTH]; }
+            set { SetProperty(ref _waitStateList[PartyConst.FIFTH], value); }
         }
 
         public int WaitState5
         {
-            get { return _waitStateList[PartyConst.PARTY_INDEX_SIXTH]; }
-            set { SetProperty(ref _waitStateList[PartyConst.PARTY_INDEX_SIXTH], value); }
+            get { return _waitStateList[PartyConst.SIXTH]; }
+            set { SetProperty(ref _waitStateList[PartyConst.SIXTH], value); }
         }
 
         public PartyWaiStatetModel()
         {
-            IsAnalyzing0.Select(x => x).Subscribe(async _ => await Run(PartyConst.PARTY_INDEX_FIRST));
-            IsAnalyzing1.Select(x => x).Subscribe(async _ => await Run(PartyConst.PARTY_INDEX_SECOND));
-            IsAnalyzing2.Select(x => x).Subscribe(async _ => await Run(PartyConst.PARTY_INDEX_THIRD));
-            IsAnalyzing3.Select(x => x).Subscribe(async _ => await Run(PartyConst.PARTY_INDEX_FOUR));
-            IsAnalyzing4.Select(x => x).Subscribe(async _ => await Run(PartyConst.PARTY_INDEX_FIFTH));
-            IsAnalyzing5.Select(x => x).Subscribe(async _ => await Run(PartyConst.PARTY_INDEX_SIXTH));
+            IsAnalyzing0.Select(x => x).Subscribe(async _ => await Run(PartyConst.FIRST));
+            IsAnalyzing1.Select(x => x).Subscribe(async _ => await Run(PartyConst.SECOND));
+            IsAnalyzing2.Select(x => x).Subscribe(async _ => await Run(PartyConst.THIRD));
+            IsAnalyzing3.Select(x => x).Subscribe(async _ => await Run(PartyConst.FOURTH));
+            IsAnalyzing4.Select(x => x).Subscribe(async _ => await Run(PartyConst.FIFTH));
+            IsAnalyzing5.Select(x => x).Subscribe(async _ => await Run(PartyConst.SIXTH));
         }
 
         private async Task Run(int partyIndex)

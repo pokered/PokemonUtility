@@ -1,6 +1,4 @@
-﻿using MySql.Data.MySqlClient;
-using PokemonUtility.Const;
-using System;
+﻿using PokemonUtility.Const;
 using System.Data;
 
 namespace PokemonUtility.Models.Database
@@ -24,21 +22,11 @@ namespace PokemonUtility.Models.Database
 
             // ポケモンIDをオリジナルに変換
             query = string.Format(query, PREDICT_VERSION, new_pokemon_id);
-            using (var con = new MySqlConnection(_connectionString))
-            {
-                // コマンド
-                var command = new MySqlCommand(query, con);
 
-                // SQLを実行します。
-                using (var executeReader = command.ExecuteReader())
-                {
-                    while (executeReader.Read())
-                    {
-                        return (int)executeReader["original_pokemon_icon_id"];
-                    }
-                }
-            }
-            
+            DataTable dt = Select(query);
+
+            if (dt.Rows.Count > 0) return ObjectConverter.ToInt(dt.Rows[0][0]);
+
             return PokemonConst.POKEMON_ID_NO;
         }
     }

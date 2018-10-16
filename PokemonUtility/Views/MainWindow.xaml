@@ -50,7 +50,7 @@
         <!-- 各種サブウィンドウ -->
         <GroupBox x:Name="groupBox2" Header="各種ウィンドウ" Grid.Row="3" Margin="10,10,0,0" HorizontalAlignment="Left" Width="114" Height="85" VerticalAlignment="Top">
             <StackPanel HorizontalAlignment="Left" Width="98">
-                <CheckBox x:Name="chk_my_party"     Content="自分のパーティー" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding IsShowMyPartyWindow.Value, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Command="{Binding ShowMyPartyWindowCommand}" />
+                <CheckBox x:Name="chk_my_party"     Content="自分のパーティー" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding IsShowMyPartyWindow.Value, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
                 <CheckBox x:Name="chk_your_party"   Content="相手のパーティー" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding IsShowOpponentPartyWindow.Value, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Command="{Binding ShowOpponentPartyWindowCommand}"/>
                 <CheckBox x:Name="chk_my_data"      Content="自分の成績" Margin="0,0,10,0" IsChecked="{Binding IsShowTodayBattleRecordWindow.Value, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Command="{Binding ShowTodayBattleRecordWindowCommand}"/>
                 <CheckBox x:Name="chk_history"      Content="履歴" IsChecked="{Binding IsShowBattleHistoryWindow.Value, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Command="{Binding ShowBattleHistoryWindowCommand}"/>
@@ -69,24 +69,8 @@
             <i:InvokeCommandAction Command="{Binding CloseWindowCommand}" />
         </i:EventTrigger>
 
-        <prism:InteractionRequestTrigger SourceObject="{Binding ShowCaptureWindowRequest, Mode=OneWay}">
-            <actions:CaptureWindowAction />
-        </prism:InteractionRequestTrigger>
-
-        <prism:InteractionRequestTrigger SourceObject="{Binding ShowMyPartyWindowRequest, Mode=OneWay}">
-            <actions:MyPartyWindowAction />
-        </prism:InteractionRequestTrigger>
-
-        <prism:InteractionRequestTrigger SourceObject="{Binding ShowOpponentPartyWindowRequest, Mode=OneWay}">
-            <actions:OpponentPartyWindowAction />
-        </prism:InteractionRequestTrigger>
-
-        <prism:InteractionRequestTrigger SourceObject="{Binding ShowTodayBattleRecordWindowRequest, Mode=OneWay}">
-            <actions:TodayBattleRecordWindowAction />
-        </prism:InteractionRequestTrigger>
-
-        <prism:InteractionRequestTrigger SourceObject="{Binding ShowBattleHistoryWindowRequest, Mode=OneWay}">
-            <actions:BattleHistoryWindowAction />
+        <prism:InteractionRequestTrigger SourceObject="{Binding ShowWindowRequest, Mode=OneWay}">
+            <actions:PopupWindowAction />
         </prism:InteractionRequestTrigger>
     </i:Interaction.Triggers>
 </Window>

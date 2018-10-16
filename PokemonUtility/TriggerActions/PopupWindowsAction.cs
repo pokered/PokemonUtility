@@ -1,82 +1,29 @@
-﻿using PokemonUtility.Views;
+﻿using PokemonUtility.Models.Notifications;
+using PokemonUtility.Views;
 using Prism.Interactivity.InteractionRequest;
 using System.Windows;
 
 namespace PokemonUtility.TriggerActions
 {
-    class CaptureWindowAction : PopupWindowActionBase
+    class PopupWindowAction : PopupWindowActionBase
     {
         protected override Window CreateWindow(INotification notification)
         {
-            // モーダル表示
-            IsModal = true;
+            WindowNotification windowNotification = (WindowNotification)notification;
 
-            // キャプチャ画面生成
-            return new CaptureWindow() { };
-        }
+            // モーダル
+            IsModal = windowNotification.IsModal;
 
-        protected override void ApplyNotificationToWindow(Window window, INotification notification)
-        {
-        }
-    }
+            // 生成するウィンドウ
+            if (windowNotification.WindowId == WindowNotification.MAIN_WINDOW) return new MainWindow();
+            if (windowNotification.WindowId == WindowNotification.CAPTURE_WINDOW) return new CaptureWindow();
+            if (windowNotification.WindowId == WindowNotification.MY_PARTY_WINDOW) return new MyPartyWindow();
+            if (windowNotification.WindowId == WindowNotification.OPPONENT_PARTY_WINDOW) return new OpponentPartyWindow();
+            if (windowNotification.WindowId == WindowNotification.TODAY_BATTLE_RECORD_WINDOW) return new TodayBattleRecordWindow();
+            if (windowNotification.WindowId == WindowNotification.BATTLE_HISTORY_WINDOW) return new BattleHistoryWindow();
 
-    class MyPartyWindowAction : PopupWindowActionBase
-    {
-        protected override Window CreateWindow(INotification notification)
-        {
-            // モーダル表示
-            IsModal = false;
-
-            // 画面生成
-            return new MyPartyWindow() { };
-        }
-
-        protected override void ApplyNotificationToWindow(Window window, INotification notification)
-        {
-        }
-    }
-
-    class OpponentPartyWindowAction : PopupWindowActionBase
-    {
-        protected override Window CreateWindow(INotification notification)
-        {
-            // モーダル表示
-            IsModal = false;
-
-            // 画面生成
-            return new OpponentPartyWindow() { };
-        }
-
-        protected override void ApplyNotificationToWindow(Window window, INotification notification)
-        {
-        }
-    }
-
-    class TodayBattleRecordWindowAction : PopupWindowActionBase
-    {
-        protected override Window CreateWindow(INotification notification)
-        {
-            // モーダル表示
-            IsModal = false;
-
-            // 画面生成
-            return new TodayBattleRecordWindow() { };
-        }
-
-        protected override void ApplyNotificationToWindow(Window window, INotification notification)
-        {
-        }
-    }
-
-    class BattleHistoryWindowAction : PopupWindowActionBase
-    {
-        protected override Window CreateWindow(INotification notification)
-        {
-            // モーダル表示
-            IsModal = false;
-
-            // 画面生成
-            return new BattleHistoryWindow() { };
+            //TODO エラー画面を表示する？
+            return new Window();
         }
 
         protected override void ApplyNotificationToWindow(Window window, INotification notification)

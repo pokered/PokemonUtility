@@ -66,5 +66,15 @@ namespace PokemonUtility.Models
         {
             get { return BattleHistoryWindowModel.GetInstance(); }
         }
+
+        public static BattleHistoryMyPartyModel BattleHistoryMyParty
+        {
+            get { return BattleHistoryMyPartyModel.GetInstance(); }
+        }
+
+        public static BattleHistoryOpponentPartyModel BattleHistoryOpponentParty
+        {
+            get { return BattleHistoryOpponentPartyModel.GetInstance(); }
+        }
     }
 }
