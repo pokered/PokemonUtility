@@ -1,4 +1,4 @@
-﻿using PokemonUtility.Models;
+﻿using PokemonUtility.Views;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -6,7 +6,7 @@ using System.Windows.Interactivity;
 
 namespace PokemonUtility.Behaviors
 {
-    class OpponentPartyImageBehavior : Behavior<Image>
+    class BattleHistoryBehavior : Behavior<Image>
     {
         // 依存関係プロパティの登録
         public static readonly DependencyProperty pokemonIndexProperty =
@@ -37,7 +37,12 @@ namespace PokemonUtility.Behaviors
         // 選出順変更
         private void ChangeOrder(object sender, EventArgs e)
         {
-            ModelConnector.OpponentPartyManegement.ChangeOrder(PartyIndex);
+            PokemonSearchWindow window = new PokemonSearchWindow();
+            window.ShowDialog();
+
+
         }
+
+
     }
 }

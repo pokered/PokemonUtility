@@ -58,7 +58,7 @@ namespace PokemonUtility.Models.Main
             // TODO トレーナーIDをどうするか 起動時にＤＢに登録する？
 
             // 勝敗
-            int battleResult = _mainWindowModel.BattleResult;
+            int battleResult = _mainWindowModel.BattleResultId;
 
             // 世代
             int softGenerationId = _mainWindowModel.SoftGenerationId;

@@ -7,7 +7,7 @@ using System.Reactive.Linq;
 
 namespace PokemonUtility.Models.Party
 {
-    class PartyWaiStatetModel : BindableBase
+    class PartyWaitStateModel : BindableBase
     {
         // プロパティ
         public ReactiveProperty<bool> IsAnalyzing0 { get; private set; } = new ReactiveProperty<bool>();
@@ -56,14 +56,14 @@ namespace PokemonUtility.Models.Party
             set { SetProperty(ref _waitStateList[PartyConst.SIXTH], value); }
         }
 
-        public PartyWaiStatetModel()
+        public PartyWaitStateModel()
         {
-            IsAnalyzing0.Select(x => x).Subscribe(async _ => await Run(PartyConst.FIRST));
-            IsAnalyzing1.Select(x => x).Subscribe(async _ => await Run(PartyConst.SECOND));
-            IsAnalyzing2.Select(x => x).Subscribe(async _ => await Run(PartyConst.THIRD));
-            IsAnalyzing3.Select(x => x).Subscribe(async _ => await Run(PartyConst.FOURTH));
-            IsAnalyzing4.Select(x => x).Subscribe(async _ => await Run(PartyConst.FIFTH));
-            IsAnalyzing5.Select(x => x).Subscribe(async _ => await Run(PartyConst.SIXTH));
+            IsAnalyzing0.Where(x => x).Subscribe(async _ => await Run(PartyConst.FIRST));
+            IsAnalyzing1.Where(x => x).Subscribe(async _ => await Run(PartyConst.SECOND));
+            IsAnalyzing2.Where(x => x).Subscribe(async _ => await Run(PartyConst.THIRD));
+            IsAnalyzing3.Where(x => x).Subscribe(async _ => await Run(PartyConst.FOURTH));
+            IsAnalyzing4.Where(x => x).Subscribe(async _ => await Run(PartyConst.FIFTH));
+            IsAnalyzing5.Where(x => x).Subscribe(async _ => await Run(PartyConst.SIXTH));
         }
 
         private async Task Run(int partyIndex)
@@ -76,13 +76,13 @@ namespace PokemonUtility.Models.Party
             while (isAnalyzing.Value)
             {
                 property.SetValue(this, WaitStateConst.FIRST_STEP);
-                await Task.Delay(400);
+                await Task.Delay(200);
                 property.SetValue(this, WaitStateConst.SECOND_STEP);
-                await Task.Delay(400);
+                await Task.Delay(200);
                 property.SetValue(this, WaitStateConst.THIRD_STEP);
-                await Task.Delay(400);
+                await Task.Delay(200);
                 property.SetValue(this, WaitStateConst.FOUR_STEP);
-                await Task.Delay(400);
+                await Task.Delay(200);
             }
 
             // 終了したら消す
@@ -97,12 +97,22 @@ namespace PokemonUtility.Models.Party
             isAnalyzing.Value = true;
         }
 
-        public void End(int partyIndex)
+        public async Task<bool> End(int partyIndex)
         {
             // プロパティの値を取得
             ReactiveProperty<bool> isAnalyzing = GetIsAnalyzingProperty(partyIndex);
 
+            // 分析終了
             isAnalyzing.Value = false;
+
+            // 待機演出が終わるまで待つ
+            while (GetWaitStateProperty(partyIndex) != WaitStateConst.END)
+            {
+                await Task.Delay(100);
+            }
+
+            // 終了通知
+            return true;
         }
         
         private ReactiveProperty<bool> GetIsAnalyzingProperty(int partyIndex)
@@ -116,9 +126,21 @@ namespace PokemonUtility.Models.Party
             // プロパティの値を取得
             return (ReactiveProperty<bool>)property.GetValue(this);
         }
+
+        private int GetWaitStateProperty(int partyIndex)
+        {
+            // プロパティ情報取得
+            var property = GetType().GetProperty(string.Format("WaitState{0}", partyIndex));
+
+            // プロパティが存在しなければ終了
+            if (property == null) return WaitStateConst.FOUR_STEP;
+
+            // プロパティの値を取得
+            return ObjectConverter.ToInt(property.GetValue(this));
+        }
     }
 
-    class MyPartyWaitStateModel : PartyWaiStatetModel
+    class MyPartyWaitStateModel : PartyWaitStateModel
     {
         #region Singleton
 
@@ -133,7 +155,7 @@ namespace PokemonUtility.Models.Party
         #endregion
     }
 
-    class OpponentPartyWaitStateModel : PartyWaiStatetModel
+    class OpponentPartyWaitStateModel : PartyWaitStateModel
     {
         #region Singleton
 

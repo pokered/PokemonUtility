@@ -22,21 +22,6 @@ namespace PokemonUtility.Models
         public static readonly int WAIT_THREE = 2;
         public static readonly int WAIT_FOUR = 3;
 
-        public static BitmapImage CreatePokemonImage(int pokemonId)
-        {
-            // 現在のディレクトリ
-            string currentDir = Directory.GetCurrentDirectory();
-
-            // 画像の有無
-            if (!ExistPokemonImage(pokemonId)) return ReadBitmapImage(Path.Combine(currentDir, "Images/progress/progress3.png"));
-
-            // ポケモンイメージパス作成
-            string pokemonImagePath = string.Format("Images/pokemon/{0}/icon.png", pokemonId);
-            string relativePokemonImagePath = Path.Combine(currentDir, pokemonImagePath);
-            
-            return ReadBitmapImage(relativePokemonImagePath);
-        }
-
         public static Bitmap CreatePokemonBitmap(int pokemonId)
         {
             // 現在のディレクトリ
@@ -50,31 +35,6 @@ namespace PokemonUtility.Models
             string relativePokemonImagePath = Path.Combine(currentDir, pokemonImagePath);
 
             return new Bitmap(relativePokemonImagePath);
-        }
-
-        public static BitmapImage CreateFrameImage(int order)
-        {
-            string frameName = "not_selected";
-
-            if (order < 0)
-            {
-                frameName = "normal_frame";
-            }
-            else if(order == ORDER_FIRST)
-            {
-                frameName = "order_first";
-            }
-            else if (order == ORDER_SECOND || order == ORDER_THIRD)
-            {
-                frameName = "order_second";
-            }
-
-            // フレームイメージパス作成
-            string currentDir = Directory.GetCurrentDirectory();
-            string frameImagePath = string.Format("Images/frame/{0}.png", frameName);
-            string relativeFrameImagePath = Path.Combine(currentDir, frameImagePath);
-            
-            return ReadBitmapImage(relativeFrameImagePath);
         }
 
         public static Bitmap CreateFrameBitmap(int order)
@@ -104,22 +64,22 @@ namespace PokemonUtility.Models
             return new Bitmap(relativeFrameImagePath);
         }
 
-        public static BitmapImage CreateProgressImage(int waitState)
+        public static BitmapImage CreateWaitImage(int waitState)
         {
             // 待機イメージパス取得
-            string progressImagePath = string.Format("Images/Progress/progress{0}.png", waitState);
-            string relativeProgressImagePath = Path.Combine(Directory.GetCurrentDirectory(), progressImagePath);
+            string WaitImagePath = string.Format("Images/WaitState/WaitState{0}.png", waitState);
+            string relativeWaitImagePath = Path.Combine(Directory.GetCurrentDirectory(), WaitImagePath);
 
             // パスが存在しなければ空の画像を返す
-            if (!File.Exists(relativeProgressImagePath)) return new BitmapImage();
+            if (!File.Exists(relativeWaitImagePath)) return new BitmapImage();
 
             // イメージ取得
-            BitmapImage progressImage = new BitmapImage();
-            progressImage.BeginInit();
-            progressImage.UriSource = new Uri(relativeProgressImagePath);
-            progressImage.EndInit();
+            BitmapImage WaitImage = new BitmapImage();
+            WaitImage.BeginInit();
+            WaitImage.UriSource = new Uri(relativeWaitImagePath);
+            WaitImage.EndInit();
 
-            return progressImage;
+            return WaitImage;
         }
 
         public static bool ExistPokemonImage(int pokemonId)
@@ -146,7 +106,7 @@ namespace PokemonUtility.Models
             return resizeBitmap;
         }
 
-        public static BitmapImage PokemonImageAddFrameImage(int pokemonId, int order, int imageSize=40)
+        public static BitmapImage CreatePokemonImage(int pokemonId, int order=-1, int imageSize=40)
         {
             // ポケモンイメージ
             Bitmap pokemonImage = CreatePokemonBitmap(pokemonId);
@@ -172,7 +132,7 @@ namespace PokemonUtility.Models
         }
 
         // 画像を重ねる
-        public static Bitmap OverlayImage(Bitmap foregroundImage, Bitmap backgroundImage)
+        private static Bitmap OverlayImage(Bitmap foregroundImage, Bitmap backgroundImage)
         {
             using (Graphics g = Graphics.FromImage(backgroundImage))
             {
@@ -180,20 +140,6 @@ namespace PokemonUtility.Models
                 g.DrawImage(foregroundImage, 0, 0);
                 return backgroundImage;
             }
-        }
-
-        // 画像をBitmapとして読み込む
-        private static BitmapImage ReadBitmapImage(string filePath)
-        {
-            // パスが存在しなければ空の画像を返す
-            if (!File.Exists(filePath)) return new BitmapImage();
-
-            BitmapImage bitmapImage = new BitmapImage();
-            bitmapImage.BeginInit();
-            bitmapImage.UriSource = new Uri(filePath);
-            bitmapImage.EndInit();
-
-            return bitmapImage;
         }
     }
 }

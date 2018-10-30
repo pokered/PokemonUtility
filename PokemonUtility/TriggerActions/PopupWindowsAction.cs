@@ -1,4 +1,5 @@
 ﻿using PokemonUtility.Models.Notifications;
+using PokemonUtility.ViewModels;
 using PokemonUtility.Views;
 using Prism.Interactivity.InteractionRequest;
 using System.Windows;

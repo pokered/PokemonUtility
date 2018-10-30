@@ -3,14 +3,13 @@ using PokemonUtility.Models.BattleHistory;
 using PokemonUtility.Struct;
 using PokemonUtility.ViewModels.Abstract;
 using Prism.Commands;
+using Prism.Interactivity.InteractionRequest;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
 using System.Reactive.Linq;
-using System.Windows.Media.Imaging;
 
 namespace PokemonUtility.ViewModels
 {
@@ -66,23 +65,16 @@ namespace PokemonUtility.ViewModels
         // 選択中の取得件数
         public ReactiveProperty<int> SelectedBattleRecordNumber { get; } = new ReactiveProperty<int>();
 
-        // ポケモンイメージ
-        public ReactiveProperty<BitmapImage> MyPokemonImage0 { get; private set; }
-        public ReactiveProperty<BitmapImage> MyPokemonImage1 { get; private set; }
-        public ReactiveProperty<BitmapImage> MyPokemonImage2 { get; private set; }
-        public ReactiveProperty<BitmapImage> MyPokemonImage3 { get; private set; }
-        public ReactiveProperty<BitmapImage> MyPokemonImage4 { get; private set; }
-        public ReactiveProperty<BitmapImage> MyPokemonImage5 { get; private set; }
 
-        public ReactiveProperty<BitmapImage> OpponentPokemonImage0 { get; private set; }
-        public ReactiveProperty<BitmapImage> OpponentPokemonImage1 { get; private set; }
-        public ReactiveProperty<BitmapImage> OpponentPokemonImage2 { get; private set; }
-        public ReactiveProperty<BitmapImage> OpponentPokemonImage3 { get; private set; }
-        public ReactiveProperty<BitmapImage> OpponentPokemonImage4 { get; private set; }
-        public ReactiveProperty<BitmapImage> OpponentPokemonImage5 { get; private set; }
+        // リクエスト
+        public InteractionRequest<INotification> CloseWindowRequest { get; } = new InteractionRequest<INotification>();
+
 
         // キャプチャ表示制御コマンド
         public DelegateCommand SearchCommand { get; }
+
+        // ポケモン検索ウィンドウ
+        public DelegateCommand ShowPokemonSearchWindowCommand { get; }
 
         public BattleHistoryWindowViewModel() : base(BattleHistoryWindowModel.GetInstance())
         {
@@ -105,21 +97,9 @@ namespace PokemonUtility.ViewModels
             SelectedBattleResult.Subscribe(x => ModelConnector.BattleHistoryWindow.BattleResultId = x.Id);
             SelectedBattleRecordNumber.Subscribe(x => ModelConnector.BattleHistoryWindow.BattleRecordNumber = x);
 
-            // イメージ紐づけ
-            MyPokemonImage0 = ModelConnector.BattleHistoryMyParty.ObserveProperty(m => m.PokemonId0).Select(x => ImageFactoryModel.CreatePokemonImage(x)).ToReactiveProperty();
-            MyPokemonImage1 = ModelConnector.BattleHistoryMyParty.ObserveProperty(m => m.PokemonId1).Select(x => ImageFactoryModel.CreatePokemonImage(x)).ToReactiveProperty();
-            MyPokemonImage2 = ModelConnector.BattleHistoryMyParty.ObserveProperty(m => m.PokemonId2).Select(x => ImageFactoryModel.CreatePokemonImage(x)).ToReactiveProperty();
-            MyPokemonImage3 = ModelConnector.BattleHistoryMyParty.ObserveProperty(m => m.PokemonId3).Select(x => ImageFactoryModel.CreatePokemonImage(x)).ToReactiveProperty();
-            MyPokemonImage4 = ModelConnector.BattleHistoryMyParty.ObserveProperty(m => m.PokemonId4).Select(x => ImageFactoryModel.CreatePokemonImage(x)).ToReactiveProperty();
-            MyPokemonImage5 = ModelConnector.BattleHistoryMyParty.ObserveProperty(m => m.PokemonId5).Select(x => ImageFactoryModel.CreatePokemonImage(x)).ToReactiveProperty();
+            // ウィンドウクローズ
+            IsShowWindow.Where(x => !x).Subscribe(_ => CloseWindowRequest.Raise(new Notification()));
 
-            OpponentPokemonImage0 = ModelConnector.BattleHistoryOpponentParty.ObserveProperty(m => m.PokemonId0).Select(x => ImageFactoryModel.CreatePokemonImage(x)).ToReactiveProperty();
-            OpponentPokemonImage1 = ModelConnector.BattleHistoryOpponentParty.ObserveProperty(m => m.PokemonId1).Select(x => ImageFactoryModel.CreatePokemonImage(x)).ToReactiveProperty();
-            OpponentPokemonImage2 = ModelConnector.BattleHistoryOpponentParty.ObserveProperty(m => m.PokemonId2).Select(x => ImageFactoryModel.CreatePokemonImage(x)).ToReactiveProperty();
-            OpponentPokemonImage3 = ModelConnector.BattleHistoryOpponentParty.ObserveProperty(m => m.PokemonId3).Select(x => ImageFactoryModel.CreatePokemonImage(x)).ToReactiveProperty();
-            OpponentPokemonImage4 = ModelConnector.BattleHistoryOpponentParty.ObserveProperty(m => m.PokemonId4).Select(x => ImageFactoryModel.CreatePokemonImage(x)).ToReactiveProperty();
-            OpponentPokemonImage5 = ModelConnector.BattleHistoryOpponentParty.ObserveProperty(m => m.PokemonId5).Select(x => ImageFactoryModel.CreatePokemonImage(x)).ToReactiveProperty();
-            
             // コマンド
             SearchCommand = new DelegateCommand(SearchBattleRecord);
         }

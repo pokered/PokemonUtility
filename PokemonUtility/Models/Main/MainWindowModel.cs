@@ -1,8 +1,12 @@
 ﻿using PokemonUtility.Const;
 using PokemonUtility.Models.Abstract;
+using PokemonUtility.Models.Capture;
+using PokemonUtility.Models.Image;
 using PokemonUtility.Struct;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Windows.Media.Imaging;
 
 namespace PokemonUtility.Models.Main
 {
@@ -21,8 +25,8 @@ namespace PokemonUtility.Models.Main
         #endregion
 
         // 対戦結果
-        private int _battleResult = BattleResultConst.WIN;
-        public int BattleResult
+        private int _battleResult = BattleResult.RESULT_WIN;
+        public int BattleResultId
         {
             get { return _battleResult; }
             set { SetProperty(ref _battleResult, value); }
@@ -47,6 +51,14 @@ namespace PokemonUtility.Models.Main
             set { SetProperty(ref _log, value); }
         }
 
+        // キャプチャイメージ
+        private BitmapImage _pokemonMarkedCaptureImage;
+        public BitmapImage PokemonMarkedCaptureImage
+        {
+            get { return _pokemonMarkedCaptureImage; }
+            set { SetProperty(ref _pokemonMarkedCaptureImage, value); }
+        }
+
         public MainWindowModel()
         {
             // 世代リスト作成
@@ -69,6 +81,61 @@ namespace PokemonUtility.Models.Main
             string log = message + "\n" + Log;
 
             Log = log.Trim();
+        }
+
+        public void CreatePokemonMarkedCaptureImage()
+        {
+            var captureWindowModel = ModelConnector.CaptureWindow;
+            var myCaptureImageManegementModel = ModelConnector.MyCaptureImageManegement;
+            var opponentCaptureImageManegementModel = ModelConnector.OpponentCaptureImageManegement;
+
+            // キャプチャ範囲
+            var captureRect = new Rectangle(captureWindowModel.X, captureWindowModel.Y, captureWindowModel.Width, captureWindowModel.Height);
+
+            // アイコン部分を囲む矩形リストを作成
+            List<Rectangle> iconSurroundRects = new List<Rectangle>();
+            iconSurroundRects.AddRange(CreateIconSurroundRects(captureRect, myCaptureImageManegementModel));
+            iconSurroundRects.AddRange(CreateIconSurroundRects(captureRect, opponentCaptureImageManegementModel));
+
+            // スクリーンキャプチャ
+            var captureImage = ScreenCaptureModel.ScreenCapture(captureRect);
+
+            //ImageオブジェクトのGraphicsオブジェクトを作成する
+            using (Graphics g = Graphics.FromImage(captureImage))
+            {
+                // ペン
+                using (Pen p = new Pen(Color.Red, 3))
+                {
+                    foreach (Rectangle iconSurroundRect in iconSurroundRects)
+                    {
+                        g.DrawRectangle(p, iconSurroundRect);
+                    }
+                }
+            }
+
+            PokemonMarkedCaptureImage = BitmapConverterModel.ToBitmapImage(captureImage);
+        }
+
+        private List<Rectangle> CreateIconSurroundRects(Rectangle rectangle, CaptureImageManegementModel captureImageManegementModel)
+        {
+            // アイコン部分を囲む矩形リストを作成
+            List<Rectangle> iconSurroundRects = new List<Rectangle>();
+
+            for (int i = PartyConst.FIRST; i <= PartyConst.SIXTH; i++)
+            {
+                // 矩形範囲
+                var relativeRectangle = captureImageManegementModel.GetPartyRelativeRectangle(i);
+
+                // パーティー
+                iconSurroundRects.Add(new Rectangle(
+                    (int)(rectangle.Width * relativeRectangle.X),
+                    (int)(rectangle.Height * relativeRectangle.Y),
+                    (int)(rectangle.Width * relativeRectangle.Width),
+                    (int)(rectangle.Height * relativeRectangle.Height)
+                    ));
+            }
+
+            return iconSurroundRects;
         }
     }
 }

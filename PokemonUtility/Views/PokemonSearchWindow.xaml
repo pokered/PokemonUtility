@@ -1,0 +1,40 @@
+﻿<Window x:Class="PokemonUtility.Views.PokemonSearchWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+             xmlns:b="clr-namespace:PokemonUtility.Behaviors"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:actions="clr-namespace:PokemonUtility.TriggerActions"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
+             prism:ViewModelLocator.AutoWireViewModel="True" Height="225.33" Width="128.039">
+    <Window.Resources>
+        <DataTemplate x:Key="AutoCompleteBoxItemTemplate">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="{Binding Name}" Width="100" />
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <Image x:Name="image" Height="100" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100" Source="{Binding PokemonImage.Value}" />
+        <Button x:Name="button" Content="OK" HorizontalAlignment="Left" Height="21" Margin="10,163,0,0" VerticalAlignment="Top" Width="46" Command="{Binding CloseWindowCommand}" CommandParameter="true" />
+        <Button x:Name="button_Copy" Content="NO" Height="21" Margin="64,163,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="46" Command="{Binding CloseWindowCommand}" CommandParameter="false" />
+        <toolkit:AutoCompleteBox
+            ItemsSource="{Binding Pokemons}"
+            SelectedItem="{Binding SelectedPokemon.Value, Mode=TwoWay}"
+            ValueMemberPath="Name"
+            ItemTemplate="{StaticResource AutoCompleteBoxItemTemplate}"
+            ItemFilter="{Binding PokemonFilter}"
+            Margin="10,115,0,50" HorizontalAlignment="Left" Width="100"
+            Text="{Binding PokemonName.Value, Mode=TwoWay}"/>
+    </Grid>
+
+    <i:Interaction.Triggers>
+        <prism:InteractionRequestTrigger SourceObject="{Binding CloseWindowRequest, Mode=OneWay}">
+            <actions:CloseWindowAction />
+        </prism:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
+    
+    <i:Interaction.Behaviors>
+        <b:HideCloseButtonOnWindowBehavior />
+    </i:Interaction.Behaviors>
+</Window>

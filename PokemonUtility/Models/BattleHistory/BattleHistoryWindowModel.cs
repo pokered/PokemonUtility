@@ -57,6 +57,7 @@ namespace PokemonUtility.Models.BattleHistory
             set { _battleRecordDatabaseModel.BattleRecordNumber = value; }
         }
 
+
         // トレーナーリスト
         public List<Trainer> Trainers { get; set; }
 
@@ -87,7 +88,16 @@ namespace PokemonUtility.Models.BattleHistory
 
         public List<BattleRecord> GetBattleRecords()
         {
-            return _battleRecordDatabaseModel.SelectBattleRecordExecute();
+            _battleRecordDatabaseModel.MyPokemonIdList.Clear();
+            _battleRecordDatabaseModel.OpponentPokemonIdList.Clear();
+            // パーティー
+            for (int i = 0; i < 6; i++)
+            {
+                _battleRecordDatabaseModel.MyPokemonIdList.Add(ModelConnector.BattleHistoryMyParty.GetPokemonId(i));
+                _battleRecordDatabaseModel.OpponentPokemonIdList.Add(ModelConnector.BattleHistoryOpponentParty.GetPokemonId(i));
+            }
+
+            return _battleRecordDatabaseModel.SelectBattleRecords();
         }
 
         public List<BattleAggregate> GetMyBattleAggregates()

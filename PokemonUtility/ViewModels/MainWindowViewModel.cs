@@ -3,7 +3,6 @@ using Prism.Interactivity.InteractionRequest;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System.Threading.Tasks;
-using PokemonUtility.Const;
 using System.Windows.Media.Imaging;
 using PokemonUtility.Models.Main;
 using System.Reactive.Linq;
@@ -63,13 +62,13 @@ namespace PokemonUtility.ViewModels
         // キャプチャ表示制御コマンド
         public DelegateCommand ShowCaptureWindowCommand { get; }
         
-        public MainWindowViewModel() :base(MainWindowModel.GetInstance())
+        public MainWindowViewModel() :base(ModelConnector.MainWindow)
         {
             // 添付プロパティ設定
             LoadProperty();
 
             // 分析中フラグ紐づけ
-            IsControlEnabled = ModelConnector.MainWindow
+            IsControlEnabled = ModelConnector.Analysis
                 .ObserveProperty(m => m.IsAnalyzing)
                 .Select(x => !x)
                 .ToReactiveProperty();
@@ -78,7 +77,7 @@ namespace PokemonUtility.ViewModels
             Log = ModelConnector.MainWindow.ObserveProperty(m => m.Log).ToReactiveProperty();
 
             // キャプチャイメージ紐づけ
-            CaptureImage = ModelConnector.CaptureImageManegement
+            CaptureImage = ModelConnector.MainWindow
                 .ObserveProperty(m => m.PokemonMarkedCaptureImage)
                 .ToReactiveProperty();
 
@@ -103,7 +102,7 @@ namespace PokemonUtility.ViewModels
 
             // ラジオボタン紐づけ
             RdoBattleResult.Value = BattleResultEnum.Win;
-            RdoBattleResult.Subscribe(x => ModelConnector.MainWindow.BattleResult = ToBattleResultId(x));
+            RdoBattleResult.Subscribe(x => ModelConnector.MainWindow.BattleResultId = ToBattleResultId(x));
 
             // 世代コンボボックスのアイテム設定
             ModelConnector.MainWindow.SoftGenerationList.ForEach(e => CmbSoftGenerations.Add(e));
@@ -121,7 +120,7 @@ namespace PokemonUtility.ViewModels
             SaveBattleRecordCommand = new DelegateCommand(SaveBattleRecord);
 
             // 分析コマンド
-            AnalysisCommand = new DelegateCommand(AnalysisCommandExecute);
+            AnalysisCommand = new DelegateCommand(Analysis);
 
             // キャプチャ画面表示コマンド
             ShowCaptureWindowCommand = new DelegateCommand(ShowCaptureWindow);
@@ -200,6 +199,9 @@ namespace PokemonUtility.ViewModels
         private void ShowCaptureWindow()
         {
             ShowSubWindow(WindowNotification.CAPTURE_WINDOW);
+
+            // 加工したキャプチャ画面表示
+            ModelConnector.MainWindow.CreatePokemonMarkedCaptureImage();
         }
 
         // サブウィンドウを表示する
@@ -212,18 +214,21 @@ namespace PokemonUtility.ViewModels
         }
 
         // 分析
-        private void AnalysisCommandExecute()
+        private void Analysis()
         {
-            AnalysisImage analysisImage = new AnalysisImage();
-            Task<bool> resultaa = analysisImage.RunAsync();
+            // キャプチャイメージ表示
+            ModelConnector.MainWindow.CreatePokemonMarkedCaptureImage();
+
+            // キャプチャイメージを分析する
+            Task<bool> result = ModelConnector.Analysis.RunAsync();
         }
         
         // 対戦結果のEnumをidに変換
         private int ToBattleResultId(BattleResultEnum battleResultEnum)
         {
-            if (battleResultEnum == BattleResultEnum.Win) return BattleResultConst.WIN;
-            if (battleResultEnum == BattleResultEnum.Lose) return BattleResultConst.LOSE;
-            return BattleResultConst.DRAW;
+            if (battleResultEnum == BattleResultEnum.Win) return BattleResult.RESULT_WIN;
+            if (battleResultEnum == BattleResultEnum.Lose) return BattleResult.RESULT_LOSE;
+            return BattleResult.RESULT_DRAW;
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿<Window x:Class="PokemonUtility.Views.MyPartyWindow"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
-             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:b="clr-namespace:PokemonUtility.Behaviors"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:actions="clr-namespace:PokemonUtility.TriggerActions"
@@ -14,7 +13,7 @@
     
     <Grid IsEnabled="{Binding WindowEnabled.Value}">
         <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Width="80" Height="80" Source="{Binding PokemonImage0.Value}" Cursor="Hand">
-        <i:Interaction.Behaviors>
+            <i:Interaction.Behaviors>
                 <b:MyPartyImageBehavior PartyIndex="0"/>
             </i:Interaction.Behaviors>
         </Image>
@@ -57,9 +56,9 @@
     </Grid>
 
     <i:Interaction.Triggers>
-        <ei:PropertyChangedTrigger Binding="{Binding IsShowWindow.Value}" >
+        <prism:InteractionRequestTrigger SourceObject="{Binding CloseWindowRequest, Mode=OneWay}">
             <actions:CloseWindowAction />
-        </ei:PropertyChangedTrigger>
+        </prism:InteractionRequestTrigger>
     </i:Interaction.Triggers>
 
     <i:Interaction.Behaviors>

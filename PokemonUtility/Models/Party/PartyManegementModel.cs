@@ -70,8 +70,8 @@ namespace PokemonUtility.Models.Party
 
         // 選出・非選出順
         private int[] _pokemonOrderList = new int[] { -1, -1, -1, -1, -1, -1 };
-        private List<int> _selectedOrder = new List<int> { };
-        private List<int> _notSelectedOrder = new List<int> { };
+        private List<int> _selectedOrder = new List<int>();
+        private List<int> _notSelectedOrder = new List<int>();
 
         public int PokemonOrder0
         {
@@ -122,7 +122,7 @@ namespace PokemonUtility.Models.Party
 
             if (_notSelectedOrder.Contains(pokemonIndex)) return _notSelectedOrder.IndexOf(pokemonIndex) + 3;
 
-            return -1;
+            return PartyConst.ORDER_NO; ;
         }
 
         // ポケモンID変更
@@ -204,6 +204,21 @@ namespace PokemonUtility.Models.Party
             PokemonOrder3 = GetOrder(PartyConst.FOURTH);
             PokemonOrder4 = GetOrder(PartyConst.FIFTH);
             PokemonOrder5 = GetOrder(PartyConst.SIXTH);
+        }
+
+        // 初期化
+        public void PartyReset()
+        {
+            // オーダー初期化
+            _selectedOrder = new List<int>();
+            _notSelectedOrder = new List<int>();
+            UpdateOrder();
+
+            // ポケモン初期化
+            for (int i = PartyConst.FIRST; i <= PartyConst.SIXTH; i++)
+            {
+                ChangePokemonId(i, PartyConst.POKEMON_ID_NO);
+            }
         }
     }
 

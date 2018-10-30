@@ -72,27 +72,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviors\BattleHistoryBehavior.cs" />
     <Compile Include="Behaviors\CloseWindowBehavior.cs" />
     <Compile Include="Behaviors\FitWithinScreenBehavior.cs" />
     <Compile Include="Behaviors\HideCloseButtonOnWindowBehavior.cs" />
     <Compile Include="Behaviors\OpponentPartyImageBehavior.cs" />
     <Compile Include="Behaviors\MyPartyImageBehavior.cs" />
     <Compile Include="Behaviors\WindowMoveBehavior.cs" />
-    <Compile Include="Const\BattleResultConst.cs" />
     <Compile Include="Const\DatabaseConst.cs" />
     <Compile Include="Const\ErrorConst.cs" />
     <Compile Include="Const\PartyConst.cs" />
-    <Compile Include="Const\PokemonConst.cs" />
-    <Compile Include="Const\SoftGenerationConst.cs" />
     <Compile Include="Const\WaitStateConst.cs" />
     <Compile Include="Models\Abstract\SubWindowModel.cs" />
     <Compile Include="Models\BattleHistory\BattleHistoryWindowModel.cs" />
-    <Compile Include="Models\BattleHistory\BattleHistroyRow.cs" />
+    <Compile Include="Models\Capture\CaptureImageManegementModel.cs" />
+    <Compile Include="Models\Common\PokemonDataModel.cs" />
     <Compile Include="Models\Database\BattleRecordDatabaseModel.cs" />
+    <Compile Include="Models\Database\PokemonDatabaseModel.cs" />
     <Compile Include="Models\ModelConnector.cs" />
+    <Compile Include="Models\Notifications\PokemonSearchWindowNotification.cs" />
     <Compile Include="Models\Notifications\WindowNotification.cs" />
+    <Compile Include="Models\Search\PokemonSearchWindowModel.cs" />
     <Compile Include="Struct\BattleAggregate.cs" />
     <Compile Include="Struct\BattleResult.cs" />
+    <Compile Include="Struct\Pokemon.cs" />
+    <Compile Include="Struct\RelativeRectangle.cs" />
     <Compile Include="Struct\SoftGeneration.cs" />
     <Compile Include="Struct\Trainer.cs" />
     <Compile Include="Models\Database\PokemonIdConverterModel.cs" />
@@ -100,7 +104,6 @@
     <Compile Include="Models\Main\BattleRecordSaveModel.cs" />
     <Compile Include="Models\Database\Abstract\DatabaseConnectModel.cs" />
     <Compile Include="Models\Image\BitmapConverterModel.cs" />
-    <Compile Include="Models\Capture\CaptureImageManegementModel.cs" />
     <Compile Include="Models\Image\ScreenCaptureModel.cs" />
     <Compile Include="Models\Main\MainWindowModel.cs" />
     <Compile Include="Models\Party\PartyWaitStateModel.cs" />
@@ -113,17 +116,24 @@
     <Compile Include="ObjectConverter.cs" />
     <Compile Include="RadioButtonConverter.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="Models\Analysis\AnalysisImage.cs" />
+    <Compile Include="Models\Analysis\AnalysisModel.cs" />
     <Compile Include="Struct\BattleRecord.cs" />
     <Compile Include="TriggerActions\Abstract\PopupWindowActionBaseOriginal.cs" />
     <Compile Include="TriggerActions\CloseWindowAction.cs" />
     <Compile Include="TriggerActions\Abstract\PopupWindowActionBase.cs" />
+    <Compile Include="TriggerActions\PokemonSearchWindowAction.cs" />
     <Compile Include="TriggerActions\PopupWindowsAction.cs" />
     <Compile Include="ViewModels\Abstract\SubWindowViewModel.cs" />
     <Compile Include="ViewModels\Abstract\WindowViewModel.cs" />
     <Compile Include="ViewModels\BattleHistoryWindowViewModel.cs" />
     <Compile Include="ViewModels\CaptureWindowViewModel.cs" />
-    <Compile Include="ViewModels\PartyWindowViewModel.cs" />
+    <Compile Include="ViewModels\MyPartyControlViewModel.cs" />
+    <Compile Include="ViewModels\MyPartyWindowViewModel.cs" />
+    <Compile Include="ViewModels\OpponentPartyControlViewModel.cs" />
+    <Compile Include="ViewModels\Abstract\PartyControllViewModel.cs" />
+    <Compile Include="ViewModels\Abstract\PartyWindowViewModel.cs" />
+    <Compile Include="ViewModels\OpponentPartyWindowViewModel.cs" />
+    <Compile Include="ViewModels\PokemonSearchWindowViewModel.cs" />
     <Compile Include="ViewModels\TodayBattleRecordWindowViewModel.cs" />
     <Compile Include="Views\BattleHistoryWindow.xaml.cs">
       <DependentUpon>BattleHistoryWindow.xaml</DependentUpon>
@@ -131,11 +141,20 @@
     <Compile Include="Views\CaptureWindow.xaml.cs">
       <DependentUpon>CaptureWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MyPartyControl.xaml.cs">
+      <DependentUpon>MyPartyControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MyPartyWindow.xaml.cs">
       <DependentUpon>MyPartyWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\OpponentPartyControl.xaml.cs">
+      <DependentUpon>OpponentPartyControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\OpponentPartyWindow.xaml.cs">
       <DependentUpon>OpponentPartyWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PokemonSearchWindow.xaml.cs">
+      <DependentUpon>PokemonSearchWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TodayBattleRecordWindow.xaml.cs">
       <DependentUpon>TodayBattleRecordWindow.xaml</DependentUpon>
@@ -162,11 +181,23 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\MyPartyControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MyPartyWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\OpponentPartyControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\OpponentPartyWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PokemonSearchWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -211,7 +242,10 @@
     </PackageReference>
     <PackageReference Include="Prism.Unity" Version="6.3.0" />
     <PackageReference Include="ReactiveProperty">
-      <Version>5.2.0</Version>
+      <Version>5.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="WPFToolkit">
+      <Version>3.5.50211.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -1227,5 +1261,11 @@
     <Resource Include="Images\Progress\progress3.png" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\WaitState\WaitState0.png" />
+    <Resource Include="Images\WaitState\WaitState1.png" />
+    <Resource Include="Images\WaitState\WaitState2.png" />
+    <Resource Include="Images\WaitState\WaitState3.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

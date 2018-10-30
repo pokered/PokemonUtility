@@ -10,10 +10,8 @@ namespace PokemonUtility
             {
                 return string.Empty;
             }
-            else
-            {
-                return value.ToString();
-            }
+
+            return value.ToString();
         }
 
         public static int ToInt(object value)
@@ -23,10 +21,17 @@ namespace PokemonUtility
             {
                 return Convert.ToInt32(value);
             }
-            else
-            {
-                return 0;
-            }
+
+            return 0;
+        }
+
+        public static bool ToBoolean(object value)
+        {
+            if (value == null) return false;
+
+            if (Convert.ToBoolean(ToString(value))) return true;
+
+            return false;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using PokemonUtility.Models.Party;
+﻿using PokemonUtility.Models;
+using PokemonUtility.Models.Party;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -37,8 +38,7 @@ namespace PokemonUtility.Behaviors
         // 選出順変更
         private void ChangeOrder(object sender, EventArgs e)
         {
-            MyPartyManegementModel partyManegementModel = MyPartyManegementModel.GetInstance();
-            partyManegementModel.ChangeOrder(PartyIndex);
+            ModelConnector.MyPartyManegement.ChangeOrder(PartyIndex);
         }
     }
 }

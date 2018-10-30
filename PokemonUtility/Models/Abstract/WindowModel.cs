@@ -19,13 +19,5 @@ namespace PokemonUtility.Models.Abstract
             get { return _y; }
             set { SetProperty(ref _y, value); }
         }
-
-        // 分析中か否か
-        private bool _isAnalyzing = false;
-        public bool IsAnalyzing
-        {
-            get { return _isAnalyzing; }
-            set { SetProperty(ref _isAnalyzing, value); }
-        }
     }
 }

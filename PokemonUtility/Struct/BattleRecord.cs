@@ -7,18 +7,21 @@ namespace PokemonUtility.Struct
 {
     class BattleRecord
     {
-        // 対戦結果ID
+        // versus
         public string VersusString { get; set; } = "VS";
 
-        // 対戦結果ID
+        // 戦績ID
         public int BattleRecordId { get; set; }
 
         // 世代
         public string SoftGeneration { get; set; }
 
         // 対戦結果
-        private int _battleResult = -1;
-        public string BattleResultString { get { return BattleResult.ToBattleResultEnglish(_battleResult); } }
+        public int BattleResultId { get; set; } = -1;
+        public string BattleResultString { get { return BattleResult.ToBattleResultEnglish(BattleResultId); } }
+
+        // 自分のトレーナー名
+        public string MyTrainerName { get; set; }
 
         // 自分のポケモン
         private int[] _myPokemonIdList = new int[] { -1, -1, -1, -1, -1, -1 };
@@ -26,33 +29,36 @@ namespace PokemonUtility.Struct
 
         public BitmapImage MyPokemonImage0
         {
-            get { return ImageFactoryModel.PokemonImageAddFrameImage(_myPokemonIdList[PartyConst.FIRST], _myPokemonOrderList[PartyConst.FIRST]); }
+            get { return ImageFactoryModel.CreatePokemonImage(_myPokemonIdList[PartyConst.FIRST], _myPokemonOrderList[PartyConst.FIRST]); }
         }
 
         public BitmapImage MyPokemonImage1
         {
-            get { return ImageFactoryModel.PokemonImageAddFrameImage(_myPokemonIdList[PartyConst.SECOND], _myPokemonOrderList[PartyConst.SECOND]); }
+            get { return ImageFactoryModel.CreatePokemonImage(_myPokemonIdList[PartyConst.SECOND], _myPokemonOrderList[PartyConst.SECOND]); }
         }
 
         public BitmapImage MyPokemonImage2
         {
-            get { return ImageFactoryModel.PokemonImageAddFrameImage(_myPokemonIdList[PartyConst.THIRD], _myPokemonOrderList[PartyConst.THIRD]); }
+            get { return ImageFactoryModel.CreatePokemonImage(_myPokemonIdList[PartyConst.THIRD], _myPokemonOrderList[PartyConst.THIRD]); }
         }
 
         public BitmapImage MyPokemonImage3
         {
-            get { return ImageFactoryModel.PokemonImageAddFrameImage(_myPokemonIdList[PartyConst.FOURTH], _myPokemonOrderList[PartyConst.FOURTH]); }
+            get { return ImageFactoryModel.CreatePokemonImage(_myPokemonIdList[PartyConst.FOURTH], _myPokemonOrderList[PartyConst.FOURTH]); }
         }
 
         public BitmapImage MyPokemonImage4
         {
-            get { return ImageFactoryModel.PokemonImageAddFrameImage(_myPokemonIdList[PartyConst.FIFTH], _myPokemonOrderList[PartyConst.FIFTH]); }
+            get { return ImageFactoryModel.CreatePokemonImage(_myPokemonIdList[PartyConst.FIFTH], _myPokemonOrderList[PartyConst.FIFTH]); }
         }
 
         public BitmapImage MyPokemonImage5
         {
-            get { return ImageFactoryModel.PokemonImageAddFrameImage(_myPokemonIdList[PartyConst.SIXTH], _myPokemonOrderList[PartyConst.SIXTH]); }
+            get { return ImageFactoryModel.CreatePokemonImage(_myPokemonIdList[PartyConst.SIXTH], _myPokemonOrderList[PartyConst.SIXTH]); }
         }
+
+        // 相手のトレーナー
+        public string OpponentTrainerName { get; set; }
 
         // 相手のポケモン
         private int[] _opponentPokemonIdList = new int[] { -1, -1, -1, -1, -1, -1 };
@@ -60,41 +66,36 @@ namespace PokemonUtility.Struct
 
         public BitmapImage OpponentPokemonImage0
         {
-            get { return ImageFactoryModel.PokemonImageAddFrameImage(_opponentPokemonIdList[PartyConst.FIRST], _opponentPokemonOrderList[PartyConst.FIRST]); }
+            get { return ImageFactoryModel.CreatePokemonImage(_opponentPokemonIdList[PartyConst.FIRST], _opponentPokemonOrderList[PartyConst.FIRST]); }
         }
 
         public BitmapImage OpponentPokemonImage1
         {
-            get { return ImageFactoryModel.PokemonImageAddFrameImage(_opponentPokemonIdList[PartyConst.SECOND], _opponentPokemonOrderList[PartyConst.SECOND]); }
+            get { return ImageFactoryModel.CreatePokemonImage(_opponentPokemonIdList[PartyConst.SECOND], _opponentPokemonOrderList[PartyConst.SECOND]); }
         }
 
         public BitmapImage OpponentPokemonImage2
         {
-            get { return ImageFactoryModel.PokemonImageAddFrameImage(_opponentPokemonIdList[PartyConst.THIRD], _opponentPokemonOrderList[PartyConst.THIRD]); }
+            get { return ImageFactoryModel.CreatePokemonImage(_opponentPokemonIdList[PartyConst.THIRD], _opponentPokemonOrderList[PartyConst.THIRD]); }
         }
 
         public BitmapImage OpponentPokemonImage3
         {
-            get { return ImageFactoryModel.PokemonImageAddFrameImage(_opponentPokemonIdList[PartyConst.FOURTH], _opponentPokemonOrderList[PartyConst.FOURTH]); }
+            get { return ImageFactoryModel.CreatePokemonImage(_opponentPokemonIdList[PartyConst.FOURTH], _opponentPokemonOrderList[PartyConst.FOURTH]); }
         }
 
         public BitmapImage OpponentPokemonImage4
         {
-            get { return ImageFactoryModel.PokemonImageAddFrameImage(_opponentPokemonIdList[PartyConst.FIFTH], _opponentPokemonOrderList[PartyConst.FIFTH]); }
+            get { return ImageFactoryModel.CreatePokemonImage(_opponentPokemonIdList[PartyConst.FIFTH], _opponentPokemonOrderList[PartyConst.FIFTH]); }
         }
 
         public BitmapImage OpponentPokemonImage5
         {
-            get { return ImageFactoryModel.PokemonImageAddFrameImage(_opponentPokemonIdList[PartyConst.SIXTH], _opponentPokemonOrderList[PartyConst.SIXTH]); }
+            get { return ImageFactoryModel.CreatePokemonImage(_opponentPokemonIdList[PartyConst.SIXTH], _opponentPokemonOrderList[PartyConst.SIXTH]); }
         }
 
         // 対戦日
         public DateTime InsertDate { get; set; }
-
-        public void ChangeBattleResult(int battleResultId)
-        {
-            _battleResult = battleResultId;
-        }
 
         public void ChangeMyPokemonId(int partyIndex, int pokemonId)
         {

@@ -1,4 +1,4 @@
-﻿<Window x:Class="PokemonUtility.Views.TodayBattleRecordWindow"
+﻿<Window
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
              xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
@@ -6,18 +6,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:actions="clr-namespace:PokemonUtility.TriggerActions"
              xmlns:prism="http://prismlibrary.com/"             
+             xmlns:local="clr-namespace:PokemonUtility.Views" x:Class="PokemonUtility.Views.TodayBattleRecordWindow"             
              prism:ViewModelLocator.AutoWireViewModel="True"
              Left="{Binding X.Value, Mode=TwoWay}"
              Top="{Binding Y.Value, Mode=TwoWay}"
-             Width="654.106"     
-             Height="434.594">
+             Width="1317.85"     
+             Height="869.188">
     <Grid Margin="0,0,105,72">
     </Grid>
 
+
     <i:Interaction.Triggers>
-        <ei:PropertyChangedTrigger Binding="{Binding IsShowWindow.Value}" >
+        <prism:InteractionRequestTrigger SourceObject="{Binding CloseWindowRequest, Mode=OneWay}">
             <actions:CloseWindowAction />
-        </ei:PropertyChangedTrigger>
+        </prism:InteractionRequestTrigger>
     </i:Interaction.Triggers>
 
     <i:Interaction.Behaviors>

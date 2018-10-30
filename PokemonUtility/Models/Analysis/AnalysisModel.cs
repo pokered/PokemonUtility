@@ -1,8 +1,8 @@
 ﻿using PokemonUtility.Const;
 using PokemonUtility.Models.Capture;
 using PokemonUtility.Models.Database;
-using PokemonUtility.Models.Main;
 using PokemonUtility.Models.Party;
+using Prism.Mvvm;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -13,94 +13,81 @@ using System.Threading.Tasks;
 
 namespace PokemonUtility.Models.Analysis
 {
-    class AnalysisImage
+    class AnalysisModel : BindableBase
     {
-        // メインモデル
-        private MainWindowModel _mainWindowModel = MainWindowModel.GetInstance();
+        #region Singleton
 
-        // キャプチャモデル
-        private CaptureWindowModel _captureWindowModel = CaptureWindowModel.GetInstance();
-        private CaptureImageManegementModel _captureManegementModel = CaptureImageManegementModel.GetInstance();
+        static AnalysisModel Instance;
+        public static AnalysisModel GetInstance()
+        {
+            if (Instance == null)
+                Instance = new AnalysisModel();
+            return Instance;
+        }
 
-        // 自分のパーティー関連のモデル
-        private MyPartyWindowModel _myPartyWindowModel = MyPartyWindowModel.GetInstance();
-        private MyPartyManegementModel _myPartyManegementModel = MyPartyManegementModel.GetInstance();
-        private MyPartyWaitStateModel _myPartyWaitStateModel = MyPartyWaitStateModel.GetInstance();
+        #endregion
 
-        // 相手のパーティー関連のモデル
-        private OpponentPartyWindowModel _opponentPartyWindowModel = OpponentPartyWindowModel.GetInstance();
-        private OpponentPartyManegementModel _opponentPartyManegementModel = OpponentPartyManegementModel.GetInstance();
-        private OpponentPartyWaitStateModel _opponentPartyWaitStateModel = OpponentPartyWaitStateModel.GetInstance();
-
+        private bool _isAnalyzing = false;
+        public bool IsAnalyzing
+        {
+            get { return _isAnalyzing; }
+            set { SetProperty(ref _isAnalyzing, value); }
+        }
+        
         public async Task<bool> RunAsync()
         {
-            // キャプチャ全体画面を表示
-            _captureManegementModel.CreatePokemonMarkedCaptureImage();
-
-            // 各ウィンドウを分析中にする
-            _mainWindowModel.IsAnalyzing = true;
-            _myPartyWindowModel.IsAnalyzing = true;
-            _opponentPartyWindowModel.IsAnalyzing = true;
-
             PokemonIdConverterModel pokemonIdConverterModel = new PokemonIdConverterModel();
 
-            // 自分のパーティー
+            // 分析開始
+            IsAnalyzing = true;
+
+            // パーティー分析
+            await PartyAnalysisAsync(ModelConnector.MyCaptureImageManegement, ModelConnector.MyPartyManegement, ModelConnector.MyPartyWaitState);
+            await PartyAnalysisAsync(ModelConnector.OpponentCaptureImageManegement, ModelConnector.OpponentPartyManegement, ModelConnector.OpponentPartyWaitState);
+
+            // 分析終了
+            IsAnalyzing = false;
+
+            return true;
+        }
+
+        // パーティー分析
+        private async Task PartyAnalysisAsync(
+            CaptureImageManegementModel captureImageManegementModel,
+            PartyManegementModel partyManegementModel,
+            PartyWaitStateModel partyWaitStateModel)
+        {
+            // ポケモンIDコンバーター
+            PokemonIdConverterModel pokemonIdConverterModel = new PokemonIdConverterModel();
+
+            // パーティー初期化
+            partyManegementModel.PartyReset();
+
             for (int i = PartyConst.FIRST; i <= PartyConst.SIXTH; i++)
             {
                 // 待機演出開始
-                //_myPartyWaitStateModel.Start(i);
+                partyWaitStateModel.Start(i);
 
                 // 画像切り取り
-                Bitmap myBitmap = await Task.Run(() => _captureManegementModel.MyPartyPokemonImage(i));
+                Bitmap myBitmap = await Task.Run(() => captureImageManegementModel.PartyPokemonImage(i));
 
                 // 画像分析
                 int pokemonId = Analysis(myBitmap);
 
                 // ポケモンIDをオリジナルに変換
                 int originalPokemonId = pokemonIdConverterModel.ToOriginalPokemonId(pokemonId);
-                
+
                 // 待機演出終了
-                //_myPartyWaitStateModel.End(i);
+                bool a = await partyWaitStateModel.End(i);
 
                 Console.WriteLine("OriginalPokemonID = " + originalPokemonId.ToString());
 
                 // 分析結果からポケモンイメージを表示
-                _myPartyManegementModel.ChangePokemonId(i, originalPokemonId);
+                partyManegementModel.ChangePokemonId(i, originalPokemonId);
             }
-
-            // 相手のパーティー
-            for (int i = PartyConst.FIRST; i <= PartyConst.SIXTH; i++)
-            {
-                //_opponentPartyWaitStateModel.Start(i);
-
-                // 画像切り取り
-                Bitmap opponentBitmap = _captureManegementModel.OpponentPartyPokemonImage(i);
-
-                // 画像分析
-                int pokemonId = Analysis(opponentBitmap);
-
-                // ポケモンIDをオリジナルに変換
-                int originalPokemonId = pokemonIdConverterModel.ToOriginalPokemonId(pokemonId);
-
-                // 待機演出終了
-                //_myPartyWaitStateModel.End(i);
-
-                Console.WriteLine("OriginalPokemonID = " + originalPokemonId.ToString());
-
-                // 分析結果からポケモンイメージを表示
-                _opponentPartyManegementModel.ChangePokemonId(i, originalPokemonId);
-
-                //_opponentPartyWaitStateModel.End(i);
-            }
-
-            // 各ウィンドウの分析終了
-            _mainWindowModel.IsAnalyzing = false;
-            _myPartyWindowModel.IsAnalyzing = false;
-            _opponentPartyWindowModel.IsAnalyzing = false;
-
-            return true;
         }
 
+        // 画像分析
         private int Analysis(Bitmap bitmap)
         {
             try
@@ -187,14 +174,14 @@ namespace PokemonUtility.Models.Analysis
                 // 分析サーバーに接続できない場合
                 Console.WriteLine("サーバーに接続できませんでした。");
 
-                return PokemonConst.POKEMON_ID_NO;
+                return PartyConst.POKEMON_ID_NO;
             }
             catch(IOException)
             {
                 // 画像が大きすぎる
                 Console.WriteLine("画像が大きすぎます。");
 
-                return PokemonConst.POKEMON_ID_NO;
+                return PartyConst.POKEMON_ID_NO;
             }
         }
     }

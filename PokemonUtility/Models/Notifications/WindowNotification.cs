@@ -13,6 +13,6 @@ namespace PokemonUtility.Models.Notifications
 
         public int WindowId { get; set; }
 
-        public bool IsModal { get; set; }
+        public bool IsModal { get; set; } = true;
     }
 }

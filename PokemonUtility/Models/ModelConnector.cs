@@ -1,7 +1,9 @@
-﻿using PokemonUtility.Models.BattleHistory;
+﻿using PokemonUtility.Models.Analysis;
+using PokemonUtility.Models.BattleHistory;
 using PokemonUtility.Models.Capture;
 using PokemonUtility.Models.Main;
 using PokemonUtility.Models.Party;
+using PokemonUtility.Models.Search;
 using PokemonUtility.Models.TodayBattleRecord;
 
 namespace PokemonUtility.Models
@@ -19,12 +21,17 @@ namespace PokemonUtility.Models
             get { return CaptureWindowModel.GetInstance(); }
         }
 
-        public static CaptureImageManegementModel CaptureImageManegement
+        public static MyCaptureImageManegementModel MyCaptureImageManegement
         {
-            get { return CaptureImageManegementModel.GetInstance(); }
+            get { return MyCaptureImageManegementModel.GetInstance(); }
         }
 
-        
+        public static OpponentCaptureImageManegementModel OpponentCaptureImageManegement
+        {
+            get { return OpponentCaptureImageManegementModel.GetInstance(); }
+        }
+
+
         public static MyPartyWindowModel MyPartyWindow
         {
             get { return MyPartyWindowModel.GetInstance(); }
@@ -75,6 +82,17 @@ namespace PokemonUtility.Models
         public static BattleHistoryOpponentPartyModel BattleHistoryOpponentParty
         {
             get { return BattleHistoryOpponentPartyModel.GetInstance(); }
+        }
+
+        public static PokemonSearchWindowModel PokemonSearchWindow
+        {
+            get { return PokemonSearchWindowModel.GetInstance(); }
+        }
+
+
+        public static AnalysisModel Analysis
+        {
+            get { return AnalysisModel.GetInstance(); }
         }
     }
 }

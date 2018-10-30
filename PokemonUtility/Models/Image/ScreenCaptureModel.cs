@@ -7,10 +7,15 @@ namespace PokemonUtility.Models.Image
     {
         public static Bitmap ScreenCapture(int x, int y, int width, int height)
         {
-            Bitmap bmp = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+            return ScreenCapture(new Rectangle(x, y, width, height));
+        }
+
+        public static Bitmap ScreenCapture(Rectangle rectangle)
+        {
+            Bitmap bmp = new Bitmap(rectangle.Width, rectangle.Height, PixelFormat.Format32bppArgb);
             using (Graphics g = Graphics.FromImage(bmp))
             {
-                g.CopyFromScreen(x, y, 0, 0, new Size(width, height), CopyPixelOperation.SourceCopy);
+                g.CopyFromScreen(rectangle.X, rectangle.Y, 0, 0, new Size(rectangle.Width, rectangle.Height), CopyPixelOperation.SourceCopy);
             }
             return bmp;
         }

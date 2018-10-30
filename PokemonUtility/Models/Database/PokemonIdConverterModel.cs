@@ -27,7 +27,7 @@ namespace PokemonUtility.Models.Database
 
             if (dt.Rows.Count > 0) return ObjectConverter.ToInt(dt.Rows[0][0]);
 
-            return PokemonConst.POKEMON_ID_NO;
+            return PartyConst.POKEMON_ID_NO;
         }
     }
 }

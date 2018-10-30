@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
 
 namespace PokemonUtility.Models.Database
 {
@@ -16,36 +17,123 @@ namespace PokemonUtility.Models.Database
         public int BattleResultId { get; set; }
         public int BattleRecordNumber { get; set; } = 50;
 
-        public List<BattleRecord> SelectBattleRecordExecute()
+        public List<BattleRecord> SelectBattleRecords()
         {
-            string query = @"
+            StringBuilder query = new StringBuilder();
+            query.AppendLine("SELECT");
+            query.AppendLine("record.battle_record_id,");
+            query.AppendLine("my_party.battle_result_id AS result,");
+            query.AppendLine("CASE WHEN");
+            query.AppendLine("  EXISTS (SELECT * FROM trainer_master WHERE trainer_id = my_party.trainer_id)");
+            query.AppendLine("  THEN (SELECT name FROM trainer_master WHERE trainer_id = my_party.trainer_id)");
+            query.AppendLine("  ELSE ''");
+            query.AppendLine("  END my_trainer_name,");
+
+            query.AppendLine("(");
+            query.AppendLine("  SELECT");
+            query.AppendLine("  GROUP_CONCAT(pokemon_id)");
+            query.AppendLine("  FROM battle_pokemons");
+            query.AppendLine("  WHERE battle_party_id = my_party.battle_party_id");
+            query.AppendLine(") AS my_pokemon_id,");
+
+            query.AppendLine("(");
+            query.AppendLine("  SELECT");
+            query.AppendLine("  GROUP_CONCAT(pokemon_icon_id)");
+            query.AppendLine("  FROM battle_pokemons");
+            query.AppendLine("  WHERE battle_party_id = my_party.battle_party_id");
+            query.AppendLine(") AS my_pokemon_icon_id,");
+
+            query.AppendLine("(");
+            query.AppendLine("  SELECT");
+            query.AppendLine("  GROUP_CONCAT(election)");
+            query.AppendLine("  FROM battle_pokemons");
+            query.AppendLine("  WHERE battle_party_id = my_party.battle_party_id");
+            query.AppendLine(") AS my_election,");
+
+            query.AppendLine("CASE WHEN");
+            query.AppendLine("  EXISTS (SELECT * FROM trainer_master WHERE trainer_id = opponent_party.trainer_id)");
+            query.AppendLine("  THEN (SELECT name FROM trainer_master WHERE trainer_id = opponent_party.trainer_id)");
+            query.AppendLine("  ELSE ''");
+            query.AppendLine("  END my_trainer_name,");
+
+            query.AppendLine("(");
+            query.AppendLine("  SELECT");
+            query.AppendLine("  GROUP_CONCAT(pokemon_id)");
+            query.AppendLine("  FROM battle_pokemons");
+            query.AppendLine("  WHERE battle_party_id = opponent_party.battle_party_id");
+            query.AppendLine(") AS opponent_pokemon_id,");
+
+            query.AppendLine("(");
+            query.AppendLine("  SELECT");
+            query.AppendLine("  GROUP_CONCAT(pokemon_icon_id)");
+            query.AppendLine("  FROM battle_pokemons");
+            query.AppendLine("  WHERE battle_party_id = opponent_party.battle_party_id");
+            query.AppendLine(") AS opponent_pokemon_icon_id,");
+            query.AppendLine("(");
+            query.AppendLine("  SELECT");
+            query.AppendLine("  GROUP_CONCAT(election)");
+            query.AppendLine("  FROM battle_pokemons");
+            query.AppendLine("  WHERE battle_party_id = opponent_party.battle_party_id");
+            query.AppendLine(") AS opponent_election,");
+            query.AppendLine("record.insert_at");
+            query.AppendLine("FROM");
+            query.AppendLine(" battle_records AS record");
+            query.AppendLine(" INNER JOIN battle_parties AS my_party");
+            query.AppendLine(" ON record.battle_record_id = my_party.battle_record_id");
+            query.AppendLine(" INNER JOIN battle_parties AS opponent_party");
+            query.AppendLine(" ON record.battle_record_id = opponent_party.battle_record_id AND");
+            query.AppendLine(" opponent_party.battle_party_id <> my_party.battle_party_id");
+            query.AppendLine("WHERE (1=1)");
+            
+
+
+            string query1 = @"
                 SELECT
+                record.battle_record_id,
                 my_party.battle_result_id AS result,
+
+                CASE WHEN
+                    EXISTS (SELECT * FROM trainer_master WHERE trainer_id = my_party.trainer_id)
+                    THEN (SELECT name FROM trainer_master WHERE trainer_id = my_party.trainer_id)
+                    ELSE ''
+                    END my_trainer_name,
+
                 (
                     SELECT
                     GROUP_CONCAT(pokemon_icon_id)
                     FROM battle_pokemons
                     WHERE battle_party_id = my_party.battle_party_id
                 ) AS my_pokemon_icon_id,
+
                 (
                     SELECT
                     GROUP_CONCAT(election)
                     FROM battle_pokemons
                     WHERE battle_party_id = my_party.battle_party_id
                 ) AS my_election,
+
+                CASE WHEN
+                    EXISTS (SELECT * FROM trainer_master WHERE trainer_id = opponent_party.trainer_id)
+                    THEN (SELECT name FROM trainer_master WHERE trainer_id = opponent_party.trainer_id)
+                    ELSE ''
+                    END opponent_trainer_name,
+
                 (
                     SELECT
                     GROUP_CONCAT(pokemon_icon_id)
                     FROM battle_pokemons
                     WHERE battle_party_id = opponent_party.battle_party_id
                 ) AS opponent_pokemon_icon_id,
+
                 (
                     SELECT
                     GROUP_CONCAT(election)
                     FROM battle_pokemons
                     WHERE battle_party_id = opponent_party.battle_party_id
                 ) AS opponent_election,
+
                 record.insert_at
+
                 FROM
                     battle_records AS record
                     INNER JOIN battle_parties AS my_party
@@ -59,19 +147,19 @@ namespace PokemonUtility.Models.Database
             // トレーナー指定
             if (IsWhereTrainerId)
             {
-                string addQuery = " AND my_party.trainer_id = {0} ";
-                query += string.Format(addQuery, TrainerId);
+                string addQuery = string.Format(" AND my_party.trainer_id = {0} ", TrainerId);
+                query.AppendLine(addQuery);
             }
 
             // 勝敗条件
             if (IsWhereBattleResultId)
             {
-                string addQuery = " AND my_party.battle_result_id = {0} ";
-                query += string.Format(addQuery, BattleResultId);
+                string addQuery = string.Format(" AND my_party.battle_result_id = {0} ", BattleResultId);
+                query.AppendLine(addQuery);
             }
 
             // having
-            string havingQuery = "";
+            StringBuilder havingQuery = new StringBuilder();
 
             // 自分のパーティー
             foreach (int myPokemonId in MyPokemonIdList)
@@ -79,17 +167,14 @@ namespace PokemonUtility.Models.Database
                 // 存在しなければ飛ばす
                 if (!ImageFactoryModel.ExistPokemonImage(myPokemonId)) continue;
 
-                string addQuery = @"
-                            AND FIND_IN_SET(
-                                (SELECT
-                                    pokemon_id
-                                FROM
-                                    pokemon_icon_master
-                                WHERE
-                                    pokemon_icon_id = {0}),
-                            my_pokemon_id)";
-
-                havingQuery += string.Format(addQuery, myPokemonId);
+                havingQuery.AppendLine("AND FIND_IN_SET(");
+                havingQuery.AppendLine("   (SELECT");
+                havingQuery.AppendLine("       pokemon_id");
+                havingQuery.AppendLine("   FROM");
+                havingQuery.AppendLine("       pokemon_icon_master");
+                havingQuery.AppendLine("   WHERE");
+                havingQuery.AppendLine(string.Format("pokemon_icon_id = {0}),", myPokemonId));
+                havingQuery.AppendLine("my_pokemon_id)");
             }
 
             // 相手のパーティー
@@ -98,32 +183,33 @@ namespace PokemonUtility.Models.Database
                 // 存在しなければ飛ばす
                 if (!ImageFactoryModel.ExistPokemonImage(opponentPokemonId)) continue;
 
-                string addQuery = @"
-                            AND FIND_IN_SET(
-                                (SELECT
-                                    pokemon_id
-                                FROM
-                                    pokemon_icon_master
-                                WHERE
-                                    pokemon_icon_id = {0}),
-                            opponent_pokemon_id)";
-
-                havingQuery += string.Format(addQuery, opponentPokemonId);
+                havingQuery.AppendLine("AND FIND_IN_SET(");
+                havingQuery.AppendLine("   (SELECT");
+                havingQuery.AppendLine("       pokemon_id");
+                havingQuery.AppendLine("   FROM");
+                havingQuery.AppendLine("       pokemon_icon_master");
+                havingQuery.AppendLine("   WHERE");
+                havingQuery.AppendLine(string.Format("pokemon_icon_id = {0}),", opponentPokemonId));
+                havingQuery.AppendLine("opponent_pokemon_id)");
             }
 
             // having句追加
-            if (havingQuery.Length > 0) query += " HAVING (1=1) " + havingQuery;
+            if (havingQuery.Length > 0)
+            {
+                query.AppendLine("HAVING (1=1)");
+                query.AppendLine(havingQuery.ToString());
+            }
 
-            // レコードが重複するので削除
-            query += " GROUP BY record.battle_record_id";
+            //// レコードが重複するので削除
+            //query.AppendLine("GROUP BY record.battle_record_id");
 
             // ソート
-            query += " ORDER BY record.insert_at DESC ";
+            query.AppendLine("ORDER BY record.insert_at DESC");
 
             // 取得件数
-            query += string.Format(" LIMIT {0} ", BattleRecordNumber);
+            query.AppendLine(string.Format(" LIMIT {0} ", BattleRecordNumber));
 
-            var data = Select(query);
+            var data = Select(query.ToString());
 
             List<BattleRecord> BattleRecordList = new List<BattleRecord>();
 
@@ -131,28 +217,37 @@ namespace PokemonUtility.Models.Database
             {
                 // 構造体に入れる
                 BattleRecord battleRecord = new BattleRecord();
-                battleRecord.ChangeBattleResult(ObjectConverter.ToInt(dataRow[0]));
+
+                battleRecord.BattleRecordId = ObjectConverter.ToInt(dataRow[0]);
+                battleRecord.BattleResultId = ObjectConverter.ToInt(dataRow[1]);
+
+                // 自分のトレーナー名
+                battleRecord.MyTrainerName = ObjectConverter.ToString(dataRow[2]);
 
                 // 自分のパーティー
-                ObjectConverter.ToString(dataRow[1])
+                ObjectConverter.ToString(dataRow[4])
                     .Split(',')
                     .Select((id, index) => new { Id = ObjectConverter.ToInt(id), Index = index })
                     .ToList().ForEach(e => battleRecord.ChangeMyPokemonId(e.Index, e.Id));
 
                 // 自分のオーダー
-                ObjectConverter.ToString(dataRow[2])
+                ObjectConverter.ToString(dataRow[5])
                     .Split(',')
                     .Select((order, index) => new { Order = ObjectConverter.ToInt(order), Index = index })
                     .ToList().ForEach(e => battleRecord.ChangeMyPokemonOrder(e.Index, e.Order));
 
+                // 相手のトレーナー名
+                battleRecord.OpponentTrainerName = ObjectConverter.ToString(dataRow[6]);
+
+
                 // 相手のパーティー
-                ObjectConverter.ToString(dataRow[3])
+                ObjectConverter.ToString(dataRow[8])
                     .Split(',')
                     .Select((id, index) => new { Id = ObjectConverter.ToInt(id), Index = index })
                     .ToList().ForEach(e => battleRecord.ChangeOpponentPokemonId(e.Index, e.Id));
 
                 // 相手のオーダー
-                ObjectConverter.ToString(dataRow[4])
+                ObjectConverter.ToString(dataRow[9])
                     .Split(',')
                     .Select((order, index) => new { Order = ObjectConverter.ToInt(order), Index = index })
                     .ToList().ForEach(e => battleRecord.ChangeOpponentPokemonOrder(e.Index, e.Order));

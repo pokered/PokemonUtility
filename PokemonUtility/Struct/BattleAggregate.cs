@@ -14,7 +14,12 @@ namespace PokemonUtility.Struct
 
         public BitmapImage PokemonImage
         {
-            get { return ImageFactoryModel.PokemonImageAddFrameImage(PokemonIconId, ImageFactoryModel.ORDER_NO); }
+            get { return ImageFactoryModel.CreatePokemonImage(PokemonIconId, ImageFactoryModel.ORDER_NO); }
+        }
+
+        public string OverlapNumberString
+        {
+            get { return OverlapNumber.ToString() + "回"; }
         }
 
         public string ElectionPercent
